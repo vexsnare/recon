@@ -1,52 +1,39 @@
-import React from 'react';
-import { View, StyleSheet, Button, Image } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React, {Component} from 'react';
+import { View, StyleSheet, Button, Image, SafeAreaView, ScrollView } from 'react-native';
 import { createDrawerNavigator, DrawerActions, DrawerItems } from 'react-navigation-drawer';
+import CreateUser from './CreateUser';
+import CreateAdmin from './CreateAdmin';
+import Profile from './Profile';
+import Records from './Records';
+import { primaryColor } from '../../themes';
 
-class MyHomeScreen extends React.Component {
+class RegisterUser extends Component {
   static navigationOptions = {
-    drawerLabel: 'Home',
+    drawerLabel: "RegisterUser..",
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('./../../../assets/icon.png')}
         style={[styles.icon, { tintColor: tintColor }]}
       />
-    ),
-  };
-
+    )
+  }
   render() {
-    return (
-      <View style={{padding: 40}}>
-      <Button
-        onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
-        title="Go to notifications"
-      />
-      </View>
-    );
+    return <CreateUser />
   }
 }
 
-class MyNotificationsScreen extends React.Component {
+class RegisterAdmin extends Component {
   static navigationOptions = {
-    drawerLabel: 'Notifications',
+    drawerLabel: "RegisterAdmin..",
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('./../../../assets/icon.png')}
         style={[styles.icon, { tintColor: tintColor }]}
       />
-    ),
-  };
-
+    )
+  }
   render() {
-    return (
-      <View style={{padding: 40}}>
-      <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
-      />
-      </View>
-    );
+    return <CreateAdmin />
   }
 }
 
@@ -57,11 +44,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyDrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: MyHomeScreen,
-  },
-  Notifications: {
-    screen: MyNotificationsScreen,
-  },
-});
+export default createDrawerNavigator({
+  Records: Records,
+  Profile: Profile,
+  RegisterUser: RegisterUser,
+  RegisterAdmin: RegisterAdmin,
+}, {
+  headerMode: 'screen',
+  initialRouteName: 'Records',
+  drawerPosition: 'Left',
+  contentOptions: {
+    activeTintColor: primaryColor,
+    itemsContainerStyle: {
+      marginVertical: 0,
+      flex: 1,
+      flexDirection: 'column'
+    },
+    iconContainerStyle: {
+      opacity: 1
+    }
+  }
+}
+);
+
+

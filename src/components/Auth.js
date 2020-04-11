@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, StatusBar, Image, Platform, TouchableWithoutFeedback } from 'react-native';
 import { primaryColor } from '../themes';
 import {Button} from './common/Button';
+import { createStackNavigator } from 'react-navigation-stack';
+import LoginScreen from './Login';
+import ForgotPasswordScreen from './ForgotPassword';
 
-class Auth extends Component {
+class AuthScreen extends Component {
 
   statusBar() {
     if (Platform.OS === 'android') {
@@ -39,7 +42,7 @@ class Auth extends Component {
             <Button
               backgroundColor='white'
               textColor={primaryColor}
-              onPress={() => this.props.navigation.navigate('login')}
+              onPress={() => this.props.navigation.navigate('Login')}
             >
               Log In
             </Button>
@@ -47,7 +50,7 @@ class Auth extends Component {
           <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('register')}>
             <View style={styles.signUpTextStyle}>
               <Text style={{ alignSelf: 'center', color: 'white' }}>
-                Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Sign Up</Text>
+                Don't have an account? Please contact Admin
               </Text>
             </View>
           </TouchableWithoutFeedback>
@@ -97,4 +100,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Auth;
+export default createStackNavigator(
+  {
+    Login: LoginScreen,
+    Forgot: ForgotPasswordScreen,
+    Auth: {
+      screen: AuthScreen
+    }
+  },
+  {
+    initialRouteName: 'Auth',
+    headerMode: 'none'
+  }
+);

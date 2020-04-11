@@ -72,6 +72,7 @@ const TabScreenNavigator = createBottomTabNavigator(
     style: {
       backgroundColor: 'blue',
     },
+    headerMode: 'screen'
   }
 );
 

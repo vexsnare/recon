@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import createFilter, {createBlacklistFilter} from 'redux-persist-transform-filter';
+import createFilter from 'redux-persist-transform-filter';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import dataReducer from './src/reducers';
 import { reducer as servicesReducer } from './src/services/Reducer';
@@ -19,6 +19,7 @@ const rootReducer = (state, action) => {
 	if (action.type === LOGOUT_USER_SUCCESS) {
 		state = undefined
 	}
+	state = undefined
 	return appReducer(state, action)
 }
 

@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import store from './Store';
 import { Provider } from 'react-redux';
-import Auth from './src/components/Auth';
-import Login from './src/components/Login';
-import ForgotPassword from './src/components/ForgotPassword';
-import UserScreen from './src/components/user/Tabs';
-import Register from './src/components/Register';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import AppLoadingScreen from './src/components/AppLoading';
+import UserNavigator from './src/components/user/Tabs';
+import AdminNavigator from './src/components/admin/Drawer';
+import AuthNavigator from './src/components/Auth';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 class App extends Component {
   state = { initialScene: null };
@@ -20,31 +18,19 @@ class App extends Component {
     );
   }  
 }
+
 const RouteConfigs = {
-  auth: {
-    screen: Auth,
-  },
-  login: {
-    screen: Login,
-  },
-  register: {
-    screen: Register,
-  },
-  forgotPassword: {
-    screen: ForgotPassword
-  },
-  userScreen: {
-    screen: UserScreen
-  }
+  Auth: AuthNavigator,
+  User: UserNavigator, 
+  Admin: AdminNavigator,
+  AppLoading: AppLoadingScreen
 }
-const StackNavigatorConfig = {
-  initialRouteName: 'auth',
-  headerMode: 'none'
+const NavigatorConfig = {
+  initialRouteName: 'AppLoading'
 }
-const AuthNavigator = createStackNavigator(RouteConfigs, StackNavigatorConfig);
-const UserNavigator = createStackNavigator(RouteConfigs, {...StackNavigatorConfig, initialRouteName: 'userScreen'} );
-const AdminNavigator = createStackNavigator(RouteConfigs, {...StackNavigatorConfig, initialRouteName: 'adminScreen'} );
-const AppContainer = createAppContainer(UserNavigator);
+
+const InitNavigator = createSwitchNavigator(RouteConfigs, NavigatorConfig)
+const AppContainer = createAppContainer(InitNavigator);
 export default App;
 
 

@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   paddingView: {
-    width: 0
+    width: 0,
   },
   floatingLabel: {
     position: 'absolute',
@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
   },
   fieldContainer: {
     flex: 1,
-    justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
+    flexDirection: 'row-reverse',
   },
   withBorder: {
     borderBottomWidth: 1/2,
@@ -218,8 +218,8 @@ const styles = StyleSheet.create({
     height: (Platform.OS == 'ios' ? 20 : 45),
     fontSize: inputTextSize,
     color: '#111111',
-    left: -4,
-    bottom: -4
+    left: 0,
+    bottom: 0
   },
   focused: {
     color: 'gray'

@@ -51,12 +51,8 @@ class Login extends Component {
     );
   }
 
-  goRegister() {
-    this.props.navigation.navigate('register')
-  }
-
   goForgetPassword() {
-    this.props.navigation.navigate('forgotPassword');
+    this.props.navigation.navigate('Forgot');
   }
 
 
@@ -73,7 +69,7 @@ class Login extends Component {
             </View>
             <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
               <View>
-                <Text style={{color: primaryColor, margin: 20}}>Back</Text>
+                <Text style={{color: primaryColor}}>Back</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -94,11 +90,6 @@ class Login extends Component {
             validate={[required]}
           />
           <View style={styles.navigateBlock}>
-            <TouchableWithoutFeedback onPress={this.goRegister.bind(this)}>
-              <View>
-                <Text style={styles.linkText} >Sign Up</Text>
-              </View>
-            </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={this.goForgetPassword.bind(this)}>
               <View>
                 <Text style={styles.linkText} >

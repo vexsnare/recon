@@ -9,9 +9,8 @@ import {
 import { SideMenuItem } from '../common';
 import { logoutUser } from '../../actions/logout';
 import { Grid, Row, Icon } from 'react-native-elements';
+
 class SideMenu extends Component {
-
-
   renderConfirmAlert() {
         Alert.alert(
             `Are you sure?`,

@@ -1,9 +1,19 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, {Component} from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-class HomeScreen extends React.Component {
+class Profile extends Component {
+  
+  static navigationOptions = {
+    drawerLabel: "Profile.",
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('./../../../assets/icon.png')}
+        style={[styles.icon, { tintColor: tintColor }]}
+      />
+    )
+  };
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -12,11 +22,10 @@ class HomeScreen extends React.Component {
     );
   }
 }
-
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
+const styles = StyleSheet.create({
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
-
-export default createAppContainer(AppNavigator);
+export default Profile;

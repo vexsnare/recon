@@ -67,13 +67,13 @@ class ForgotPassword extends Component {
     return (
         <View style={styles.globalContainer}>
         <ScrollView style={styles.container}>
-          <View style={{paddingBottom: 25, paddingTop: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.mainText}>Forgot Password</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+          <View style={{paddingTop: 10, flexDirection: 'column', justifyContent: 'space-around'}}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <View>
-                <Text style={{color: primaryColor, margin: 20}}>Back</Text>
+                <Text style={{color: primaryColor}}>Back</Text>
               </View>
             </TouchableOpacity>
+            <Text style={styles.mainText}>Forgot Password</Text>
           </View>
           <Field
             name='login'
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 26,
     fontWeight: 'normal',
-    top: 15
+    paddingVertical: 15
   },
   globalContainer: {
     flex: 1,

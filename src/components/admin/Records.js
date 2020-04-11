@@ -1,22 +1,34 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React, {Component} from 'react';
+import {Image, Button, StyleSheet, View} from 'react-native';
+import { createDrawerNavigator, DrawerActions, DrawerItems } from 'react-navigation-drawer';
 
-class HomeScreen extends React.Component {
+class RecordList extends Component {
+  static navigationOptions = {
+    drawerLabel: "Records.",
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('./../../../assets/icon.png')}
+        style={[styles.icon, { tintColor: tintColor }]}
+      />
+    ),
+  };
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Records</Text>
+      <View style={{padding: 40}}>
+      <Button
+        onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}
+        title="Go to notifications"
+      />
       </View>
     );
   }
 }
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
+const styles = StyleSheet.create({
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 
-export default createAppContainer(AppNavigator);
+export default RecordList;
