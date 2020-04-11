@@ -28,6 +28,8 @@ build/
 .idea
 .gradle
 local.properties
+.expo-shared
+.expo
 *.iml
 
 # node.js
