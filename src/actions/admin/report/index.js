@@ -1,1 +1,1 @@
-export * from './ReportActions';
+export * from './RecordActions';

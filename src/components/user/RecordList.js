@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
 
-  const { fetching, error } = state.data.owner.projectList;
-  const { data } = state.data.owner.project;
+  const { fetching, error } = state.data.user.projectList;
+  const { data } = state.data.user.project;
 
   const records =  [];
   return { records, fetching, error, data };

@@ -28,24 +28,24 @@ class SideMenu extends Component {
   }
 
   helpPress() {
-    email(['contact@alitus.co.in'], null, null, 'Query on Sighte App', 'Dear Sighte Team, ');
+    email(['contact@demo.co.in'], null, null, 'Query on Paryavekshan App', 'Dear Team, ');
   }
 
   aboutUs() {
-    web("http://www.alitus.co.in");
+    web("http://www.demo.co.in");
   }
 
   tutorial() {
-    web("https://www.youtube.com/watch?v=4XFH91p0aUA");
+    web("https://www.youtube.com");
   }
 
 
   followUs() {
-    web("https://www.linkedin.com/company-beta/13219565/");
+    web("https://www.linkedin.com/");
   }
 
   rateApplication() {
-    web("http://bit.ly/altsgta");
+    web("http://bit.ly");
   }
 
   render() {
@@ -77,10 +77,7 @@ class SideMenu extends Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={this.aboutUs.bind(this)}>
             <SideMenuItem icon={{name:"ios-information-circle", type: 'ionicon'}}>About us</SideMenuItem>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.tutorial.bind(this)}>
-            <SideMenuItem icon={{name:"ios-information-circle", type: 'ionicon'}}>Tutorial</SideMenuItem>
-          </TouchableOpacity>
+            </TouchableOpacity>
           </View>
           </Row>
         </Grid>

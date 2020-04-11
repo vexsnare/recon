@@ -20,14 +20,14 @@ export const registerUser = (values, dispatch) => {
     first_name: splitName(name)[0],
     last_name: splitName(name)[1],
     contact_number,
-    role: 'owner'
+    role: 'user'
   };
 
   return new Promise((resolve, reject) => {
     session.register(registerData)
     .then((user) => {
       resolve(user);
-      if(user.role === 'owner') {
+      if(user.role === 'user') {
         NavigatorService.reset('projectList');
       }
       else {

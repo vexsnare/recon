@@ -1,6 +1,5 @@
 import store from '../../Store';
 import { getNested } from '../utils';
-import * as reportApi from '../services/supervisor/report';
 import { Platform, NetInfo, Alert } from 'react-native';
 import _ from 'lodash';
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
@@ -83,27 +82,4 @@ export function isNetworkConnected() {
     });
   }
   return NetInfo.isConnected.fetch();
-}
-
-
-  export const transformTitle = (title) => {
-    if(title.length >= 15) {
-      const titleArray = title.split(/\s*\/\s*|\s+/);
-      let result = "";
-      if(titleArray[0] == 'Excavation') {
-        result =  "Excavation";
-      } else if(titleArray[0] == 'Formwork') {
-          result =  "Formwork";
-      } else {
-        for(var i = 0; i < titleArray.length; i++) {
-          result += titleArray[i][0].toUpperCase();
-        }
-      }
-      return result;
-    }
-    return title;
-  }
-
-export const sleep = (time) => {
-  return new Promise((resolve) => setTimeout(resolve, time));
 }

@@ -11,11 +11,11 @@ export const loginUser = (values, dispatch) => {
     session.authenticate(login, password)
     .then((user) => {
       resolve(user);
-      if(user.role === 'owner') {
-        NavigatorService.reset('projectList');
+      if(user.role === 'user') {
+        NavigatorService.reset('recordList');
       }
       else {
-        NavigatorService.reset('taskList');
+        NavigatorService.reset('home');
       }
     }).catch((errorMessage) => {
       reject(new SubmissionError({_error: errorMessage}));

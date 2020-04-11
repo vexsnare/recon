@@ -97,18 +97,7 @@ const mapStateToProps = (state) => {
   let initialValues = {
     works: {}
   }
-
-  const { name, company, start_date, end_date, project_value, project_value_unit, works, supervisor } = state.data.owner.project.data;
-  const project_id = state.data.owner.project.data.id;
-  initialValues['name'] = name;
-  initialValues['company'] = company;
-  initialValues['project_value'] = project_value;
-  initialValues['supervisor_name'] = formatName(supervisor.first_name, supervisor.last_name);
-  initialValues['supervisor_number'] = supervisor.contact_number;
-  initialValues['project_value_unit'] = project_value_unit;
-  initialValues['start_date'] = formatDate(start_date);
-  initialValues['end_date'] = formatDate(end_date);
-  initialValues['works'] = formatWorks(works);
+  const project_id = state.data.user.project.data.id;
   return { initialValues, project_id };
 }
 
