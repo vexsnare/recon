@@ -1,19 +1,54 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import store from './Store';
+import { Provider } from 'react-redux';
+import Auth from './src/components/Auth';
+import Login from './src/components/Login';
+import ForgotPassword from './src/components/ForgotPassword';
+import UserScreen from './src/components/user/Tabs';
+import AdminScreen from './src/components/admin/Drawer';
+import Register from './src/components/Register';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+class App extends Component {
+  state = { initialScene: null };
+
+  render() {
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
+  }  
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const RouteConfigs = {
+  auth: {
+    screen: Auth,
   },
-});
+  login: {
+    screen: Login,
+  },
+  register: {
+    screen: Register,
+  },
+  forgotPassword: {
+    screen: ForgotPassword
+  },
+  userScreen: {
+    screen: UserScreen
+  },
+  adminScreen: {
+    screen: AdminScreen
+  }
+}
+const StackNavigatorConfig = {
+  initialRouteName: 'auth',
+  headerMode: 'none'
+}
+const AuthNavigator = createStackNavigator(RouteConfigs, StackNavigatorConfig);
+const UserNavigator = createStackNavigator(RouteConfigs, {...StackNavigatorConfig, initialRouteName: 'userScreen'} );
+const AdminNavigator = createStackNavigator(RouteConfigs, {...StackNavigatorConfig, initialRouteName: 'adminScreen'} );
+const AppContainer = createAppContainer(AdminNavigator);
+export default App;
+
+
