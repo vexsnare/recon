@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { reduxForm } from 'redux-form'
-import RecordForm from './RecordForm';
 import { View, StyleSheet } from 'react-native';
 import { Button } from '../common';
 import { primaryColor } from '../../themes';
@@ -97,7 +96,7 @@ const mapStateToProps = (state) => {
   let initialValues = {
     works: {}
   }
-  const project_id = state.data.user.project.data.id;
+  const project_id = state;
   return { initialValues, project_id };
 }
 

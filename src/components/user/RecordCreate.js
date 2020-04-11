@@ -5,7 +5,7 @@ import RecordForm from './RecordForm';
 import { View, StyleSheet } from 'react-native';
 import { Button } from '../common';
 import { primaryColor } from '../../themes';
-import { createProject } from '../../actions/user/project';
+import { createProject } from '../../actions/user/record';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class RecordCreateForm extends Component {

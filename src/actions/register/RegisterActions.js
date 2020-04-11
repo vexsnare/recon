@@ -28,7 +28,7 @@ export const registerUser = (values, dispatch) => {
     .then((user) => {
       resolve(user);
       if(user.role === 'user') {
-        NavigatorService.reset('projectList');
+        NavigatorService.reset('recordList');
       }
       else {
         NavigatorService.reset('taskList');

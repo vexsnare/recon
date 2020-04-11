@@ -6,8 +6,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import RecordListScreen from './RecordList';
 import RecordCreateScreen from './RecordCreate';
-import RecordViewScreen from './RecordView';
-import RecordEditScreen from './RecordEdit';
 import { Icon } from 'react-native-elements'
 import {
   View,
@@ -32,24 +30,6 @@ const RecordStackNavigator = createStackNavigator({
     navigationOptions: {
       title: 'Create'
     }
-  },
-  recordView: {
-    screen: RecordViewScreen,
-    navigationOptions: ({navigation}) =>( {
-      title: 'View',
-      headerRight:
-                  <TouchableWithoutFeedback
-                     onPress={ () => navigation.navigate('recordEdit') }
-                  >
-                   <View style={{padding: 10}}><Icon name="mode-edit" size={22} /></View>
-                 </TouchableWithoutFeedback>,
-    })
-  },
-  recordEdit: {
-    screen: RecordEditScreen,
-    navigationOptions: ({navigation}) => ({
-      title: 'Edit',
-    })
   }
 }
 );

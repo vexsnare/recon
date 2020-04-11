@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
 import { primaryColor} from '../../themes';
 import { Wait } from '../common';
-import { fetchProjectList, takeATour } from '../../actions/user/project';
+import { fetchProjectList, takeATour } from '../../actions/user/record';
 import Welcome from './Welcome';
 
 
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
 
-  const { fetching, error } = state.data.user.projectList;
-  const { data } = state.data.user.project;
+  const { fetching, error } = state;
+  const { data } = state;
 
   const records =  [];
   return { records, fetching, error, data };
 
 }
 
-export default connect(mapStateToProps, {fetchProjectList, takeATour})(RecordList);
+export default RecordList;

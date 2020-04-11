@@ -5,7 +5,6 @@ import Auth from './src/components/Auth';
 import Login from './src/components/Login';
 import ForgotPassword from './src/components/ForgotPassword';
 import UserScreen from './src/components/user/Tabs';
-import AdminScreen from './src/components/admin/Drawer';
 import Register from './src/components/Register';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
@@ -36,9 +35,6 @@ const RouteConfigs = {
   },
   userScreen: {
     screen: UserScreen
-  },
-  adminScreen: {
-    screen: AdminScreen
   }
 }
 const StackNavigatorConfig = {
@@ -48,7 +44,7 @@ const StackNavigatorConfig = {
 const AuthNavigator = createStackNavigator(RouteConfigs, StackNavigatorConfig);
 const UserNavigator = createStackNavigator(RouteConfigs, {...StackNavigatorConfig, initialRouteName: 'userScreen'} );
 const AdminNavigator = createStackNavigator(RouteConfigs, {...StackNavigatorConfig, initialRouteName: 'adminScreen'} );
-const AppContainer = createAppContainer(AdminNavigator);
+const AppContainer = createAppContainer(UserNavigator);
 export default App;
 
 

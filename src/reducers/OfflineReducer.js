@@ -1,8 +1,3 @@
-import {
-  SUBMIT_REPORT_OFFLINE,
-  REMOVE_REPORT_FROM_OFFLINE
-} from '../actions/admin/report/types';
-
 const INITIAL_STATE = {
   reports: {
   }
@@ -10,7 +5,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SUBMIT_REPORT_OFFLINE:
+    case "SUBMIT_REPORT_OFFLINE":
       const current_date = new Date();
       const current_time = current_date.getTime();
       const midnight_time = current_date.setHours(0,0,0,0);
@@ -21,7 +16,7 @@ export default (state = INITIAL_STATE, action) => {
       }
       state.reports[current_time] = action.payload;
       return { ...state };
-    case REMOVE_REPORT_FROM_OFFLINE:
+    case "REMOVE_REPORT_FROM_OFFLINE":
       const key = action.payload;
       delete state.reports[key]
       return { ...state };
