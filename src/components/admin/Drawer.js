@@ -30,7 +30,8 @@ class RegisterAdmin extends Component {
         source={require('./../../../assets/icon.png')}
         style={[styles.icon, { tintColor: tintColor }]}
       />
-    )
+    ),
+    
   }
   render() {
     return <CreateAdmin />
@@ -45,7 +46,12 @@ const styles = StyleSheet.create({
 });
 
 export default createDrawerNavigator({
-  Records: Records,
+  Records: {
+    screen:Records,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Profile',
+    }), 
+  },
   Profile: Profile,
   RegisterUser: RegisterUser,
   RegisterAdmin: RegisterAdmin,

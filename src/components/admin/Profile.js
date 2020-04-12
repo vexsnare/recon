@@ -12,7 +12,7 @@ class Profile extends Component {
         source={require('./../../../assets/icon.png')}
         style={[styles.icon, { tintColor: tintColor }]}
       />
-    )
+    ),
   };
   render() {
     return (
