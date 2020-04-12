@@ -1,12 +1,13 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import dataReducer from './src/reducers';
 import { reducer as formReducer } from 'redux-form';
+import { reducer as servicesReducer } from './src/services/Reducer';
 import { LOGOUT_USER_SUCCESS } from './src/actions/logout/types';
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 const appReducer = combineReducers({
 	data: dataReducer,
-	form: formReducer
+	form: formReducer,
+	services: servicesReducer,
 });
 
 const rootReducer = (state, action) => {

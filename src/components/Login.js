@@ -17,6 +17,7 @@ import { Button } from './common';
 import {
   loginUser,
 } from '../actions/login';
+import { connect } from 'react-redux';
 
 class Login extends Component {
 
@@ -57,6 +58,9 @@ class Login extends Component {
 
 
   render() {
+    if(this.props.isLogin) {
+      this.props.navigation.navigate(this.props.role == "User" ? "User" : "Admin");
+    }
     console.log('Login Props = ', this.props);
     return (
         <ScrollView
@@ -114,8 +118,16 @@ class Login extends Component {
 
 
 const loginForm = reduxForm({ form: 'loginForm',  destroyOnUnmount: true })(Login);
+const mapStateToProps = (state) => {
+  const { isLogin, user } = state.services.session; 
+  const role = "User";
+  if(user.roles.length > 1) {
+      role = "Admin";
+  }
+  return { isLogin, user, role };
+}
 
-export default loginForm;
+export default connect(mapStateToProps)(loginForm);
 
 const styles = StyleSheet.create({
   mainText: {

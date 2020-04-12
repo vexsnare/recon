@@ -20,12 +20,12 @@ const clearSession = () => {
 	}
 };
 
+const dummyUser = {"id": "Test", "name": "Test User", "mobile": "11111111111"};
 const onRequestSuccess = (response) => {
-	const tokens = _.pick(response.headers, ['access-token', 'uid', 'client']);
-	const userData = response.data.data;
-	store.dispatch({ type: UPDATE, payload: { tokens, user: userData } });
-	axios.defaults.headers = tokens;
-	return userData;
+	const access_token = response.data.access_token;
+	//const userData = dummyUser;
+	//store.dispatch({ type: UPDATE, payload: { tokens: access_token, user: userData, isLogin: true } });
+	return access_token;
 };
 
 const parseSignUpErrorResponse = (response) => {
@@ -40,9 +40,11 @@ const parseSignUpErrorResponse = (response) => {
 	Errors will be an array of string as per devise
  */
 const parseErrorResponse = (response) => {
-	const errors = getNested(response, 'data.errors');
-	if (errors) {
-		return errors.join(', ');
+	console.log("Error Response: ", response)
+	const error = getNested(response, 'data.error');
+	if (error) {
+		if(error === "invalid_grant") return "Incorrect Username or Password.";
+		return error;
 	}
 	return CONNECTION_ERR_MESSAGE;
 };
@@ -87,25 +89,21 @@ export const validateToken = () => {
 	});
 };
 
-export const authenticate = (login, password) => {
-	var loginData;
-	if(login.indexOf('@') !== -1) {
-		loginData = {
-		 	email: login,
-		 	password
-		};
-	 } else {
-		 loginData = {
-			 contact_number: login,
-			 password
-		 };
-	}
+export const authenticate =  (login, password) => {
 	return new Promise((resolve, reject) => {
-		api.authenticate(loginData)
+		api.authenticate(login, password)
 		.then(response => {
 				console.log('SUCCESS: auth response = ', response);
-				const userData = onRequestSuccess(response);
-				resolve(userData);
+				const accessToken = onRequestSuccess(response);
+				axios.defaults.headers['Authorization'] = "Bearer "+ accessToken;
+				
+				resolve(
+					api.getUser(login).then(response => {
+						const user = response.data.response;
+						store.dispatch({ type: UPDATE, payload: { tokens: accessToken, user: user, isLogin: true } });
+						resolve(user);
+					}).catch (err => {console.log("Failure in getting user detail after signin")})
+				);
 		})
 		.catch(error => {
 			console.log('FAILURE: auth error = ', error);

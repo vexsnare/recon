@@ -1,14 +1,19 @@
 import axios from 'axios';
 
 const endPoints = {
-	authenticate: 'auth/sign_in',
 	validateToken: '/auth/validate_token',
 	signOut: 'auth/sign_out',
 	register: '/auth',
 };
 
-export const authenticate = (loginData) => {
-  return axios.post(endPoints.authenticate, loginData);
+export const authenticate = (username, password) => {
+    const url = `/oauth/token?username=${username}&password=${password}&grant_type=password`;
+	return axios.post(url, {}, {});
+};
+
+export const getUser = (username) => {
+    const url = `/user/?mobileNumber=${username}`;
+	return axios.get(url);
 };
 
 export const validateToken = () => {
