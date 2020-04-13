@@ -5,7 +5,7 @@ import RecordForm from './RecordForm';
 import { View, StyleSheet } from 'react-native';
 import { Button } from '../common';
 import { primaryColor } from '../../themes';
-import { createProject } from '../../actions/user/record';
+import { createRecord } from '../../actions/user/record';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class RecordCreateForm extends Component {
@@ -22,7 +22,7 @@ class RecordCreateForm extends Component {
         >
         <RecordForm />
         <View style={styles.button}>
-          <Button color={primaryColor} onPress={this.props.handleSubmit((data, dispatch) => this.props.createProject(data, dispatch))}>
+          <Button color={primaryColor} onPress={this.props.handleSubmit((data, dispatch) => createRecord(data, dispatch))}>
             SAVE
           </Button>
         </View>
@@ -48,4 +48,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default reduxForm({ form: 'recordCreateForm', validate, createProject })(RecordCreateForm);
+
+
+export default reduxForm({ form: 'recordCreateForm', validate })(RecordCreateForm);
+

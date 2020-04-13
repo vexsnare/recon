@@ -16,8 +16,10 @@ export const Dropdown = (props) => {
       <Text style={{fontSize: inputTextSize}}>{label}</Text>
       <RNPickerSelect
           onValueChange={input.onChange}
-          value={input.value == undefined ? input.value : (label == "Gender" ? "male": '0')}
-          {...otherProps}
+          input={input}
+          onFocus={input.onFocus}
+          onBlur={input.onBlur}
+          autoCorrect={false}
           items={options}
       />
       </View>
@@ -63,29 +65,23 @@ export default class RecordForm extends Component {
           name='name'
           label='Full Name'
           component={renderTextInput}
-          validate={[required]}
         />
         <Field
           name='age'
           label='Age'
           component={renderTextInput}
-          validate={[required]}
+          keyboardType='numeric'
         />
         <Field
-          name='gender'
-          label='Gender'
-          component={Dropdown}
-          options={[
-            { label: 'Male', value: 'male' },
-            { label: 'Female', value: 'female' },
-            { label: 'Other', value: 'other' }
-        ]}
-          validate={[required]}
+          name='mobileNumber'
+          label='Phone Number'
+          maxLength={10}
+          keyboardType='numeric'
+          component={renderTextInput}
         />
         <Field
           name='ward'
           label='Village/Ward'
-          validate={[required]}
           component={renderTextInput}
         />
         <Field
@@ -97,15 +93,16 @@ export default class RecordForm extends Component {
           name='district'
           label='District'
           component={renderTextInput}
-          validate={[required]}
         />
         <Field
-          name='mobileNumber'
-          label='Phone Number'
-          maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
-          validate={[required, mobile]}
+          name='gender'
+          label='Gender'
+          component={Dropdown}
+          options={[
+            { label: 'Male', value: 'M' },
+            { label: 'Female', value: 'F' },
+            { label: 'Other', value: 'O' }
+        ]}
         />
         <Heading>
             Symptoms
@@ -114,58 +111,40 @@ export default class RecordForm extends Component {
           name='fever'
           label='Fever'
           component={Dropdown}
-          options={[
-            { label: 'No', value: '0' },
-            { label: 'Yes', value: '1' }
-        ]}
+          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
         />
         <Field
           name='cough'
           label='Cough'
           maxLength={10}
-          options={[
-            { label: 'No', value: '0' },
-            { label: 'Yes', value: '1' }
-        ]}
+          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
           component={Dropdown}
         />
         <Field
           name='shortnessOfBreath'
           label='Shortness of breath'
-                    options={[
-            { label: 'No', value: '0' },
-            { label: 'Yes', value: '1' }
-        ]}
-          
+          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
           component={Dropdown}
         />
 
         <Field
           name='anyOneInFamilyShowingSymptoms'
           label='Anyone In Family Showing Symptoms'
-                    options={[
-            { label: 'No', value: '0' },
-            { label: 'Yes', value: '1' }
-        ]}
+          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
           component={Dropdown}
         />
 
-<Field
-          name='anyOneAround'
+        <Field
           label='Anyone Around Showing Symptoms'
-                    options={[
-            { label: 'No', value: '0' },
-            { label: 'Yes', value: '1' }
-        ]}
-          component={Dropdown}
+          name='anyOneAround'
+          component={renderTextArea}
         />
 
-<Field
+          <Field
           name='previousHistoryOfDisease'
           label='Previous History Of Disease'
           component={renderTextArea}
         />
-
 
         <Field
           name='other_detail'
