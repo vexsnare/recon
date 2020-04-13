@@ -46,12 +46,7 @@ const styles = StyleSheet.create({
 });
 
 export default createDrawerNavigator({
-  Records: {
-    screen:Records,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Profile',
-    }), 
-  },
+  Records: Records,
   Profile: Profile,
   RegisterUser: RegisterUser,
   RegisterAdmin: RegisterAdmin,

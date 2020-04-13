@@ -3,7 +3,7 @@ import axios from 'axios';
 const endPoints = {
 	validateToken: '/auth/validate_token',
 	signOut: 'auth/sign_out',
-	register: '/auth',
+	register: '/user/signup',
 };
 
 export const authenticate = (username, password) => {
@@ -21,7 +21,7 @@ export const validateToken = () => {
 };
 
 export const signOut = () => {
-	return axios.delete(endPoints.signOut);
+	return true;
 };
 
 export const register = (signupData) => {

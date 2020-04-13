@@ -11,31 +11,12 @@ import {
 	UPDATE,
 	RESET
 } from './ActionTypes';
+import { REGISTER_USER_FAIL, REGISTER_USER_SUCCESS, REGISTER_USER } from './../../actions/register/types'
 
-const clearSession = () => {
-	try {
-		store.dispatch({type: RESET});
-	} catch(error) {
-		console.log('Error while clearing user session', error);
-	}
-};
-
-const dummyUser = {"id": "Test", "name": "Test User", "mobile": "11111111111"};
 const onRequestSuccess = (response) => {
 	const access_token = response.data.access_token;
-	//const userData = dummyUser;
-	//store.dispatch({ type: UPDATE, payload: { tokens: access_token, user: userData, isLogin: true } });
 	return access_token;
 };
-
-const parseSignUpErrorResponse = (response) => {
-	const fullMessages = getNested(response, 'data.errors.full_messages');
-	if (fullMessages) {
-		return fullMessages.join(', ');
-	}
-	return CONNECTION_ERR_MESSAGE;
-};
-
 /*
 	Errors will be an array of string as per devise
  */
@@ -114,36 +95,26 @@ export const authenticate =  (login, password) => {
 };
 
 export const register = (signupData) => {
+	console.log(signupData);
 	return new Promise((resolve, reject) => {
 		api.register(signupData)
 		.then(response => {
 			console.log('register response = ', response);
-			const userData = onRequestSuccess(response);
-			resolve(userData);
+			const status = response.data.status;
+			if(status == "FAILURE") {
+				throw response.data.exception.message;
+			} else {
+				store.dispatch({ type: REGISTER_USER_SUCCESS});
+			}
+			resolve(status);
 		})
 		.catch(error => {
 			console.log('register error = ', error);
-			const errorMessage = parseSignUpErrorResponse(error.response);
-			reject(errorMessage);
+			reject(error);
 		});
 	});
 };
 
 export const signOut = () => {
-	return new Promise((resolve, reject) => {
-		api.signOut().then((response) => {
-			console.log('signOut response = ', response);
-			clearSession();
-			console.log('signOut response  clear= ', response);
-
-			const successMessage = 'Signed out successfully';
-			resolve(successMessage);
-		})
-		.catch(error => {
-			console.log('signOut error.response = ', error.response);
-			clearSession();
-			const errorMessage = parseErrorResponse(error.response);
-			reject(errorMessage);
-		});
-	});
+	store.dispatch({ type: RESET });
 };

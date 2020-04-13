@@ -1,15 +1,58 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Field } from 'redux-form'
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
-import { Heading} from '../common';
+import { Heading, TextInput, Bold } from '../common';
 import { required, mobile } from '../../validators';
 import { renderTextInput } from '../renderer';
 
+import RNPickerSelect from 'react-native-picker-select';
+
+export const Dropdown = (props) => {
+  const { input, label, options, meta, ...otherProps } = props;
+  return (
+    <View>
+      <Text style={{fontSize: inputTextSize}}>{label}</Text>
+      <RNPickerSelect
+          onValueChange={input.onChange}
+          value={input.value == undefined ? input.value : (label == "Gender" ? "male": '0')}
+          {...otherProps}
+          items={options}
+      />
+      </View>
+  );
+};
+
+
+export const renderTextArea = (props) => {
+  const { input, label, ...otherProps } = props;
+  return (
+    <View style={{paddingHorizontal: 5, paddingVertical: 20}}>
+    <Bold style={{fontSize: 20, paddingBottom: 10}}>{label}</Bold>
+    <TextInput
+      editable = {true}
+      {...otherProps}
+      multiline={true}
+      onChangeText={input.onChange}
+      value={input.value}
+      numberOfLines = {8}
+      input={input}
+      onFocus={input.onFocus}
+      onBlur={input.onBlur}
+      autoCorrect={false}
+      underlineColorAndroid="transparent"
+      placeholder="Add remark of your report here"
+      style={styles.multiline}
+    />
+  </View>
+  );
+}
 
 export default class RecordForm extends Component {
 
+
+  
   render() {
     return (
       <View>
@@ -29,7 +72,18 @@ export default class RecordForm extends Component {
           validate={[required]}
         />
         <Field
-          name='village'
+          name='gender'
+          label='Gender'
+          component={Dropdown}
+          options={[
+            { label: 'Male', value: 'male' },
+            { label: 'Female', value: 'female' },
+            { label: 'Other', value: 'other' }
+        ]}
+          validate={[required]}
+        />
+        <Field
+          name='ward'
           label='Village/Ward'
           validate={[required]}
           component={renderTextInput}
@@ -46,7 +100,7 @@ export default class RecordForm extends Component {
           validate={[required]}
         />
         <Field
-          name='number'
+          name='mobileNumber'
           label='Phone Number'
           maxLength={10}
           keyboardType='numeric'
@@ -59,38 +113,64 @@ export default class RecordForm extends Component {
         <Field
           name='fever'
           label='Fever'
-          keyboardType='numeric'
-          component={renderTextInput}
+          component={Dropdown}
+          options={[
+            { label: 'No', value: '0' },
+            { label: 'Yes', value: '1' }
+        ]}
         />
         <Field
           name='cough'
           label='Cough'
           maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
+          options={[
+            { label: 'No', value: '0' },
+            { label: 'Yes', value: '1' }
+        ]}
+          component={Dropdown}
         />
         <Field
-          name='shortness_of_breath'
+          name='shortnessOfBreath'
           label='Shortness of breath'
-          maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
+                    options={[
+            { label: 'No', value: '0' },
+            { label: 'Yes', value: '1' }
+        ]}
+          
+          component={Dropdown}
         />
 
         <Field
-          name='family_member_positive'
-          label='Family member positive'
-          maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
+          name='anyOneInFamilyShowingSymptoms'
+          label='Anyone In Family Showing Symptoms'
+                    options={[
+            { label: 'No', value: '0' },
+            { label: 'Yes', value: '1' }
+        ]}
+          component={Dropdown}
         />
+
+<Field
+          name='anyOneAround'
+          label='Anyone Around Showing Symptoms'
+                    options={[
+            { label: 'No', value: '0' },
+            { label: 'Yes', value: '1' }
+        ]}
+          component={Dropdown}
+        />
+
+<Field
+          name='previousHistoryOfDisease'
+          label='Previous History Of Disease'
+          component={renderTextArea}
+        />
+
 
         <Field
           name='other_detail'
           label='Other Detail'
-          maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
+          component={renderTextArea}
         />
         
       </View>
@@ -118,6 +198,14 @@ const styles = StyleSheet.create({
     color: secondaryColor,
     fontSize: inputTextSize,
     padding: 5
+  },
+  multiline: {
+    borderWidth: 1,
+    flex: 1,
+    height: 80,
+    fontSize: 15,
+    padding: 4,
+    marginBottom: 4,
   },
   fieldError: {
     color: 'red',

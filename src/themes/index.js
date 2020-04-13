@@ -1,4 +1,4 @@
-export const primaryColor = '#2AC882';
+export const primaryColor = '#00cc99';
 export const secondaryColor = '#18acca';
 export const iconColor = 'gray';
 export const statusBarColor = 'rgba(179, 80, 0, 0.54)';

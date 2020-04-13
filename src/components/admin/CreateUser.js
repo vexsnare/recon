@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
-import { required, mobile, email } from '../../validators';
+import { required, mobile } from '../../validators';
 import { renderTextInput} from '../renderer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
@@ -52,7 +53,10 @@ class RegisterUser extends Component {
     }
 
     render() {
-      const { error, navigation } = this.props;
+      const { loading, status } = this.props;
+      if(status == "SUCCESS") {
+        console.log("Register Page props: " + this.props);
+      }
       return (
         <KeyboardAwareScrollView
           style={styles.contentContainer}
@@ -69,7 +73,7 @@ class RegisterUser extends Component {
             validate={[required]}
           />
           <Field
-            name='contact_number'
+            name='phone'
             label='Mobile'
             maxLength={10}
             keyboardType='numeric'
@@ -155,4 +159,9 @@ const styles = StyleSheet.create({
 
 const registerForm = reduxForm({ form: 'signupForm', destroyOnUnmount: true })(RegisterUser);
 
-export default registerForm;
+const mapStateToProps = (state) => {
+  const { loading, status }  = state.data.register;
+  return { loading, status };
+};
+
+export default connect(mapStateToProps)(registerForm);

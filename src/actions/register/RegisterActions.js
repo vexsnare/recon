@@ -1,38 +1,46 @@
 import * as session from '../../services/session';
 import { SubmissionError } from 'redux-form';
-import NavigatorService from '../../services/navigator';
-
-const splitName = (fullName) => {
-  if (!fullName) return [null, null];
-  const splited = fullName.trim().split(/\s+/);
-  const firstName = splited.slice(0, splited.length > 1 ? -1 : 1).join(' ');
-  const lastName = splited.length > 1 ? splited.slice(-1).join('') : null;
-  return [firstName, lastName];
-};
 
 export const registerUser = (values, dispatch) => {
 
-  const { email, password, name, contact_number } = values;
+  const { password, name, phone } = values;
 
   const registerData = {
-    email,
+    fullName: name,
     password,
-    first_name: splitName(name)[0],
-    last_name: splitName(name)[1],
-    contact_number,
-    role: 'user'
+    mobileNumber:phone,
+    admin: 0,
+    createdBy: "dummy"
   };
 
   return new Promise((resolve, reject) => {
     session.register(registerData)
     .then((user) => {
       resolve(user);
-      if(user.role === 'user') {
-        NavigatorService.reset('recordList');
-      }
-      else {
-        NavigatorService.reset('taskList');
-      }
+    }).catch((errorMessage) => {
+      console.log('Failed to signup', errorMessage);
+      reject(new SubmissionError({_error : errorMessage}));
+    });
+  });
+};
+
+
+export const registerAdmin = (values, dispatch) => {
+
+  const { password, name, phone } = values;
+
+  const registerData = {
+    fullName: name,
+    password,
+    mobileNumber:phone,
+    admin: 1,
+    createdBy: "dummy"
+  };
+
+  return new Promise((resolve, reject) => {
+    session.register(registerData)
+    .then((user) => {
+      resolve(user);
     }).catch((errorMessage) => {
       console.log('Failed to signup', errorMessage);
       reject(new SubmissionError({_error : errorMessage}));

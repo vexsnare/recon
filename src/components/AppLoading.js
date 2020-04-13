@@ -7,11 +7,12 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import {connect} from 'react-redux';
 
 class AppLoadingScreen extends React.Component {
   componentDidMount() {
-    this._bootstrapAsync();
-
+    const { isLogin, role } = this.props;
+    this.props.navigation.navigate(isLogin ? ( role === "Admin" ? 'Admin' : 'User' ): 'Auth');
   }
 
   // Fetch the token from storage then navigate to our appropriate place
@@ -32,4 +33,14 @@ class AppLoadingScreen extends React.Component {
     );
   }
 }
- export default AppLoadingScreen;
+const mapStateToProps = (state) => {
+  const { isLogin, user } = state.services.session; 
+  let role = "User";
+  if(isLogin && user.roles.length > 1) {
+    role = "Admin";
+  }
+  return {role, isLogin};
+}
+
+export default connect(mapStateToProps)(AppLoadingScreen);
+
