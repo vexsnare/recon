@@ -11,38 +11,21 @@ import {
 	UPDATE,
 	RESET
 } from './ActionTypes';
-
-const clearSession = () => {
-	try {
-		store.dispatch({type: RESET});
-	} catch(error) {
-		console.log('Error while clearing user session', error);
-	}
-};
+import { REGISTER_USER_FAIL, REGISTER_USER_SUCCESS, REGISTER_USER } from './../../actions/register/types'
 
 const onRequestSuccess = (response) => {
-	const tokens = _.pick(response.headers, ['access-token', 'uid', 'client']);
-	const userData = response.data.data;
-	store.dispatch({ type: UPDATE, payload: { tokens, user: userData } });
-	axios.defaults.headers = tokens;
-	return userData;
+	const access_token = response.data.access_token;
+	return access_token;
 };
-
-const parseSignUpErrorResponse = (response) => {
-	const fullMessages = getNested(response, 'data.errors.full_messages');
-	if (fullMessages) {
-		return fullMessages.join(', ');
-	}
-	return CONNECTION_ERR_MESSAGE;
-};
-
 /*
 	Errors will be an array of string as per devise
  */
 const parseErrorResponse = (response) => {
-	const errors = getNested(response, 'data.errors');
-	if (errors) {
-		return errors.join(', ');
+	console.log("Error Response: ", response)
+	const error = getNested(response, 'data.error');
+	if (error) {
+		if(error === "invalid_grant") return "Incorrect Username or Password.";
+		return error;
 	}
 	return CONNECTION_ERR_MESSAGE;
 };
@@ -87,25 +70,21 @@ export const validateToken = () => {
 	});
 };
 
-export const authenticate = (login, password) => {
-	var loginData;
-	if(login.indexOf('@') !== -1) {
-		loginData = {
-		 	email: login,
-		 	password
-		};
-	 } else {
-		 loginData = {
-			 contact_number: login,
-			 password
-		 };
-	}
+export const authenticate =  (login, password) => {
 	return new Promise((resolve, reject) => {
-		api.authenticate(loginData)
+		api.authenticate(login, password)
 		.then(response => {
 				console.log('SUCCESS: auth response = ', response);
-				const userData = onRequestSuccess(response);
-				resolve(userData);
+				const accessToken = onRequestSuccess(response);
+				axios.defaults.headers['Authorization'] = "Bearer "+ accessToken;
+				
+				resolve(
+					api.getUser(login).then(response => {
+						const user = response.data.response;
+						store.dispatch({ type: UPDATE, payload: { tokens: accessToken, user: user, isLogin: true } });
+						resolve(user);
+					}).catch (err => {console.log("Failure in getting user detail after signin")})
+				);
 		})
 		.catch(error => {
 			console.log('FAILURE: auth error = ', error);
@@ -116,36 +95,26 @@ export const authenticate = (login, password) => {
 };
 
 export const register = (signupData) => {
+	console.log(signupData);
 	return new Promise((resolve, reject) => {
 		api.register(signupData)
 		.then(response => {
 			console.log('register response = ', response);
-			const userData = onRequestSuccess(response);
-			resolve(userData);
+			const status = response.data.status;
+			if(status == "FAILURE") {
+				throw response.data.exception.message;
+			} else {
+				store.dispatch({ type: REGISTER_USER_SUCCESS});
+			}
+			resolve(status);
 		})
 		.catch(error => {
 			console.log('register error = ', error);
-			const errorMessage = parseSignUpErrorResponse(error.response);
-			reject(errorMessage);
+			reject(error);
 		});
 	});
 };
 
 export const signOut = () => {
-	return new Promise((resolve, reject) => {
-		api.signOut().then((response) => {
-			console.log('signOut response = ', response);
-			clearSession();
-			console.log('signOut response  clear= ', response);
-
-			const successMessage = 'Signed out successfully';
-			resolve(successMessage);
-		})
-		.catch(error => {
-			console.log('signOut error.response = ', error.response);
-			clearSession();
-			const errorMessage = parseErrorResponse(error.response);
-			reject(errorMessage);
-		});
-	});
+	store.dispatch({ type: RESET });
 };

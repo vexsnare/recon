@@ -4,20 +4,20 @@ import { workIdMap } from '../../../helpers/consts';
 
 
 export const create = (projectData) => {
-  projectData = transformProjectData(projectData);
   return new Promise((resolve, reject) => {
     api.createProject(projectData)
     .then((result) => {
+      console.log(result);
       resolve(result.data);
     })
     .catch(err => {
+      console.log(err);
       reject(err);
     });
   });
 };
 
 export const update = (projectData, id) => {
-  projectData = transformProjectData(projectData);
   return api.updateProject(projectData, id);
 };
 

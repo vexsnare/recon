@@ -1,22 +1,17 @@
 
-import NavigatorService from '../../services/navigator';
 import { SubmissionError } from 'redux-form';
 import * as session from '../../services/session';
+import {UPDATE} from './types';
+import { connect } from 'react-redux';
 
 export const loginUser = (values, dispatch) => {
   var { login, password } = values;
-  login = login.trim();
   password = password.trim();
   return new Promise((resolve, reject) => {
     session.authenticate(login, password)
     .then((user) => {
-      resolve(user);
-      if(user.role === 'user') {
-        NavigatorService.reset('recordList');
-      }
-      else {
-        NavigatorService.reset('home');
-      }
+        user = resolve(user);
+        console.log("Login success: " + user);
     }).catch((errorMessage) => {
       reject(new SubmissionError({_error: errorMessage}));
     });

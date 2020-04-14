@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Field, reduxForm } from 'redux-form'
 import { required, mobile, email } from '../../validators';
@@ -15,7 +16,7 @@ import {
 
 import { primaryColor } from '../../themes';
 import { Button } from '../common';
-import { registerUser } from '../../actions/register';
+import { registerAdmin } from '../../actions/register';
 
 class RegisterAdmin extends Component {
 
@@ -42,7 +43,7 @@ class RegisterAdmin extends Component {
           textColor={'white'}
           disabled={this.props.error != null}
           size='small'
-          onPress={this.props.handleSubmit((data, dispatch) => registerUser(data, dispatch))}
+          onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
         >Sign Up</Button>
       );
     }
@@ -65,7 +66,7 @@ class RegisterAdmin extends Component {
             validate={[required]}
           />
           <Field
-            name='contact_number'
+            name='phone'
             label='Mobile'
             maxLength={10}
             keyboardType='numeric'
@@ -161,6 +162,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const registerForm = reduxForm({ form: 'signupForm', destroyOnUnmount: true })(RegisterAdmin);
+const registerForm = reduxForm({ form: 'signupFormAdmin', destroyOnUnmount: true })(RegisterAdmin);
 
-export default registerForm;
+const mapStateToProps = (state) => {
+  const { loading, status }  = state.data.register;
+  return { loading, status };
+};
+
+export default connect(mapStateToProps)(registerForm);

@@ -1,76 +1,23 @@
-import { NavigationActions } from 'react-navigation';
-import type { NavigationParams, NavigationRoute } from 'react-navigation';
+import { NavigationActions} from 'react-navigation';
 
-let _container; // eslint-disable-line
+let _navigator;
 
-function setContainer(container: Object) {
-  _container = container;
+function setTopLevelNavigator(navigatorRef) {
+  _navigator = navigatorRef;
 }
 
-function reset(routeName: string, params?: NavigationParams) {
-  _container.dispatch(
-    NavigationActions.reset({
-      index: 0,
-      key: null,
-      actions: [
-        NavigationActions.navigate({
-          type: 'Navigation/NAVIGATE',
-          routeName,
-          params,
-        }),
-      ],
-    }),
-  );
-}
-
-function navigate(routeName: string, params?: NavigationParams) {
-  _container.dispatch(
+function navigate(routeName, params) {
+  _navigator.dispatch(
     NavigationActions.navigate({
-      type: 'Navigation/NAVIGATE',
       routeName,
       params,
-    }),
+    })
   );
 }
 
-function back(params?: NavigationParams) {
-  _container.dispatch(
-    NavigationActions.navigate({
-      type: 'Navigation/BACK',
-      key: null,
-      params
-    }),
-  );
-}
-
-function navigateDeep(actions: { routeName: string, params?: NavigationParams }[]) {
-  _container.dispatch(
-    actions.reduceRight(
-      (prevAction, action): any =>
-        NavigationActions.navigate({
-          type: 'Navigation/NAVIGATE',
-          routeName: action.routeName,
-          params: action.params,
-          action: prevAction,
-        }),
-      undefined,
-    ),
-  );
-}
-
-function getCurrentRoute(): NavigationRoute | null {
-  if (!_container || !_container.state.nav) {
-    return null;
-  }
-
-  return _container.state.nav.routes[_container.state.nav.index] || null;
-}
+// add other navigation functions that you need and export them
 
 export default {
-  setContainer,
-  navigateDeep,
   navigate,
-  reset,
-  back,
-  getCurrentRoute,
+  setTopLevelNavigator,
 };

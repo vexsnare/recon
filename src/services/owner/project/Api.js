@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const endPoints = {
-	projects: '/projects',
+	projects: '/record/',
 	reports: '/reports',
 };
 

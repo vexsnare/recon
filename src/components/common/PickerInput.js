@@ -6,33 +6,12 @@ import {
   Platform,
   StyleSheet,
   Text,
-  Alert,
   TouchableWithoutFeedback,
-  TouchableNativeFeedback
 } from 'react-native';
 import SimplePicker from '../lib/ios-simple-picker';
 import { primaryColor, inputTextSize } from '../../themes';
-import { TextInput } from './TextInput';
 
 class PickerInput extends Component {
-  // state = { inputGroupStyle: { borderBottomColor: 'gray', borderWidth: 0.5 } };
-  //
-  // onFocus() {
-  //   this.setState({
-  //     inputGroupStyle: {
-  //       borderBottomColor: primaryColor,
-  //       borderWidth: 0.5
-  //     }
-  //   });
-  // }
-  // onBlur() {
-  //  this.setState({
-  //    inputGroupStyle: {
-  //      borderBottomColor: 'gray',
-  //      borderWidth: 0.2
-  //    }
-  //  });
-  // }
   state = {val : null}
 
   renderOptions(options, value) {
