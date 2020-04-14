@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Field } from 'redux-form'
-import { View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
 import { Heading} from '../common';
 import { required, mobile } from '../../validators';
 import { renderTextInput } from '../renderer';
+import { CheckBox } from 'react-native-elements'
 
 
 export default class RecordForm extends Component {
@@ -25,6 +26,7 @@ export default class RecordForm extends Component {
         <Field
           name='age'
           label='Age'
+          keyboardType='numeric'
           component={renderTextInput}
           validate={[required]}
         />
@@ -56,26 +58,61 @@ export default class RecordForm extends Component {
         <Heading>
             Symptoms
         </Heading>
-        <Field
-          name='fever'
-          label='Fever'
-          keyboardType='numeric'
-          component={renderTextInput}
-        />
-        <Field
-          name='cough'
-          label='Cough'
-          maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
-        />
-        <Field
-          name='shortness_of_breath'
-          label='Shortness of breath'
-          maxLength={10}
-          keyboardType='numeric'
-          component={renderTextInput}
-        />
+        <Text h2>Fever</Text>
+        <View style={{flexDirection: 'row'}}>
+          
+        <CheckBox
+            center
+            title='yes'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked='true'//handle it with state
+          />
+          <CheckBox
+            center
+            title='No'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked='false'//handle it with state
+          />
+        </View>
+        <Text>Cough</Text>
+        <View style={{flexDirection: 'row'}}>
+          
+        <CheckBox
+            center
+            title='yes'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked='true' //handle it with state 
+          />
+          <CheckBox
+            center
+            title='No'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked='false'//handle it with state
+          />
+        </View>
+        
+        <Text h2>Shortness Of Breath</Text>
+        <View style={{flexDirection: 'row'}}>
+          
+        <CheckBox
+            center
+            title='yes'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked='true' //handle it with state 
+          />
+          <CheckBox
+            center
+            title='No'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked='false'//handle it with state
+          />
+        </View>
 
         <Field
           name='family_member_positive'
@@ -89,7 +126,6 @@ export default class RecordForm extends Component {
           name='other_detail'
           label='Other Detail'
           maxLength={10}
-          keyboardType='numeric'
           component={renderTextInput}
         />
         

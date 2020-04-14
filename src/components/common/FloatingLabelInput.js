@@ -103,7 +103,8 @@ class FloatingLabelInput extends Component {
               <Text style={[styles.fieldLabel, this.labelStyle()]}>{this.placeholderValue()}</Text>
             </FloatingLabel>
             <TextFieldHolder withValue={this.state.text}>
-              <TextInput {...this.props}
+                <View style={{flex: 1}}>
+                <TextInput {...this.props}
                 ref='input'
                 underlineColorAndroid="transparent"
                 style={[styles.valueText]}
@@ -114,6 +115,8 @@ class FloatingLabelInput extends Component {
                 onBlur={() => this.unsetFocus()}
                 onChangeText={(value) => this.setText(value)}
                 />
+                </View>
+              
             </TextFieldHolder>
           </View>
         </View>
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
   fieldContainer: {
     flex: 1,
     position: 'relative',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
   },
   withBorder: {
     borderBottomWidth: 1/2,
@@ -219,7 +222,7 @@ const styles = StyleSheet.create({
     fontSize: inputTextSize,
     color: '#111111',
     left: 0,
-    bottom: 0
+    bottom: 0,
   },
   focused: {
     color: 'gray'
