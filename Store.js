@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 import { reducer as formReducer } from 'redux-form';
 import { reducer as servicesReducer } from './src/services/Reducer';
 import { LOGOUT_USER_SUCCESS } from './src/actions/logout/types';
+import * as persistActionCreators from './src/services/persist/Actions';
 import { persistStore, autoRehydrate } from 'redux-persist';
 
 const appReducer = combineReducers({
@@ -29,8 +30,7 @@ export const persist = persistStore(store, {
     storage: AsyncStorage,
     blacklist: ['form']
   }, () => {
-		console.log("Store persisted");
+	store.dispatch(persistActionCreators.update({ isHydrated: true }));
 	}
 );
-
 export default store;

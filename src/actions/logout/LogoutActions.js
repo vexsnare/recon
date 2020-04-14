@@ -3,11 +3,10 @@ import {
   LOGOUT_USER_FAIL,
   LOGOUT_USER,
  } from './types';
- import NavigatorService from '../../services/navigator';
-import * as session from './../../services/session';
+import NavigatorService from '../../services/navigator';
+import { store } from '../../../Store';
 
 export const logoutUser = () => {
-    console.log("Logout Called");
-    session.signOut();
+	  store.dispatch({ type: LOGOUT_USER_SUCCESS });    
     NavigatorService.navigate("Auth");
 };

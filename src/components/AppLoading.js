@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { getNested } from '../utils';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -8,20 +9,36 @@ import {
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
+import axios from 'axios';
+import {store } from '../../Store';
 
 class AppLoadingScreen extends React.Component {
   componentDidMount() {
-    const { isLogin, role } = this.props;
-    this.props.navigation.navigate(isLogin ? ( role === "Admin" ? 'Admin' : 'User' ): 'Auth');
+    let isHydrated = getNested(store.getState(), 'services.persist.isHydrated');
+    let isLogin = getNested(store.getState(), 'services.session.isLogin');
+    if (isHydrated || isLogin) {
+      this.autoLogin();
+    } else {
+      const unsubscribe = store.subscribe(() => {
+        isHydrated = getNested(store.getState(), 'services.persist.isHydrated');
+        if (isHydrated) {
+          this.autoLogin();
+          unsubscribe();
+        }
+      }, (error) => {
+        unsubscribe();
+      });
+    }
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
-    let userToken = await AsyncStorage.getItem('userToken');
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? ( userType === "admin" ? 'Admin' : 'User' ): 'Auth');
-  };
+  autoLogin() {
+    const { isLogin, role, tokens } = this.props;
+    console.log("AppLO: " , this.props);
+    if(isLogin) {
+      axios.defaults.headers['Authorization'] = "Bearer " + tokens;
+      this.props.navigation.navigate(role === "Admin" ? 'Admin' : 'User');
+    } else this.props.navigation.navigate('Auth');
+  }
 
   // Render any loading content that you like here
   render() {
@@ -34,12 +51,12 @@ class AppLoadingScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { isLogin, user } = state.services.session; 
+  const { isLogin, user, tokens } = state.services.session; 
   let role = "User";
   if(isLogin && user.roles.length > 1) {
     role = "Admin";
   }
-  return {role, isLogin};
+  return {role, isLogin, tokens};
 }
 
 export default connect(mapStateToProps)(AppLoadingScreen);

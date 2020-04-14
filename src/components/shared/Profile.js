@@ -3,17 +3,18 @@ import {
   View,
   ScrollView,
   Text,
+  Image,
   StyleSheet,
   TouchableHighlight,
   Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/logout';
-import { Entypo } from 'react-native-vector-icons/Entypo';
 import { ListItem } from 'react-native-elements';
+import { createStackNavigator } from 'react-navigation-stack';
 
 class Profile extends React.Component {
-  
+
   logoutPress() {
     logoutUser();
   }
@@ -52,7 +53,7 @@ class Profile extends React.Component {
            wrapperStyle={{padding:5}}
             hideChevron
             title={roles.length > 1 ? "ADMIN USER" : "STANDARD USER"}
-            leftIcon={{type: 'ionicon', name: 'md-phone-portrait'}}
+            leftIcon={{type: 'ionicon', name: 'ios-key'}}
          />
 
         <ListItem
@@ -74,9 +75,9 @@ class Profile extends React.Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white'
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 const mapStateToProps = (state) => {
@@ -84,5 +85,14 @@ const mapStateToProps = (state) => {
   return { user };
 }
 
-export default connect(mapStateToProps)(Profile);
+const ProfileScreen = connect(mapStateToProps)(Profile);
+
+export default createStackNavigator({
+  'Profile': ProfileScreen
+},
+{
+  initialRouteName: 'Profile'
+}
+)
+
 

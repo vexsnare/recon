@@ -1,10 +1,7 @@
-
 import { SubmissionError } from 'redux-form';
-import * as session from '../../services/session';
-import {UPDATE} from './types';
-import { connect } from 'react-redux';
+import * as session from '../../services/session';;
 
-export const loginUser = (values, dispatch) => {
+export const loginUser = (values) => {
   var { login, password } = values;
   password = password.trim();
   return new Promise((resolve, reject) => {
@@ -17,3 +14,5 @@ export const loginUser = (values, dispatch) => {
     });
   });
 };
+
+

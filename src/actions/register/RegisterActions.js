@@ -1,5 +1,6 @@
 import * as session from '../../services/session';
 import { SubmissionError } from 'redux-form';
+import NavigatorService from '../../services/navigator';
 
 export const registerUser = (values, dispatch) => {
 
@@ -17,6 +18,7 @@ export const registerUser = (values, dispatch) => {
     session.register(registerData)
     .then((user) => {
       resolve(user);
+      //NavigatorService.reset("Records");
     }).catch((errorMessage) => {
       console.log('Failed to signup', errorMessage);
       reject(new SubmissionError({_error : errorMessage}));
@@ -41,6 +43,7 @@ export const registerAdmin = (values, dispatch) => {
     session.register(registerData)
     .then((user) => {
       resolve(user);
+      //NavigatorService.reset("Records");
     }).catch((errorMessage) => {
       console.log('Failed to signup', errorMessage);
       reject(new SubmissionError({_error : errorMessage}));

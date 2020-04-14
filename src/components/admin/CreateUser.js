@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
 import { required, mobile } from '../../validators';
 import { renderTextInput} from '../renderer';
+import { createStackNavigator} from 'react-navigation-stack'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   View,
@@ -63,9 +64,6 @@ class RegisterUser extends Component {
           keyboardShouldPersistTaps='always'
         >
           <View style={styles.container}>
-          <View style={{paddingBottom: 25, paddingTop: 10}}>
-            <Text style={styles.mainText}>Register User</Text>
-          </View>
           <Field
             name='name'
             label="Full Name"
@@ -164,4 +162,8 @@ const mapStateToProps = (state) => {
   return { loading, status };
 };
 
-export default connect(mapStateToProps)(registerForm);
+const RegisterFormScreen = connect(mapStateToProps)(registerForm);
+
+export default createStackNavigator({
+  'Register User': RegisterFormScreen
+});

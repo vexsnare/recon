@@ -7,6 +7,8 @@ const endPoints = {
 };
 
 export const authenticate = (username, password) => {
+	axios.defaults.headers['Authorization'] = 'Basic dGVzdGp3dGNsaWVudGlkOlhZN2ttem9OemwxMDA=';
+	console.log("axios.defaults", axios.defaults);
     const url = `/oauth/token?username=${username}&password=${password}&grant_type=password`;
 	return axios.post(url, {}, {});
 };

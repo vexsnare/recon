@@ -1,4 +1,4 @@
-import Profile from './Profile';
+import Profile from './../shared/Profile';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { primaryColor} from '../../themes';

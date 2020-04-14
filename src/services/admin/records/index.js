@@ -1,13 +1,14 @@
 import * as api from './Api';
-import _ from 'lodash';
 
-export const send = (report) => {
+export const getAllRecords = () => {
   return new Promise((resolve, reject) => {
-    api.submitReport(report)
+    api.getAllRecords()
     .then((result) => {
-      resolve(result.data);
+      console.log(result);
+      resolve(result.data.response);
     })
     .catch(err => {
+      console.log(err);
       reject(err);
     });
   });

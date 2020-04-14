@@ -12,6 +12,7 @@ import {
 	RESET
 } from './ActionTypes';
 import { REGISTER_USER_FAIL, REGISTER_USER_SUCCESS, REGISTER_USER } from './../../actions/register/types'
+import { LOGOUT_USER_SUCCESS } from '../../actions/logout/types';
 
 const onRequestSuccess = (response) => {
 	const access_token = response.data.access_token;
@@ -113,8 +114,4 @@ export const register = (signupData) => {
 			reject(error);
 		});
 	});
-};
-
-export const signOut = () => {
-	store.dispatch({ type: RESET });
 };

@@ -7,6 +7,7 @@ import AdminNavigator from './src/components/admin/Drawer';
 import AuthNavigator from './src/components/Auth';
 import axios from 'axios';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import NavigatorService from './src/services/navigator';
 
 class App extends Component {
 
@@ -14,14 +15,15 @@ class App extends Component {
   constructor() {
     super();
     axios.defaults.baseURL = 'https://ancient-dawn-45667.herokuapp.com';
-	  axios.defaults.headers['Authorization'] = 'Basic dGVzdGp3dGNsaWVudGlkOlhZN2ttem9OemwxMDA=';
 	  axios.defaults.headers['Content-Type'] = 'application/json';
   }
 
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <AppContainer
+          ref={navigatorRef => { NavigatorService.setTopLevelNavigator(navigatorRef);}}
+        />
       </Provider>
     );
   }  
