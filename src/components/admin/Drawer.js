@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, StyleSheet, Button, Image, SafeAreaView, ScrollView } from 'react-native';
+import { View, StyleSheet, Button, Image, SafeAreaView, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { createDrawerNavigator, DrawerActions, DrawerItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Icon } from 'react-native-elements';
@@ -11,19 +11,20 @@ import { primaryColor } from '../../themes';
 
 
 const ProfileStackNav =  createStackNavigator({
-  'Profile': ProfileScreen,
-  navigationOptions: ({ navigation }) => ({
-    drawerLabel: "Profile",
-    headerLeft: <TouchableWithoutFeedback
-                     onPress={ () => navigation.toggleDrawer()}
-                  >
-                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
-                 </TouchableWithoutFeedback>,
-  })
-},
-{
-  initialRouteName: 'Profile'
-}
+  'ProfileAdmin': {
+    screen: ProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: "Profile",
+      headerLeft: <TouchableWithoutFeedback
+                       onPress={ () => navigation.toggleDrawer()}
+                    >
+                     <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+                   </TouchableWithoutFeedback>
+    })
+  }}, 
+  {
+    initialRouteName: 'ProfileAdmin'
+  }
 )
 
 export default createDrawerNavigator({
