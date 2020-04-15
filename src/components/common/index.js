@@ -12,5 +12,6 @@ export * from './Bold';
 export * from './NotFound';
 export * from './CardHeading';
 export * from './Wait';
+export * from './Loader';
 export * from './FloatingLabelInput';
 export * from './FetchError';

@@ -7,6 +7,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { primaryColor } from '../../themes';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,10 +55,10 @@ class Loader extends React.Component {
   }
 
   static propTypes = {
-    visible: React.PropTypes.bool,
-    textContent: React.PropTypes.string,
-    color: React.PropTypes.string,
-    overlayColor: React.PropTypes.string
+    visible: PropTypes.bool,
+    textContent: PropTypes.string,
+    color: PropTypes.string,
+    overlayColor: PropTypes.string
   };
 
   static defaultProps = {

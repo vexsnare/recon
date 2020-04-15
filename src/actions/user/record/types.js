@@ -1,10 +1,11 @@
-export const PROJECT_CREATED = 'project/created';
+export const PROJECT_CREATE = 'project/create';
+export const PROJECT_CREATE_F = 'project/create_s';
+export const PROJECT_CREATE_S = 'project/create_f';
+export const PROJECT_CREATE_OFFLINE = 'project/create_offline';
 export const PROJECT_FETCHING = 'project/fetching';
 export const PROJECT_FETCH_SUCCESS = 'project/fetched';
 export const PROJECT_FETCH_ERROR = 'project/fetchError';
 export const PROJECT_LIST_FETCHING = 'project/list/fetching';
 export const PROJECT_LIST_FETCH_SUCCESS = 'project/list/fetched';
 export const PROJECT_LIST_FETCH_ERROR = 'project/list/fetchError';
-export const TAKE_A_TOUR = 'owner/tour';
-export const TAKE_A_TOUR_DONE = 'owner/tour/done';
-export const TAKE_A_TOUR_ALERT = 'owner/tour/alert';
+export const PROJECT_LIST_ADD = 'project/list/add';

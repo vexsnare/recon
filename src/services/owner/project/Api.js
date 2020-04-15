@@ -5,6 +5,7 @@ const endPoints = {
 	reports: '/reports',
 };
 
+//In Use
 export const fetchProjects = () => {
   return axios.get(endPoints.projects);
 };
@@ -13,7 +14,9 @@ export const fetchProject = (id) => {
 	return axios.get(`${endPoints.projects}/${id}`);
 };
 
+//In Use
 export const createProject = (projectData) => {
+
 	return axios.post(endPoints.projects, projectData);
 };
 

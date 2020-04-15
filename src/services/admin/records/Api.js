@@ -5,6 +5,5 @@ const endPoints = {
 };
 
 export const getAllRecords = () => {
-	console.log(axios.defaults.headers);
   	return axios.get(endPoints.records);
 };

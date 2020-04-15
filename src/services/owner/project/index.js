@@ -25,9 +25,11 @@ export const fetch = () => {
   return new Promise((resolve, reject) => {
     api.fetchProjects()
     .then((result) => {
+      console.log("result.data", result.data);
       resolve(result.data);
     })
     .catch(err => {
+      console.log("err", err);
       reject(err);
     });
   });
