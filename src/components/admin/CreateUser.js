@@ -22,16 +22,6 @@ import { Button } from './../common';
 import { registerUser } from '../../actions/register';
 
 class RegisterUser extends Component {
-  
-  static navigationOptions  = ({ navigation }) => ({
-    drawerLabel: "Register User",
-    headerLeft: <TouchableWithoutFeedback
-                     onPress={ () => navigation.toggleDrawer()}
-                  >
-                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
-                 </TouchableWithoutFeedback>,
-  });
-
 
     componentDidMount() {
       this.props.reset();
@@ -177,5 +167,19 @@ const mapStateToProps = (state) => {
 const RegisterFormScreen = connect(mapStateToProps)(registerForm);
 
 export default createStackNavigator({
-  'Register User': RegisterFormScreen
-});
+  'RegisterUserNav': {
+    screen: RegisterFormScreen,
+    navigationOptions: ({navigation}) => ({    
+      title: 'Regiser User',
+      headerLeft: 
+        <TouchableWithoutFeedback
+          onPress={ () => navigation.toggleDrawer()}
+      >
+        <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+      </TouchableWithoutFeedback>}
+      )
+  }
+}, {
+  initialRouteName: 'RegisterUserNav'
+}
+);

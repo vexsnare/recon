@@ -16,15 +16,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 class Profile extends React.Component {
 
-  static navigationOptions  = ({ navigation }) => ({
-    drawerLabel: "Profile",
-    headerLeft: <TouchableWithoutFeedback
-                     onPress={ () => navigation.toggleDrawer()}
-                  >
-                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
-                 </TouchableWithoutFeedback>,
-  });
-
   logoutPress() {
     logoutUser();
   }
@@ -95,14 +86,6 @@ const mapStateToProps = (state) => {
   return { user };
 }
 
-const ProfileScreen = connect(mapStateToProps)(Profile);
-
-export default createStackNavigator({
-  'Profile': ProfileScreen
-},
-{
-  initialRouteName: 'Profile'
-}
-)
+export const ProfileScreen = connect(mapStateToProps)(Profile);
 
 

@@ -23,15 +23,6 @@ import { registerAdmin } from '../../actions/register';
 
 class RegisterAdmin extends Component {
 
-    static navigationOptions  = ({ navigation }) => ({
-      drawerLabel: "Register Admin",
-      headerLeft: <TouchableWithoutFeedback
-                      onPress={ () => navigation.toggleDrawer()}
-                    >
-                    <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
-                  </TouchableWithoutFeedback>,
-    });
-
     renderAlert() {
       if (this.props.error) {
         setTimeout(() => {
@@ -181,6 +172,22 @@ const mapStateToProps = (state) => {
 const RegisterFormScreen = connect(mapStateToProps)(registerForm);
 
 export default createStackNavigator({
-  'Register Admin': RegisterFormScreen
-})
+  'RegisterAdminNav': {
+    screen: RegisterFormScreen,
+    navigationOptions: ({navigation}) => ({    
+      title: 'Regiser Admin',
+      headerLeft: 
+        <TouchableWithoutFeedback
+          onPress={ () => navigation.toggleDrawer()}
+      >
+        <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+      </TouchableWithoutFeedback>}
+      )
+  }
+},
+{
+  initialRouteName: 'RegisterAdminNav'
+}
+
+)
 

@@ -27,7 +27,7 @@ export default class Welcome extends Component {
            iconLeft
            fontSize={16}
            containerViewStyle={{marginTop: 20}}
-           onPress={() => this.props.navigation.navigate('recordCreate')}
+           onPress={() => this.props.navigation.navigate('RecordCreate')}
            backgroundColor={primaryColor}
            title='Add Record' />
           <Card style={{justifyContent: 'center', margin: 10}}>

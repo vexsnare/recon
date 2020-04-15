@@ -28,7 +28,7 @@ class RecordList extends Component {
         {
           <ActionButton
           buttonColor={primaryColor}
-          onPress={() => navigation.navigate('recordCreate')}
+          onPress={() => navigation.navigate('RecordCreate')}
           hideShadow
           />
         }

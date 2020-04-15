@@ -1,4 +1,4 @@
-import Profile from './../shared/Profile';
+import {ProfileScreen} from './../shared/Profile';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { primaryColor} from '../../themes';
@@ -6,31 +6,36 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import RecordListScreen from './RecordList';
 import RecordCreateScreen from './RecordCreate';
-import { Icon } from 'react-native-elements'
 import {
   View,
   TouchableWithoutFeedback
 } from 'react-native';
 
 const RecordStackNavigator = createStackNavigator({
-  records: {
+  "Home": {
     screen: RecordListScreen,
-    navigationOptions: ({ navigation }) => ({
-         headerLeft: <TouchableWithoutFeedback
-                        onPress={ () => navigation.navigate('DrawerOpen') }
-                     >
-                      <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
-                    </TouchableWithoutFeedback>,
-
     title: 'Home'
-    })
   },
-  recordCreate: {
+  "RecordCreate": {
     screen: RecordCreateScreen,
     navigationOptions: {
       title: 'Create'
     }
   }
+},
+{
+  initialRouteName: "Home"
+}
+);
+
+const ProfileStackNavigator = createStackNavigator({
+  "Profile": {
+    screen: ProfileScreen,
+    title: 'Profile'
+  }
+},
+{
+  initialRouteName: "Profile"
 }
 );
 
@@ -50,7 +55,7 @@ const TabScreenNavigator = createBottomTabNavigator(
       },
     },
     profile: {
-      screen: Profile,
+      screen: ProfileStackNavigator,
       navigationOptions: {
         tabBarLabel: 'Profile',
         tabBarIcon: ({ tintColor, focused }) => (

@@ -33,7 +33,7 @@ class RecordList extends Component {
 
   renderItem = ({ item }) => (
       <ListItem
-      leftIcon={
+      rightIcon={
       <Icon 
         name='chevron-right'
         type='evilicon'
