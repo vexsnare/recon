@@ -12,14 +12,26 @@ import {
   StyleSheet,
   Alert,
   Image,
-  TouchableOpacity
-} from 'react-native';
+  TouchableOpacity,
+  TouchableWithoutFeedback
 
+} from 'react-native';
+import { Icon } from 'react-native-elements';
 import { primaryColor } from '../../themes';
 import { Button } from './../common';
 import { registerUser } from '../../actions/register';
 
 class RegisterUser extends Component {
+  
+  static navigationOptions  = ({ navigation }) => ({
+    drawerLabel: "Register User",
+    headerLeft: <TouchableWithoutFeedback
+                     onPress={ () => navigation.toggleDrawer()}
+                  >
+                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+                 </TouchableWithoutFeedback>,
+  });
+
 
     componentDidMount() {
       this.props.reset();

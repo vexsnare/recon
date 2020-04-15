@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import View from 'react-native';
-import Textarea from 'react-native-textarea';
+
 
 export default MyTextArea = () => {
 
@@ -12,7 +12,7 @@ export default MyTextArea = () => {
     onChangeText={this.onChange}
     defaultValue={this.state.text}
     maxLength={120}
-    placeholder={'Start typing hre'}
+    placeholder={'Start typing'}
     placeholderTextColor={'#c7c7c7'}
     underlineColorAndroid={'transparent'}
   />

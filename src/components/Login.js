@@ -72,7 +72,7 @@ class Login extends Component {
             </View>
             <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
               <View>
-                <Text style={{color: primaryColor}}>Back</Text>
+                <Text style={{color: primaryColor, margin: 20}}>Back</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>

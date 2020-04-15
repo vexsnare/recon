@@ -6,14 +6,24 @@ import {
   Image,
   StyleSheet,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/logout';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Icon } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation-stack';
 
 class Profile extends React.Component {
+
+  static navigationOptions  = ({ navigation }) => ({
+    drawerLabel: "Profile",
+    headerLeft: <TouchableWithoutFeedback
+                     onPress={ () => navigation.toggleDrawer()}
+                  >
+                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+                 </TouchableWithoutFeedback>,
+  });
 
   logoutPress() {
     logoutUser();

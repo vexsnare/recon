@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, Button, StyleSheet, View, FlatList} from 'react-native';
+import {Image, Button, StyleSheet, View, FlatList, TouchableWithoutFeedback} from 'react-native';
 import { ListItem, Icon } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation-stack';
 import TouchableScale from 'react-native-touchable-scale';
@@ -14,7 +14,7 @@ class RecordList extends Component {
     getAllRecords();
   }
 
-  static navigationOptions = {
+  static navigationOptions  = ({ navigation }) => ({
     drawerLabel: "Records",
     drawerIcon: ({ tintColor }) => (
       <Image
@@ -22,7 +22,12 @@ class RecordList extends Component {
         style={[styles.icon, { tintColor: tintColor }]}
       />
     ),
-  };
+    headerLeft: <TouchableWithoutFeedback
+                     onPress={ () => navigation.toggleDrawer()}
+                  >
+                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+                 </TouchableWithoutFeedback>,
+  });
 
   keyExtractor = (item, index) => item.id;
 

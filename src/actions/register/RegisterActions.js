@@ -18,7 +18,7 @@ export const registerUser = (values, dispatch) => {
     session.register(registerData)
     .then((user) => {
       resolve(user);
-      //NavigatorService.reset("Records");
+      NavigatorService.navigate("Records");
     }).catch((errorMessage) => {
       console.log('Failed to signup', errorMessage);
       reject(new SubmissionError({_error : errorMessage}));
@@ -43,7 +43,7 @@ export const registerAdmin = (values, dispatch) => {
     session.register(registerData)
     .then((user) => {
       resolve(user);
-      //NavigatorService.reset("Records");
+      NavigatorService.navigate("Records");
     }).catch((errorMessage) => {
       console.log('Failed to signup', errorMessage);
       reject(new SubmissionError({_error : errorMessage}));

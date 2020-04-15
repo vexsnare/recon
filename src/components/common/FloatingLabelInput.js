@@ -7,7 +7,8 @@ import {
   Animated,
   Platform
 } from 'react-native';
-import { inputTextSize, inputFloatingLabelFontSize } from '../../themes';
+import {secondaryColor} from '../../themes';
+import { inputTextSize, inputLabelFontSize, inputFloatingLabelFontSize } from '../../themes';
 
 class FloatingLabel extends Component {
   constructor(props) {
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   paddingView: {
-    width: 0,
+    width: 0
   },
   floatingLabel: {
     position: 'absolute',
@@ -207,8 +208,9 @@ const styles = StyleSheet.create({
   },
   fieldContainer: {
     flex: 1,
-    position: 'relative',
-    flexDirection: 'row-reverse',
+    paddingLeft: 5,
+    justifyContent: 'center',
+    position: 'relative'
   },
   withBorder: {
     borderBottomWidth: 1/2,
@@ -218,8 +220,8 @@ const styles = StyleSheet.create({
     height: (Platform.OS == 'ios' ? 20 : 45),
     fontSize: inputTextSize,
     color: '#111111',
-    left: 0,
-    bottom: 0
+    left: -4,
+    bottom: -4
   },
   focused: {
     color: 'gray'

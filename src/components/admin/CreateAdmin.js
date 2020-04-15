@@ -12,14 +12,25 @@ import {
   StyleSheet,
   Alert,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import { primaryColor } from '../../themes';
 import { Button } from '../common';
 import { registerAdmin } from '../../actions/register';
 
 class RegisterAdmin extends Component {
+
+    static navigationOptions  = ({ navigation }) => ({
+      drawerLabel: "Register Admin",
+      headerLeft: <TouchableWithoutFeedback
+                      onPress={ () => navigation.toggleDrawer()}
+                    >
+                    <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+                  </TouchableWithoutFeedback>,
+    });
 
     renderAlert() {
       if (this.props.error) {
