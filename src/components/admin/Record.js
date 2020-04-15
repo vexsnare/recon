@@ -9,10 +9,10 @@ export default class Record extends Component {
         return (
             <View>
             <View style={{margin: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{fontSize: 20}}>
+                <Text style={{fontSize: 20, flex: 1}}>
                     {key}
                 </Text>
-                <Text style={{fontSize: 20}}>
+                <Text style={{fontSize: 20, flex: 2}}>
                     {typeof value ==="boolean" ? (value? "YES": "NO") : value}
                 </Text>
             </View>

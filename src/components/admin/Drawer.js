@@ -45,14 +45,14 @@ export default createDrawerNavigator({
   "RegisterUser": { 
     screen: CreateUser,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Register.',
+      drawerLabel: 'Register User',
       drawerIcon: <Icon type='ionicon' name="ios-body" />
     })
   },
   "RegisterAdmin": {
     screen: CreateAdmin,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Register.',
+      drawerLabel: 'Register Admin',
       drawerIcon: <Icon type='ionicon' name="ios-build" />
     })
   }
