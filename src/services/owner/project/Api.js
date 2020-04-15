@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const endPoints = {
 	projects: '/record/',
-	reports: '/reports',
+	bulk: '/record/bulk',
 };
 
 //In Use
@@ -18,6 +18,12 @@ export const fetchProject = (id) => {
 export const createProject = (projectData) => {
 
 	return axios.post(endPoints.projects, projectData);
+};
+
+//In Use
+export const submitPending = (records) => {
+	console.log("Last " , records);
+	return axios.post(endPoints.bulk, records);
 };
 
 export const updateProject = (projectData, id) => {

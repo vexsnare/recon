@@ -5,21 +5,39 @@ import {
   FlatList,
   View
 } from 'react-native';
-import { ListItem, Icon } from 'react-native-elements';
+import { ListItem, Icon, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
 import { createStackNavigator } from 'react-navigation-stack';
-import { primaryColor} from '../../themes';
+import { primaryColor, secondaryColor} from '../../themes';
 import { Wait } from '../common';
 import RecordView from '../admin/Record';
 import Welcome from './Welcome';
 import axios from 'axios';
 import { fetchNewProjectList } from '../../actions/user/record';
+import { submitOfflineReports } from '../../helpers';
 
 class RecordList extends Component {
 
   componentDidMount() {
  //   fetchNewProjectList();
+  }
+  
+
+  renderSyncReportAction(offlineReports) {
+    if(offlineReports) {
+      return (
+        <Button
+          raised
+          icon={{name: 'sync', size: 22}}
+          buttonStyle={{backgroundColor: secondaryColor}}
+          textStyle={{textAlign: 'center'}}
+          containerViewStyle={{marginRight: 0, marginLeft: 0, borderWidth: 1}}
+          title={`Click to sync offline records`}
+          onPress={()=>submitOfflineReports(true)}
+        />
+      );
+    }
   }
   
   keyExtractor = (item, index) => item.id;
@@ -44,15 +62,19 @@ class RecordList extends Component {
 )
 
   render() {
+    const { loading, records, navigation, offlineRecords} = this.props;
 
     if(loading) {
       return <Wait />;
     }
-    const { loading, records, navigation} = this.props;
+    
     let list = records;
     // navigation state
     return (
         <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 10}} >
+        <View style={{backgroundColor: 'white'}}>
+        {this.renderSyncReportAction(offlineRecords)}
+        </View>
         {_.isEmpty(records) && <Welcome navigation={navigation}/>}
         {!_.isEmpty(records) &&       
         <FlatList
@@ -89,7 +111,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { loading, error } = state.data.user.records;
-
+  const offlineRecords = state.data.offline.records;
   const recordList = state.data.user.records.records.records;
   let records = [];
   if(recordList) {
@@ -97,7 +119,7 @@ const mapStateToProps = (state) => {
   }
   const tokens  = state.services.session.tokens;
   axios.defaults.headers['Authorization'] = "Bearer " + tokens;
-  return { records, error, loading };
+  return { records, error, loading, offlineRecords };
 }
 
 export default connect(mapStateToProps)(RecordList);

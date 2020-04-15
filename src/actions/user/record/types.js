@@ -9,3 +9,5 @@ export const PROJECT_LIST_FETCHING = 'project/list/fetching';
 export const PROJECT_LIST_FETCH_SUCCESS = 'project/list/fetched';
 export const PROJECT_LIST_FETCH_ERROR = 'project/list/fetchError';
 export const PROJECT_LIST_ADD = 'project/list/add';
+export const SUBMIT_REPORT_OFFLINE = '@report/submit_from_offline';
+export const REMOVE_REPORT_FROM_OFFLINE = '@report/remove_from_offline';

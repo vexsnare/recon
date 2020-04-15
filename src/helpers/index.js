@@ -1,8 +1,13 @@
 import store from '../../Store';
 import { getNested } from '../utils';
-import { Platform, NetInfo, Alert } from 'react-native';
+import { Platform, Alert } from 'react-native';
 import _ from 'lodash';
-import loaderHandler from 'react-native-busy-indicator/LoaderHandler';
+import NetInfo from '@react-native-community/netinfo';
+import axios from 'axios';
+import * as api from '../services/owner/project/Api';
+import {
+  REMOVE_REPORT_FROM_OFFLINE
+} from '../actions/user/record/types';
 
 export const runValidators = (value, validators) => {
   var error = '';
@@ -24,62 +29,40 @@ export const renderAlert = (title, msg) => {
       );
 }
 
+//In Use
 export const syncReports = (reports) => {
   console.log('reports=', reports);
   return new Promise((resolve, reject) => {
-    let next = 0;
-    if(!_.isEmpty(reports)) {
-      const timestamp = _.keys(reports)[0];
-      console.log('_.keys(reports)',_.keys(reports));
-      const report = reports[timestamp];
-      console.log('processing report : ', timestamp);
-      Promise.all(promises).then(() => {
-        reportApi.send(report).then((res) => {
-          console.log('Submitted report - ', timestamp);
-          console.log('Before = ', reports);
-          delete reports[timestamp];
-          syncReports(reports).then(() => resolve(null)).catch(err => reject(err));
-          console.log('After = ', reports);
-        }).catch(err => {
-          reject('Error on syncing report' , err);
-        });
-      }).catch(err => {
-        reject('Error on syncing pictures' , err)
-      })
-    } else resolve('No more report');
+    api.submitPending(reports)
+    .then((result) => {
+      console.log(result);
+      resolve(result.data);
+    })
+    .catch(err => {
+      console.log(err);
+      reject(err);
+    });
   });
 }
 
 export const submitOfflineReports = (showLoader) => {
   showLoader = showLoader || false;
-  const offlineReports = getNested(store.getState(), 'data.offline.reports');
+  const offlineReports = getNested(store.getState(), 'data.offline.records');
   if(_.isEmpty(offlineReports) && showLoader) {
     renderAlert('Not required', 'All reports are already submitted');
     return;
   }
-  isNetworkConnected()
-   .then( isConnected => {
-    if(isConnected) {
-      if(showLoader) loaderHandler.showLoader('Syncing...');
+  NetInfo.fetch()
+   .then( state => {
+    if(state.isInternetReachable) {
+      if(showLoader) { console.log(showLoader)};
       syncReports(offlineReports).then(() => {
         if(showLoader) renderAlert('Done', 'All offline reports have been sent to server.');
-        loaderHandler.hideLoader();
+        //loaderHandler.hideLoader();
+        store.dispatch({type:REMOVE_REPORT_FROM_OFFLINE});
       })
     } else {
       if(showLoader) renderAlert('No Internet', 'Please connect to Internet and try again');
     }
    });
-}
-
-export function isNetworkConnected() {
-  if (Platform.OS === 'ios') {
-    return new Promise(resolve => {
-      const handleFirstConnectivityChangeIOS = isConnected => {
-        NetInfo.isConnected.removeEventListener('change', handleFirstConnectivityChangeIOS);
-        resolve(isConnected);
-      };
-      NetInfo.isConnected.addEventListener('change', handleFirstConnectivityChangeIOS);
-    });
-  }
-  return NetInfo.isConnected.fetch();
 }

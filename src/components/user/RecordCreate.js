@@ -3,8 +3,9 @@ import _ from 'lodash';
 import { reduxForm } from 'redux-form'
 import RecordForm from './RecordForm';
 import { View, StyleSheet } from 'react-native';
-import { Button } from '../common';
-import { primaryColor } from '../../themes';
+import { Button } from './../common';
+import { getNested } from '../../utils';
+import { primaryColor, secondaryColor } from '../../themes';
 import {Loader} from './../common';
 import { createRecord } from '../../actions/user/record';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
