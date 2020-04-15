@@ -31,28 +31,28 @@ export default createDrawerNavigator({
   "Records": {
     screen: RecordNavigator,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Records.',
+      drawerLabel: 'Records',
       drawerIcon: <Icon type='ionicon' name="ios-journal" />
     })
   },
   "Profile": {
     screen: ProfileStackNav,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Profile.',
+      drawerLabel: 'Profile',
       drawerIcon: <Icon type='ionicon' name="ios-person" />
     })
   },
   "RegisterUser": { 
     screen: CreateUser,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Register.',
+      drawerLabel: 'Register User',
       drawerIcon: <Icon type='ionicon' name="ios-body" />
     })
   },
   "RegisterAdmin": {
     screen: CreateAdmin,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Register.',
+      drawerLabel: 'Register Admin',
       drawerIcon: <Icon type='ionicon' name="ios-build" />
     })
   }
