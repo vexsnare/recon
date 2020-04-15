@@ -9,7 +9,7 @@ import { primaryColor, secondaryColor } from '../../themes';
 import {Loader} from './../common';
 import { createRecord } from '../../actions/user/record';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import { connect } from 'react-redux';
 
 class RecordCreateForm extends Component {
 
@@ -18,13 +18,14 @@ class RecordCreateForm extends Component {
   }
 
   render() {
+    const {loading} = this.props;
     return (
       <KeyboardAwareScrollView
         style={styles.container}
         keyboardShouldPersistTaps='always'
         >
         <RecordForm />
-        <Loader visible={this.props.submitting} />
+        <Loader visible={loading} />
         <View style={styles.button}>
           <Button color={primaryColor} onPress={this.props.handleSubmit((data, dispatch) => createRecord(data, dispatch))}>
             SAVE
@@ -46,7 +47,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default reduxForm({form: 'recordCreateForm'})(RecordCreateForm);
+const mapStateToProps = (state) => {
+  const { loading } = state.data.user.records.record;
+  return { loading };
+};
 
+const CreateForm = reduxForm({form: 'recordCreateForm', destroyOnUnmount: true})(RecordCreateForm);
+
+
+export default connect(mapStateToProps)(CreateForm);
 
 

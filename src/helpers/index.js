@@ -31,7 +31,6 @@ export const renderAlert = (title, msg) => {
 
 //In Use
 export const syncReports = (reports) => {
-  console.log('reports=', reports);
   return new Promise((resolve, reject) => {
     api.submitPending(reports)
     .then((result) => {

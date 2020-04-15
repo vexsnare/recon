@@ -33,25 +33,18 @@ const renderAlert = (title, message) => {
     title,
     message,
     [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      {text: 'OK', onPress: () => NavigatorService.navigate("Home")},
     ],
     { cancelable: false }
   )
 }
 
-const renderLoader = (state) => {
-  return <Loader loading={true} />;
-}
-
 export const createRecord =  (values) => {
-  console.log(values, "Create Report Called")
-  
-    renderLoader(true);
+    dispatch({type: PROJECT_CREATE});
     console.log('Checking Internet is there or not');
     NetInfo.fetch().then((status) => {
       console.log('Internet is there isConnected = ', status);
       if(status.isInternetReachable) {
-        dispatch({type: PROJECT_CREATE});
         return new Promise((resolve, reject) => {
           console.log("Record: ", values);
           project.create(values)
@@ -78,19 +71,19 @@ export const createRecord =  (values) => {
               console.log('No Internet Submitting offLine');
               dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
               renderAlert('Submitted offLine', "Please sync your reports once you are connected to Internet");
-              <Loader visible={false} />
+              dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
             }
           )
         }
         else {
           console.log("Log ", 11);
           renderAlert('Error', "Can't submit. Please sync 100 pending recorts before submitting a new one");
-          <Loader visible={false} />
+          dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
         }
       }
     }).catch(err => {
       console.log('Error while fetching Net Info');
-      <Loader visible={false} />
+      dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
     })
   }
 
