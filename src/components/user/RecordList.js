@@ -8,10 +8,8 @@ import {
 import { ListItem, Icon, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
-import { createStackNavigator } from 'react-navigation-stack';
 import { primaryColor, secondaryColor} from '../../themes';
 import { Wait } from '../common';
-import RecordView from '../admin/Record';
 import Welcome from './Welcome';
 import axios from 'axios';
 import { fetchNewProjectList } from '../../actions/user/record';

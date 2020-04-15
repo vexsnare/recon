@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 class RecordCreateForm extends Component {
 
   componentDidMount() {
-    this.props.reset();
   }
 
   render() {

@@ -6,9 +6,9 @@ class Container extends Component {
   static defaultProps = {}
 
   render() {
-    const { children } = this.props;
+    const { children, style } = this.props;
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={{...styles.container, ...style}}>
         {children}
       </ScrollView>
     );
@@ -17,7 +17,7 @@ class Container extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15
+    padding: 10
   }
 });
 

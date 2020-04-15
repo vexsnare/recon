@@ -35,7 +35,23 @@ class RegisterAdmin extends Component {
       return null;
     }
 
-    renderButton() {
+    renderRegisterButton() {
+      if (this.props.submitting) {
+        return null;
+      }
+      return (
+        <Button
+          color={primaryColor}
+          backgroundColor={primaryColor}
+          textColor={'white'}
+          disabled={this.props.error != null}
+          size='small'
+          onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
+        >Sign Up</Button>
+      );
+    }
+
+    renderUpdateButton() {
       if (this.props.submitting) {
         return null;
       }
@@ -90,12 +106,17 @@ class RegisterAdmin extends Component {
                 This is Admin account creation with Admin access rights.
               </Text>
             </TouchableOpacity>
+            
             <View style={{paddingTop: 10}}>
               <View style={styles.line} />
                 <View style={{paddingTop: 10, alignSelf: 'flex-end'}}>
-                  {this.renderButton()}
+                  {this.renderRegisterButton()}
+                </View>
+                <View style={{paddingTop: 10, alignSelf: 'flex-end'}}>
+                  {this.renderUpdateButton()}
                 </View>
               </View>
+              
             </View>
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>
@@ -131,7 +152,9 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 0.4,
     marginLeft: -10,
-    marginRight: -10
+    marginRight: -10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   button: {
     backgroundColor: primaryColor,

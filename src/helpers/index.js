@@ -57,7 +57,6 @@ export const submitOfflineReports = (showLoader) => {
       if(showLoader) { console.log(showLoader)};
       syncReports(offlineReports).then(() => {
         if(showLoader) renderAlert('Done', 'All offline reports have been sent to server.');
-        //loaderHandler.hideLoader();
         store.dispatch({type:REMOVE_REPORT_FROM_OFFLINE});
       })
     } else {

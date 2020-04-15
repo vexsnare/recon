@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import { Alert } from 'react-native';
 import {Loader} from '../../../components/common'
 import { loginUser } from '../../login/LoginActions';
+import * as Location from 'expo-location';
 import {
   PROJECT_CREATE,
   PROJECT_CREATE_S,
@@ -28,62 +29,111 @@ const sleep = (time) => {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const renderAlert = (title, message) => {
+const redirectToHome = () => NavigatorService.navigate("Home");
+
+const renderAlert = (title, message, func) => {
   Alert.alert(
     title,
     message,
     [
-      {text: 'OK', onPress: () => NavigatorService.navigate("Home")},
+      {text: 'OK', onPress: func},
     ],
     { cancelable: false }
   )
 }
 
 export const createRecord =  (values) => {
-    dispatch({type: PROJECT_CREATE});
-    console.log('Checking Internet is there or not');
-    NetInfo.fetch().then((status) => {
-      console.log('Internet is there isConnected = ', status);
-      if(status.isInternetReachable) {
-        return new Promise((resolve, reject) => {
-          console.log("Record: ", values);
-          project.create(values)
-          .then((data) => {
-            dispatch({type: PROJECT_LIST_ADD, payload: data.response});
-            dispatch({type: PROJECT_CREATE_S, payload: "Created Successfully"});
-            NavigatorService.navigate("Home");
-            resolve();
-          })
-          .catch((err) => {
-            console.log(err);
-            dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
-            reject(new SubmissionError(err));
-          });
-        });
+  
+    let location = null;
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+
+      location = await Location.getCurrentPositionAsync({});
+    })();
+
+    console.log("Location : ", location );
+    if(location && location.coords) {
+      const {latitude, longitude, accuracy} = location.coords;
+      const current_location = {
+        lat: latitude,
+        long: longitude
+      }
+      values["location"] = current_location;
+    };
+
+    Location.requestPermissionsAsync().then((permission) => {
+      let { status } = permission;
+      if (status !== 'granted') {
+        renderAlert(status, 'Permission to access location was denied', null);
       } else {
-        console.log('Checking Internet... not connected');
-        console.log("Log ", 0);
-        const offlineReports = getNested(store.getState(), 'data.offline.records');
-        console.log("Log ", 1);
-        if(_.size(offlineReports) <= 100) {
-          console.log("Log ", 2);
-          sleep(1500).then ( () => {
-              console.log('No Internet Submitting offLine');
-              dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
-              renderAlert('Submitted offLine', "Please sync your reports once you are connected to Internet");
-              dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+        Location.getCurrentPositionAsync({}).then(location => {
+          if(location && location.coords) {
+            const {latitude, longitude, accuracy} = location.coords;
+            const current_location = {
+              lat: latitude,
+              lon: longitude
             }
-          )
-        }
-        else {
-          console.log("Log ", 11);
-          renderAlert('Error', "Can't submit. Please sync 100 pending recorts before submitting a new one");
+            values["location"] = current_location;
+
+
+            dispatch({type: PROJECT_CREATE});
+            console.log('Checking Internet is there or not');
+
+            NetInfo.fetch().then((status) => {
+              console.log('Internet is there isConnected = ', status);
+              if(status.isInternetReachable) {
+                return new Promise((resolve, reject) => {
+                  console.log("Record: ", values);
+                  project.create(values)
+                  .then((data) => {
+                    dispatch({type: PROJECT_LIST_ADD, payload: data.response});
+                    dispatch({type: PROJECT_CREATE_S, payload: "Created Successfully"});
+                    NavigatorService.navigate("Home");
+                    resolve();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+                    reject(new SubmissionError(err));
+                  });
+                });
+              } else {
+                console.log('Checking Internet... not connected');
+                console.log("Log ", 0);
+                const offlineReports = getNested(store.getState(), 'data.offline.records');
+                console.log("Log ", 1);
+                if(_.size(offlineReports) <= 100) {
+                  console.log("Log ", 2);
+                  sleep(1500).then ( () => {
+                      console.log('No Internet Submitting offLine');
+                      dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
+                      renderAlert('Submitted offLine', "Please sync your reports once you are connected to Internet");
+                      dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+                    }
+                  )
+                }
+                else {
+                  console.log("Log ", 11);
+                  renderAlert('Error', "Can't submit. Please sync 100 pending recorts before submitting a new one", redirectToHome);
+                  dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+                }
+              }
+            }).catch(err => {
+              console.log('Error while fetching Net Info');
+              dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+            })
+
+
+          };
+
+        }).catch(err => {
           dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
-        }
+          reject(new SubmissionError(err));
+        })
       }
     }).catch(err => {
-      console.log('Error while fetching Net Info');
       dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+      reject(new SubmissionError(err));
     })
   }
 
