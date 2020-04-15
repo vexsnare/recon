@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { Field } from 'redux-form'
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
-import { Heading, TextInput, Bold } from '../common';
+import { Heading, TextInput, Bold, Toggle, Che } from '../common';
 import { required, mobile } from '../../validators';
-import { renderTextInput } from '../renderer';
+import { renderTextInput, renderCheckBox } from '../renderer';
 
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -110,28 +110,24 @@ export default class RecordForm extends Component {
         <Field
           name='fever'
           label='Fever'
-          component={Dropdown}
-          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
+          component={renderCheckBox}
         />
         <Field
           name='cough'
           label='Cough'
           maxLength={10}
-          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
-          component={Dropdown}
+          component={renderCheckBox}
         />
         <Field
           name='shortnessOfBreath'
           label='Shortness of breath'
-          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
-          component={Dropdown}
+          component={renderCheckBox}
         />
 
         <Field
           name='anyOneInFamilyShowingSymptoms'
           label='Anyone In Family Showing Symptoms'
-          options={[{label: 'No', value: 0},{label: 'Yes', value: 1}]}
-          component={Dropdown}
+          component={renderCheckBox}
         />
 
         <Field

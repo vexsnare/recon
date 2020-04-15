@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { selectionColor, inputErrorTextSize } from '../../themes';
 import { TextInput, FloatingLabelInput } from '../common';
-
+import CheckBox from '../lib/checkbox';
 export const renderTextInput = (props) => {
   const { input, meta, label, ...inputProps } = props;
   if(Platform.OS === 'ios') {
@@ -39,6 +39,22 @@ export const renderTextInput = (props) => {
      />
      {meta.touched && meta.error && <Text style={styles.error}>{meta.error}</Text>}
     </View>
+  );
+}
+
+
+export const renderCheckBox = (props) => {
+  const { input, ...inputProps } = props;
+  var checked = input.value;
+  if(typeof input.value === 'string') {
+    checked = input.value === "true";
+  }
+  return (
+      <CheckBox
+      {...inputProps}
+      checked={checked}
+      onChange={input.onChange}
+    />
   );
 }
 

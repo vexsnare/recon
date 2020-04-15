@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { primaryColor } from '../../themes';
+import { primaryColor, secondaryColor } from '../../themes';
 import { Button } from '../common';
 import { registerAdmin } from '../../actions/register';
 
@@ -45,9 +45,9 @@ class RegisterAdmin extends Component {
           backgroundColor={primaryColor}
           textColor={'white'}
           disabled={this.props.error != null}
-          size='small'
+          size='medium'
           onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
-        >Sign Up</Button>
+        >Create </Button>
       );
     }
 
@@ -57,13 +57,13 @@ class RegisterAdmin extends Component {
       }
       return (
         <Button
-          color={primaryColor}
-          backgroundColor={primaryColor}
+          color={secondaryColor}
+          backgroundColor={'black'}
           textColor={'white'}
           disabled={this.props.error != null}
-          size='small'
+          size='medium'
           onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
-        >Sign Up</Button>
+        >Update Existing</Button>
       );
     }
 
@@ -109,11 +109,14 @@ class RegisterAdmin extends Component {
             
             <View style={{paddingTop: 10}}>
               <View style={styles.line} />
-                <View style={{paddingTop: 10, alignSelf: 'flex-end'}}>
+              <View style={{flexDirection: 'row',justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                <View style={{paddingTop: 20}}>
                   {this.renderRegisterButton()}
                 </View>
-                <View style={{paddingTop: 10, alignSelf: 'flex-end'}}>
+                <View style={styles.line} />
+                <View style={{paddingTop: 20}}>
                   {this.renderUpdateButton()}
+                </View>
                 </View>
               </View>
               
@@ -153,8 +156,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.4,
     marginLeft: -10,
     marginRight: -10,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
   },
   button: {
     backgroundColor: primaryColor,

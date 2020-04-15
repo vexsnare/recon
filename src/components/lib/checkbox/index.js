@@ -5,7 +5,7 @@ https://github.com/sconxu/react-native-checkbox/blob/master/checkbox.js
 'use strict';
 
 import React, { Component } from 'react';
-var PropTypes = React.PropTypes;
+import PropTypes from 'prop-types';
 import { inputTextSize } from '../../../themes';
 import {
     StyleSheet,
@@ -103,8 +103,8 @@ var styles = StyleSheet.create({
         marginBottom: 5,
     },
     checkbox: {
-        width: 16,
-        height: 16,
+        width: 20,
+        height: 20,
     },
     labelContainer: {
         marginLeft: 10,

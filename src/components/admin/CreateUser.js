@@ -17,7 +17,7 @@ import {
 
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { primaryColor } from '../../themes';
+import { primaryColor, secondaryColor } from '../../themes';
 import { Button } from './../common';
 import { registerUser } from '../../actions/register';
 
@@ -39,7 +39,7 @@ class RegisterUser extends Component {
       return null;
     }
 
-    renderButton() {
+    renderCreateButton() {
       if (this.props.submitting) {
         return null;
       }
@@ -49,11 +49,28 @@ class RegisterUser extends Component {
           backgroundColor={primaryColor}
           textColor={'white'}
           disabled={this.props.error != null}
-          size='small'
+          size='medium'
           onPress={this.props.handleSubmit((data, dispatch) => registerUser(data, dispatch))}
-        >Sign Up</Button>
+        >Create</Button>
       );
     }
+
+    renderUpdateButton() {
+      if (this.props.submitting) {
+        return null;
+      }
+      return (
+        <Button
+          color={secondaryColor}
+          backgroundColor={'black'}
+          textColor={'white'}
+          disabled={this.props.error != null}
+          size='medium'
+          onPress={this.props.handleSubmit((data, dispatch) => registerUser(data, dispatch))}
+        >Update User</Button>
+      );
+    }
+
 
     render() {
       const { loading, status } = this.props;
@@ -94,11 +111,17 @@ class RegisterUser extends Component {
             </TouchableOpacity>
             <View style={{paddingTop: 10}}>
               <View style={styles.line} />
-                <View style={{paddingTop: 10, alignSelf: 'flex-end'}}>
-                  {this.renderButton()}
+              <View style={{flexDirection: 'row',justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                <View style={{paddingTop: 20}}>
+                  {this.renderCreateButton()}
+                </View>
+                <View style={styles.line} />
+                <View style={{paddingTop: 20}}>
+                  {this.renderUpdateButton()}
+                </View>
                 </View>
               </View>
-            </View>
+              </View>
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>
             { this.renderAlert() }

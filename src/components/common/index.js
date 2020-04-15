@@ -15,3 +15,4 @@ export * from './Wait';
 export * from './Loader';
 export * from './FloatingLabelInput';
 export * from './FetchError';
+export * from './Toggle';
