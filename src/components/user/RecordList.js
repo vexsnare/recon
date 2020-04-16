@@ -73,7 +73,8 @@ class RecordList extends Component {
   }
 
   renderListItem = ({ item })=>  {
-    const { name, mobileNumber, distric, age, gender, updatedTimeStamp } = item;
+    const { name, mobileNumber, district, age, gender, updatedTimeStamp } = item;
+    console.log("updatedTimeStamp",updatedTimeStamp);
     return (
       <View>
         <Card>
@@ -86,9 +87,9 @@ class RecordList extends Component {
             <View style={{paddingHorizontal: 10, backgroundColor: 'white'}}>
             {this.renderCardItem('Age', age)}
             {this.renderCardItem('Gender', gender)}
-            {this.renderCardItem('Distric', distric)}
+            {this.renderCardItem('District', district)}
             {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
-            {this.renderCardItem('Date', moment(new Date(updatedTimeStamp)).format('DD/MMM/YYYY HH:MM'))}
+            {this.renderCardItem('Date', moment(new Date(updatedTimeStamp)).format('DD MMM YYYY HH:MM'))}
             </View>
           </TouchableWithoutFeedback>
           <TouchableHighlight onPress={() => this.onRowPress(item)}>

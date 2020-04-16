@@ -32,7 +32,7 @@ export default class Record extends Component {
                 {this.display("Gender", record.gender)}
                 {this.display("Ward", record.ward)}
                 {this.display("Tehsil", record.tehsil)}
-                {this.display("Distric", record.distric)}
+                {this.display("District", record.district)}
                 {this.display("Fever", record.fever)}
                 {this.display("Cough", record.cough)}
                 {this.display("Shortness Of Breath", record.shortnessOfBreath)}

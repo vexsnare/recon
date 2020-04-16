@@ -4,7 +4,7 @@ import { Field } from 'redux-form'
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
 import { Heading, TextInput, Bold, Toggle, Che } from '../common';
-import { required, mobile } from '../../validators';
+import { required, mobile, maxLength2 } from '../../validators';
 import { renderTextInput, renderCheckBox } from '../renderer';
 
 import RNPickerSelect from 'react-native-picker-select';
@@ -22,13 +22,14 @@ export const Dropdown = (props) => {
           autoCorrect={false}
           items={options}
       />
+      {meta.touched && meta.error && <Text style={{color: 'red', fontSize: inputErrorTextSize}}>{meta.error}</Text>}
       </View>
   );
 };
 
 
 export const renderTextArea = (props) => {
-  const { input, label, ...otherProps } = props;
+  const { input, label, meta, ...otherProps } = props;
   return (
     <View style={{paddingHorizontal: 5, paddingVertical: 20}}>
     <Bold style={{fontSize: 20, paddingBottom: 10}}>{label}</Bold>
@@ -47,6 +48,7 @@ export const renderTextArea = (props) => {
       placeholder="Add remark of your report here"
       style={styles.multiline}
     />
+    {meta.touched && meta.error && <Text style={{color: 'red', fontSize: inputErrorTextSize}}>{meta.error}</Text>}
   </View>
   );
 }
@@ -65,12 +67,15 @@ export default class RecordForm extends Component {
           name='name'
           label='Full Name'
           component={renderTextInput}
+          validate={[required]}
         />
         <Field
           name='age'
           label='Age'
           component={renderTextInput}
           keyboardType='numeric'
+          validate={[required, maxLength2]}
+
         />
         <Field
           name='mobileNumber'
@@ -78,6 +83,7 @@ export default class RecordForm extends Component {
           maxLength={10}
           keyboardType='numeric'
           component={renderTextInput}
+          validate={[required, mobile]}
         />
         <Field
           name='ward'
@@ -88,11 +94,13 @@ export default class RecordForm extends Component {
           name='tehsil'
           label='Tehsil'
           component={renderTextInput}
+          validate={[required]}
         />
         <Field
           name='district'
           label='District'
           component={renderTextInput}
+          validate={[required]}
         />
         <Field
           name='gender'
@@ -103,6 +111,7 @@ export default class RecordForm extends Component {
             { label: 'Female', value: 'F' },
             { label: 'Other', value: 'O' }
         ]}
+        validate={[required]}
         />
         <Heading>
             Symptoms
