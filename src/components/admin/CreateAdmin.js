@@ -18,8 +18,8 @@ import {
 import { Icon } from 'react-native-elements';
 
 import { primaryColor, secondaryColor } from '../../themes';
-import { Button } from '../common';
-import { registerAdmin } from '../../actions/register';
+import { Button, Loader } from '../common';
+import { registerAdmin, updateAdmin } from '../../actions/register';
 
 class RegisterAdmin extends Component {
 
@@ -47,23 +47,7 @@ class RegisterAdmin extends Component {
           disabled={this.props.error != null}
           size='medium'
           onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
-        >Create </Button>
-      );
-    }
-
-    renderUpdateButton() {
-      if (this.props.submitting) {
-        return null;
-      }
-      return (
-        <Button
-          color={secondaryColor}
-          backgroundColor={'black'}
-          textColor={'white'}
-          disabled={this.props.error != null}
-          size='medium'
-          onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
-        >Update Existing</Button>
+        >Create/Update</Button>
       );
     }
 
@@ -109,17 +93,13 @@ class RegisterAdmin extends Component {
             
             <View style={{paddingTop: 10}}>
               <View style={styles.line} />
-              <View style={{flexDirection: 'row',justifyContent: 'space-between', alignItems: 'flex-start'}}>
+              
                 <View style={{paddingTop: 20}}>
                   {this.renderRegisterButton()}
                 </View>
                 <View style={styles.line} />
-                <View style={{paddingTop: 20}}>
-                  {this.renderUpdateButton()}
-                </View>
-                </View>
-              </View>
-              
+                
+              </View>        
             </View>
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>

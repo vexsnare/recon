@@ -4,6 +4,7 @@ const endPoints = {
 	validateToken: '/auth/validate_token',
 	signOut: 'auth/sign_out',
 	register: '/user/signup',
+	userUpdate: '/user',
 };
 
 export const authenticate = (username, password) => {
@@ -28,4 +29,8 @@ export const signOut = () => {
 
 export const register = (signupData) => {
 	return axios.post(endPoints.register, signupData);
+};
+
+export const update = (signupData) => {
+	return axios.put(endPoints.userUpdate, signupData);
 };

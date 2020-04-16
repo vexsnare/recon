@@ -115,3 +115,24 @@ export const register = (signupData) => {
 		});
 	});
 };
+
+export const update = (signupData) => {
+	console.log(signupData);
+	return new Promise((resolve, reject) => {
+		api.update(signupData)
+		.then(response => {
+			console.log('register response = ', response);
+			const status = response.data.status;
+			if(status == "FAILURE") {
+				throw response.data.exception.message;
+			} else {
+				store.dispatch({ type: REGISTER_USER_SUCCESS});
+			}
+			resolve(status);
+		})
+		.catch(error => {
+			console.log('register error = ', error);
+			reject(error);
+		});
+	});
+};

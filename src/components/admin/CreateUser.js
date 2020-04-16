@@ -19,7 +19,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { primaryColor, secondaryColor } from '../../themes';
 import { Button } from './../common';
-import { registerUser } from '../../actions/register';
+import { registerUser, updateUser } from '../../actions/register';
 
 class RegisterUser extends Component {
 
@@ -51,26 +51,9 @@ class RegisterUser extends Component {
           disabled={this.props.error != null}
           size='medium'
           onPress={this.props.handleSubmit((data, dispatch) => registerUser(data, dispatch))}
-        >Create</Button>
+        >Create/Update</Button>
       );
     }
-
-    renderUpdateButton() {
-      if (this.props.submitting) {
-        return null;
-      }
-      return (
-        <Button
-          color={secondaryColor}
-          backgroundColor={'black'}
-          textColor={'white'}
-          disabled={this.props.error != null}
-          size='medium'
-          onPress={this.props.handleSubmit((data, dispatch) => registerUser(data, dispatch))}
-        >Update User</Button>
-      );
-    }
-
 
     render() {
       const { loading, status } = this.props;
@@ -111,15 +94,11 @@ class RegisterUser extends Component {
             </TouchableOpacity>
             <View style={{paddingTop: 10}}>
               <View style={styles.line} />
-              <View style={{flexDirection: 'row',justifyContent: 'space-between', alignItems: 'flex-start'}}>
+           
                 <View style={{paddingTop: 20}}>
                   {this.renderCreateButton()}
                 </View>
-                <View style={styles.line} />
-                <View style={{paddingTop: 20}}>
-                  {this.renderUpdateButton()}
-                </View>
-                </View>
+           
               </View>
               </View>
           {/* modal for showing loader */}

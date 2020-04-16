@@ -15,10 +15,9 @@ export default (state = INITIAL_STATE, action) => {
           recordList.push(action.payload);
       return { ...state, records: [...recordList]};
     case PROJECT_LIST_FETCH_SUCCESS:
-      records.add(action.data);
-      return { ...state, error: null, loading: false, records: records};
+      return { ...state, error: null, loading: false, records: action.payload};
     case PROJECT_LIST_FETCH_ERROR:
-      return { ...state, loading: false, error: action.data };
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

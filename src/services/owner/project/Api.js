@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 const endPoints = {
-	projects: '/record/',
+	projects: '/record/partner',
 	bulk: '/record/bulk',
 };
 
 //In Use
 export const fetchProjects = () => {
+	console.log(axios.defaults);
   return axios.get(endPoints.projects);
 };
 

@@ -196,7 +196,7 @@ export const fetchNewProjectList = () => {
     dispatch({type: PROJECT_LIST_FETCHING});
     project.fetch()
     .then((projects) => {
-      dispatch({type: PROJECT_LIST_FETCH_SUCCESS, payload: projects});
+      dispatch({type: PROJECT_LIST_FETCH_SUCCESS, payload: projects.response});
     })
     .catch(err => {
       console.log(err);
