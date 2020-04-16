@@ -1,6 +1,6 @@
 export const PROJECT_CREATE = 'project/create';
-export const PROJECT_CREATE_F = 'project/create_s';
-export const PROJECT_CREATE_S = 'project/create_f';
+export const PROJECT_CREATE_F = 'project/create_f';
+export const PROJECT_CREATE_S = 'project/create_s';
 export const PROJECT_CREATE_OFFLINE = 'project/create_offline';
 export const PROJECT_FETCHING = 'project/fetching';
 export const PROJECT_FETCH_SUCCESS = 'project/fetched';

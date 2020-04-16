@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { primaryColor, secondaryColor } from '../../themes';
-import { Button } from './../common';
+import { Button, Loader } from './../common';
 import { registerUser, updateUser } from '../../actions/register';
 
 class RegisterUser extends Component {
@@ -104,7 +104,7 @@ class RegisterUser extends Component {
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>
             { this.renderAlert() }
-             <Spinner visible={this.props.submitting} overlayColor={primaryColor} />
+             <Loader visible={this.props.submitting}/>
           </View>
         </KeyboardAwareScrollView>
       );

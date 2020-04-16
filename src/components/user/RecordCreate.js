@@ -15,6 +15,7 @@ class RecordCreateForm extends Component {
 
   componentDidMount() {
   }
+  
 
   render() {
     const {loading} = this.props;

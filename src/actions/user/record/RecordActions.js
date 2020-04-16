@@ -43,23 +43,6 @@ const renderAlert = (title, message, func) => {
 }
 
 export const createRecord =  (values) => {
-  
-    let location = null;
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-
-      location = await Location.getCurrentPositionAsync({});
-    })();
-
-    console.log("Location : ", location );
-    if(location && location.coords) {
-      const {latitude, longitude, accuracy} = location.coords;
-      const current_location = {
-        lat: latitude,
-        long: longitude
-      }
-      values["location"] = current_location;
-    };
 
     Location.requestPermissionsAsync().then((permission) => {
       let { status } = permission;
@@ -93,8 +76,9 @@ export const createRecord =  (values) => {
                   })
                   .catch((err) => {
                     console.log(err);
-                    dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
-                    reject(new SubmissionError(err));
+                    dispatch({type: PROJECT_CREATE_F, payload: "Submision Failed"});
+                    renderAlert('Submision Failed', "Report to your Administrator");
+                    reject(new SubmissionError("Submision Failed"));
                   });
                 });
               } else {
@@ -120,7 +104,7 @@ export const createRecord =  (values) => {
               }
             }).catch(err => {
               console.log('Error while fetching Net Info');
-              dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+              
             })
 
 
@@ -128,10 +112,12 @@ export const createRecord =  (values) => {
 
         }).catch(err => {
           dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+          
           reject(new SubmissionError(err));
         })
       }
     }).catch(err => {
+      
       dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
       reject(new SubmissionError(err));
     })

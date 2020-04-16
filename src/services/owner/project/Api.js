@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const endPoints = {
-	projects: '/record/partner',
+	projects: '/record/partner/',
+	project: '/record/',
 	bulk: '/record/bulk',
 };
 
@@ -17,8 +18,7 @@ export const fetchProject = (id) => {
 
 //In Use
 export const createProject = (projectData) => {
-
-	return axios.post(endPoints.projects, projectData);
+	return axios.post(endPoints.project, projectData);
 };
 
 //In Use

@@ -8,7 +8,6 @@ import {
   Text,
   View
 } from 'react-native';
-import { phonecall } from 'react-native-communications';
 import { Icon, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
@@ -20,6 +19,7 @@ import Welcome from './Welcome';
 import axios from 'axios';
 import { fetchNewProjectList } from '../../actions/user/record';
 import { submitOfflineReports } from '../../helpers';
+import { Linking  } from 'expo';
 
 class RecordList extends Component {
 
@@ -62,7 +62,7 @@ class RecordList extends Component {
             </Text>
           </View>
           {phone &&
-            <TouchableWithoutFeedback onPress={()=> phonecall(phone, true)} style={{flex: 1, justifyContent: 'flex-end'}}>
+            <TouchableWithoutFeedback onPress={()=> Linking.openURL("tel:+91"+phone)} style={{flex: 1, justifyContent: 'flex-end'}}>
               <View>
                 <Icon name="phone" size={20} color={primaryColor} style={{paddingLeft: 10, marginVertical: -2}} />
               </View>
@@ -86,8 +86,8 @@ class RecordList extends Component {
             <View style={{paddingHorizontal: 10, backgroundColor: 'white'}}>
             {this.renderCardItem('Age', age)}
             {this.renderCardItem('Gender', gender)}
-            {this.renderCardItem('Disctric', distric)}
-            {this.renderCardItem('Phone Number', mobileNumber, true)}
+            {this.renderCardItem('Distric', distric)}
+            {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
             {this.renderCardItem('Date', moment(new Date(updatedTimeStamp)).format('DD/MMM/YYYY HH:MM'))}
             </View>
           </TouchableWithoutFeedback>

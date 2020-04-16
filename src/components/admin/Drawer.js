@@ -11,7 +11,7 @@ import { primaryColor } from '../../themes';
 
 
 const ProfileStackNav =  createStackNavigator({
-  'ProfileAdmin': {
+  'Profile': {
     screen: ProfileScreen,
     navigationOptions: ({ navigation }) => ({
       drawerLabel: "Profile",
@@ -23,7 +23,7 @@ const ProfileStackNav =  createStackNavigator({
     })
   }}, 
   {
-    initialRouteName: 'ProfileAdmin'
+    initialRouteName: 'Profile'
   }
 )
 

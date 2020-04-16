@@ -8,8 +8,8 @@ import {connect} from 'react-redux';
 import { getAllRecords } from '../../actions/admin/records';
 import RecordScreen from './Record'
 import { Card, Wait } from '../common';
-import { phonecall } from 'react-native-communications';
 import moment from 'moment';
+import { Linking } from 'expo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 class RecordList extends Component {
@@ -50,7 +50,7 @@ class RecordList extends Component {
             </Text>
           </View>
           {phone &&
-            <TouchableWithoutFeedback onPress={()=> phonecall(phone, true)} style={{flex: 1, justifyContent: 'flex-end'}}>
+            <TouchableWithoutFeedback onPress={()=> Linking.openURL("tel:+91"+phone)} style={{flex: 1, justifyContent: 'flex-end'}}>
               <View>
                 <Icon name="phone" size={20} color={primaryColor} style={{paddingLeft: 10, marginVertical: -2}} />
               </View>
@@ -61,7 +61,7 @@ class RecordList extends Component {
   }
 
   renderListItem = ({ item })=>  {
-    const { name, mobileNumber, distric, age, gender, date } = item;
+    const { name, mobileNumber, distric, age, gender, updatedTimeStamp } = item;
     return (
       <View>
         <Card>
@@ -74,9 +74,9 @@ class RecordList extends Component {
             <View style={{paddingHorizontal: 10, backgroundColor: 'white'}}>
             {this.renderCardItem('Age', age)}
             {this.renderCardItem('Gender', gender)}
-            {this.renderCardItem('Disctric', distric)}
-            {this.renderCardItem('Phone Number', mobileNumber, true)}
-            {this.renderCardItem('Date', moment(new Date()).format('DD MMM YYYY'))}
+            {this.renderCardItem('Distric', distric)}
+            {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
+            {this.renderCardItem('Date', moment(new Date(updatedTimeStamp)).format('DD/MMM/YYYY HH:MM'))}
             </View>
           </TouchableWithoutFeedback>
           <TouchableHighlight onPress={() => this.onRowPress(item)}>

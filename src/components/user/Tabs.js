@@ -6,7 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import RecordListScreen from './RecordList';
 import RecordCreateScreen from './RecordCreate';
-import RecordViewScreen from './../admin/Record';
+import UserRecordViewScreen from './Record';
 
 const RecordStackNavigator = createStackNavigator({
   "Home": {
@@ -22,7 +22,7 @@ const RecordStackNavigator = createStackNavigator({
     }
   },
   "RecordViewScreen": {
-    screen: RecordViewScreen,
+    screen: UserRecordViewScreen,
     navigationOptions: {
       title: 'View'
     }

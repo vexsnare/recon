@@ -104,7 +104,7 @@ class RegisterAdmin extends Component {
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>
             { this.renderAlert() }
-             <Spinner visible={this.props.submitting} overlayColor={primaryColor} />
+             <Loader visible={this.props.submitting} />
           </View>
         </KeyboardAwareScrollView>
       );
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   tAndcForAdminText: {
-    color: 'red',
+    color: 'blue',
     alignSelf: 'center',
     paddingLeft: 5,
     paddingBottom: 5,
