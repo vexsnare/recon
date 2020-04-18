@@ -5,7 +5,6 @@ export const FETCH_RECORDS = 'records/fetch';
 export const FETCH_RECORDS_S = 'records/fetch_S';
 export const FETCH_RECORDS_F = 'records/fetch_F';
 export const UPDATE_TO_EDIT_RECORD= 'records/UPDATE_TO_EDIT_RECORD';
-export const RECORD_LIST_ADD = 'record/list/add';
 
 export const getRecords = () => {
     store.dispatch({ type: FETCH_RECORDS })

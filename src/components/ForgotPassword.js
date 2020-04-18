@@ -15,6 +15,7 @@ import {
 import { primaryColor, inputErrorTextSize } from '../themes';
 import {  Button, Loader } from './common';
 import { renderTextInput} from './renderer';
+import {Icon} from 'react-native-elements'
 import { forgotPassword } from '../actions/forgot_password/forgotPasswordAction'
 
 class ForgotPassword extends Component {
@@ -35,14 +36,15 @@ class ForgotPassword extends Component {
       return null;
     }
     return (
-      <View style={{marginTop: 20, paddingBottom: 10, backgroundColor: '#f1f1f1'}}>
+      <View style={{marginTop: 20, padding: 10, backgroundColor: '#f1f1f1'}}>
         <View style={styles.line} />
-          <Text>
+          <Text style={{fontSize: 20, paddingVertical: 10}}>
             Please call this number directly and ask them to reset your password.
           </Text>
         <TouchableWithoutFeedback onPress={() => Linking.openURL("tel:+91"+phone)} style={{flex: 1, justifyContent: 'flex-end'}}>
-          <View>
-    <Text style={{marginLeft: 5}}><Text style={styles.boldText}>Phone:</Text>+91-{phone}</Text>
+          <View style={{flex: 3, flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.boldText}>Phone:</Text><Text style={{fontSize: 20}}>+91-{phone}</Text>
+                <Icon name="phone" size={25} color={primaryColor} style={{paddingLeft: 10, marginVertical: -2}} />
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -86,7 +88,7 @@ class ForgotPassword extends Component {
           />
           <View>
             <Text style={styles.instructionText}>
-              We would like you fetch your admin detail.
+              We would fetch your admin detail.
             </Text>
           </View>
           <View style={{paddingTop: 10}}>
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   boldText: {
-    fontWeight: '500'
+    fontSize: 20
   },
   line: {
     borderColor: 'gray',

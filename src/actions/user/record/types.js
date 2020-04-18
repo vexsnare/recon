@@ -5,6 +5,7 @@ export const RECORD_CREATE_OFFLINE = 'project/create_offline';
 export const RECORD_UPDATE = 'record/fetching';
 export const RECORD_UPDATE_SUCCESS = 'record/fetched';
 export const RECORD_UPDATE_FAILURE = 'record/fetchError';
+export const RECORD_LIST_ADD = 'Record/list/add';
 export const PROJECT_LIST_FETCHING = 'Record/list/fetching';
 export const PROJECT_LIST_FETCH_SUCCESS = 'Record/list/fetched';
 export const PROJECT_LIST_FETCH_ERROR = 'Record/list/fetchError';

@@ -1,9 +1,11 @@
 import {
     FETCH_RECORDS,
     FETCH_RECORDS_S,
-    FETCH_RECORDS_F,
-    RECORD_LIST_ADD
+    FETCH_RECORDS_F
 } from '../../actions/admin/records';
+import {
+  RECORD_LIST_ADD
+} from '../../actions/user/record/types'
 
 const INITIAL_STATE = { error: null, loading: false, records:[] };
 
