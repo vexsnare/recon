@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import {Divider} from 'react-native-elements'
 import {Card, CardHeading, CardSection, Container, TextInput } from './../common';
 
-export default class Record extends Component {
+export default class RecordView extends Component {
 
     display(key, value) {
         return (

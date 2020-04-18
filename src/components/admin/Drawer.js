@@ -21,7 +21,7 @@ const ProfileStackNav =  createStackNavigator({
                      <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
                    </TouchableWithoutFeedback>
     })
-  }}, 
+  } },
   {
     initialRouteName: 'Profile'
   }

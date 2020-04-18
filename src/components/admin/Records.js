@@ -6,32 +6,18 @@ import TouchableScale from 'react-native-touchable-scale';
 import { primaryColor } from '../../themes';
 import {connect} from 'react-redux';
 import { getAllRecords } from '../../actions/admin/records';
-import RecordScreen from './Record'
+import RecordViewScreen from './Record'
 import { Card, Wait } from '../common';
 import moment from 'moment';
 import { Linking } from 'expo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import RecordView from './Record';
 
 class RecordList extends Component {
 
   componentDidMount() {
     getAllRecords();
   }
-
-  static navigationOptions  = ({ navigation }) => ({
-    drawerLabel: "Records",
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('./../../../assets/icon.png')}
-        style={[styles.icon, { tintColor: tintColor }]}
-      />
-    ),
-    headerLeft: <TouchableWithoutFeedback
-                     onPress={ () => navigation.toggleDrawer()}
-                  >
-                   <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
-                 </TouchableWithoutFeedback>,
-  });
 
   keyExtractor = (item, index) => item.id;
 
@@ -151,8 +137,8 @@ const mapStateToProps = (state) => {
 
  export default createStackNavigator({
    'Record List': RecordListScreen,
-   'Record': RecordScreen
- }, {
+   'Record': RecordView
+ },{
    initialRouteName: 'Record List'
  }
  )
