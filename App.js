@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import store from './Store';
 import { Provider } from 'react-redux';
 import AppLoadingScreen from './src/components/AppLoading';
-import UserNavigator from './src/components/user/Tabs';
 import AdminNavigator from './src/components/admin/Drawer';
 import AuthNavigator from './src/components/Auth';
 import axios from 'axios';
@@ -30,8 +29,7 @@ class App extends Component {
 }
 
 const RouteConfigs = {
-  Auth: AuthNavigator,
-  User: UserNavigator, 
+  Auth: AuthNavigator, 
   Admin: AdminNavigator,
   AppLoading: AppLoadingScreen
 }

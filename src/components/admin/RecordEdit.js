@@ -1,0 +1,56 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { reduxForm } from 'redux-form'
+import RecordForm from './RecordForm';
+import { View, StyleSheet } from 'react-native';
+import { Button } from '../common';
+import { primaryColor } from '../../themes';
+import { Container, Loader } from '../common';
+import { updateRecord } from '../../actions/user/record';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+class RecordUpdate extends Component {
+  
+  render() {
+    const {recordId, handleSubmit, submitting} = this.props;
+    return (
+      <KeyboardAwareScrollView
+        style={{flex: 1, backgroundColor: 'white'}}
+        keyboardShouldPersistTaps='always'
+        style={styles.container}
+        >
+        <RecordForm />
+        <Container>
+          <Loader visible={this.props.submitting} />
+          <View style={styles.button}>
+            <Button color={primaryColor} onPress={handleSubmit((data, dispatch) => updateRecord(data, recordId, dispatch))}>
+              Update
+            </Button>
+          </View>
+        </Container>
+      </KeyboardAwareScrollView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  button: {
+    marginBottom: 30
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 10
+  }
+});
+
+const mapStateToProps = (state) => {
+  const { toEditRecord } = state.data.user.records.record;
+  let initialValues = toEditRecord;
+  return { initialValues, recordId: toEditRecord.id };
+}
+
+const RecordUpdateForm = reduxForm({form: 'recordUpdateForm'})(RecordUpdate);
+
+export default connect(mapStateToProps)(RecordUpdateForm);

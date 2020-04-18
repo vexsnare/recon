@@ -3,25 +3,28 @@ import _ from 'lodash';
 import { Field } from 'redux-form'
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
-import { Heading, TextInput, Bold, Toggle, Che } from '../common';
-import { required, mobile, maxLength2 } from '../../validators';
+import { Heading, TextInput, Bold } from '../common';
+import { required, mobile, maxLength2, valueIsNotNull } from '../../validators';
 import { renderTextInput, renderCheckBox } from '../renderer';
 
 import RNPickerSelect from 'react-native-picker-select';
 
-export const Dropdown = (props) => {
-  const { input, label, options, meta, ...otherProps } = props;
+export const renderDropdown = (props) => {
+  const { input, label, placeholder, options, meta, ...otherProps } = props;
   return (
     <View>
       <Text style={{fontSize: inputTextSize}}>{label}</Text>
+      <View style={{borderColor: 'gray', borderWidth: 1}}>
       <RNPickerSelect
           onValueChange={input.onChange}
           input={input}
+          placeholder={placeholder}
           onFocus={input.onFocus}
           onBlur={input.onBlur}
           autoCorrect={false}
           items={options}
       />
+      </View>
       {meta.touched && meta.error && <Text style={{color: 'red', fontSize: inputErrorTextSize}}>{meta.error}</Text>}
       </View>
   );
@@ -45,7 +48,7 @@ export const renderTextArea = (props) => {
       onBlur={input.onBlur}
       autoCorrect={false}
       underlineColorAndroid="transparent"
-      placeholder="Add remark of your report here"
+      placeholder="Please start typing here..."
       style={styles.multiline}
     />
     {meta.touched && meta.error && <Text style={{color: 'red', fontSize: inputErrorTextSize}}>{meta.error}</Text>}
@@ -75,7 +78,6 @@ export default class RecordForm extends Component {
           component={renderTextInput}
           keyboardType='numeric'
           validate={[required, maxLength2]}
-
         />
         <Field
           name='mobileNumber'
@@ -105,13 +107,13 @@ export default class RecordForm extends Component {
         <Field
           name='gender'
           label='Gender'
-          component={Dropdown}
+          component={renderDropdown}
           options={[
-            { label: 'Male', value: 'M' },
-            { label: 'Female', value: 'F' },
-            { label: 'Other', value: 'O' }
+            { label: 'Male', value: 'MALE' },
+            { label: 'Female', value: 'FEMALE' },
+            { label: 'Other', value: 'OTHER' }
         ]}
-        validate={[required]}
+        validate={[required, valueIsNotNull]}
         />
         <Heading>
             Symptoms
@@ -150,13 +152,44 @@ export default class RecordForm extends Component {
           label='Previous History Of Disease'
           component={renderTextArea}
         />
-
         <Field
-          name='other_detail'
-          label='Other Detail'
+          name='otherDetails'
+          label='Other Details'
           component={renderTextArea}
         />
-        
+        <Heading>
+            Quarantine Detail
+        </Heading>
+        <Field
+          name='quarantineType'
+          label='Quarantine Type'
+          component={renderDropdown}
+          options={[
+            { label: 'Home', value: 'HOME' },
+            { label: 'Institutional', value: 'INSTITUTIONAL' },
+            { label: 'None', value: 'NONE' },
+          ]}
+        />
+        <Field
+          name='quarantineAddress'
+          label='Quarantine Address'
+          component={renderTextArea}
+        />
+        <Field
+          name='contactType'
+          label='Contact Type'
+          component={renderDropdown}
+          options={[
+            { label: 'Primary', value: 'PRIMARY' },
+            { label: 'Secondary', value: 'SECONDARY' },
+            { label: 'None', value: 'NONE' },
+          ]}
+        />
+        <Field
+          name='contactAddress'
+          label='Contact Address'
+          component={renderTextArea}
+        />
       </View>
     );
   }
@@ -184,8 +217,9 @@ const styles = StyleSheet.create({
     padding: 5
   },
   multiline: {
-    borderWidth: 1,
+    borderWidth: 2,
     flex: 1,
+    borderColor: 'gray',
     height: 80,
     fontSize: 15,
     padding: 4,

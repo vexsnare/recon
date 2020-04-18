@@ -5,8 +5,10 @@ const endPoints = {
 	signOut: 'auth/sign_out',
 	register: '/user/signup',
 	userUpdate: '/user',
+	myAdmin: '/user/myadmin'
 };
 
+//In Use
 export const authenticate = (username, password) => {
 	axios.defaults.headers['Authorization'] = 'Basic dGVzdGp3dGNsaWVudGlkOlhZN2ttem9OemwxMDA=';
 	console.log("axios.defaults", axios.defaults);
@@ -14,8 +16,17 @@ export const authenticate = (username, password) => {
 	return axios.post(url, {}, {});
 };
 
+// In Use
 export const getUser = (username) => {
     const url = `/user/?mobileNumber=${username}`;
+	return axios.get(url);
+};
+
+// In Use
+export const getMyAdmin = (username) => {
+	
+	const url = `${endPoints.myAdmin}?mobileNumber=${username}`;
+	
 	return axios.get(url);
 };
 
@@ -31,6 +42,7 @@ export const register = (signupData) => {
 	return axios.post(endPoints.register, signupData);
 };
 
+//In Use
 export const update = (signupData) => {
 	return axios.put(endPoints.userUpdate, signupData);
 };

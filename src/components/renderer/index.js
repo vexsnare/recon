@@ -45,10 +45,7 @@ export const renderTextInput = (props) => {
 
 export const renderCheckBox = (props) => {
   const { input, ...inputProps } = props;
-  var checked = input.value;
-  if(typeof input.value === 'string') {
-    checked = input.value === "true";
-  }
+  var checked = input.value ? input.value : false;
   return (
       <CheckBox
       {...inputProps}

@@ -6,16 +6,12 @@ import {Loader} from '../../../components/common'
 import { loginUser } from '../../login/LoginActions';
 import * as Location from 'expo-location';
 import {
-  PROJECT_CREATE,
-  PROJECT_CREATE_S,
-  PROJECT_CREATE_F,
-  PROJECT_FETCHING,
-  PROJECT_FETCH_SUCCESS,
-  PROJECT_FETCH_ERROR,
-  PROJECT_LIST_FETCH_SUCCESS,
-  PROJECT_LIST_FETCH_ERROR,
-  PROJECT_LIST_FETCHING,
-  PROJECT_LIST_ADD,  
+  RECORD_CREATE,
+  RECORD_CREATE_S,
+  RECORD_CREATE_F,
+  RECORD_UPDATE,
+  RECORD_UPDATE_FAILURE,
+  RECORD_UPDATE_SUCCESS,
   SUBMIT_REPORT_OFFLINE
 } from './types';
 import * as project from '../../../services/owner/project';
@@ -23,13 +19,14 @@ import NavigatorService from '../../../services/navigator';
 import { store } from '../../../../Store';
 import {getNested} from '../../../utils';
 import NetInfo from '@react-native-community/netinfo';
+import { getRecords } from '../../../actions/admin/records';
 const { dispatch} = store;
 
 const sleep = (time) => {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const redirectToHome = () => NavigatorService.navigate("Home");
+const redirectToRecordList = () => NavigatorService.navigate("RecordList");
 
 const renderAlert = (title, message, func) => {
   Alert.alert(
@@ -42,8 +39,15 @@ const renderAlert = (title, message, func) => {
   )
 }
 
-export const createRecord =  (values) => {
+const transformValues = (values) => {
+  const quarantineType = values.quarantineType ? values.quarantineType : "NONE";
+  const contactType = values.contactType ? values.contactType : "NONE";
+  return {...values, quarantineType, contactType}
+}
 
+export const createRecord =  (formValues) => {
+    let values = transformValues(formValues);
+    console.log("formValues", values);
     Location.requestPermissionsAsync().then((permission) => {
       let { status } = permission;
       if (status !== 'granted') {
@@ -57,9 +61,7 @@ export const createRecord =  (values) => {
               lon: longitude
             }
             values["location"] = current_location;
-
-
-            dispatch({type: PROJECT_CREATE});
+            dispatch({type: RECORD_CREATE});
             console.log('Checking Internet is there or not');
 
             NetInfo.fetch().then((status) => {
@@ -69,14 +71,14 @@ export const createRecord =  (values) => {
                   console.log("Record: ", values);
                   project.create(values)
                   .then((data) => {
-                    dispatch({type: PROJECT_LIST_ADD, payload: data.response});
-                    dispatch({type: PROJECT_CREATE_S, payload: "Created Successfully"});
-                    NavigatorService.navigate("Home");
+                    dispatch({type: RECORD_LIST_ADD, payload: data.response});
+                    dispatch({type: RECORD_CREATE_S, payload: "Created Successfully"});
+                    redirectToRecordList();
                     resolve();
                   })
                   .catch((err) => {
                     console.log(err);
-                    dispatch({type: PROJECT_CREATE_F, payload: "Submision Failed"});
+                    dispatch({type: RECORD_CREATE_F, payload: "Submision Failed"});
                     renderAlert('Submision Failed', "Report to your Administrator");
                     reject(new SubmissionError("Submision Failed"));
                   });
@@ -92,103 +94,56 @@ export const createRecord =  (values) => {
                       console.log('No Internet Submitting offLine');
                       dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
                       renderAlert('Submitted offLine', "Please sync your reports once you are connected to Internet");
-                      dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+                      dispatch({type: RECORD_CREATE_F, payload: "Failed"});
                     }
                   )
                 }
                 else {
-                  console.log("Log ", 11);
-                  renderAlert('Error', "Can't submit. Please sync 100 pending recorts before submitting a new one", redirectToHome);
-                  dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+                  renderAlert('Error', "Can't submit. Please sync 100 pending recorts before submitting a new one", redirectToRecordList);
+                  dispatch({type: RECORD_CREATE_F, payload: "Failed"});
                 }
               }
             }).catch(err => {
               console.log('Error while fetching Net Info');
-              
+              reject(new SubmissionError(err));
             })
-
-
           };
 
         }).catch(err => {
-          dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+          console.log('Error Unable to get position', err);
+          dispatch({type: RECORD_CREATE_F, payload: "Failed"});
           
           reject(new SubmissionError(err));
         })
       }
     }).catch(err => {
-      
-      dispatch({type: PROJECT_CREATE_F, payload: "Failed"});
+      console.log('Error Unable to get location', err);
+      dispatch({type: RECORD_CREATE_F, payload: "Failed"});
       reject(new SubmissionError(err));
     })
   }
 
 
-export const updateProject = (values, id, dispatch) => {
+export const updateRecord = (formValues, id, dispatch) => {
+  const values = transformValues(formValues);
+  dispatch({type: RECORD_UPDATE});
   return new Promise((resolve, reject) => {
     project.update(values, id)
-    .then(() => {
-      NavigatorService.back();
-      fetchNewProject(dispatch, id);
-      fetchNewProjectList(dispatch);
-      resolve();
+    .then((result) => {
+      console.log("result = ", result);
+      dispatch({type: RECORD_UPDATE_SUCCESS});
+      getRecords();
+      redirectToRecordList();
+      resolve(result.data);
     })
     .catch((err) => {
-      console.log(err);
+      console.log("err", err);
+      dispatch({type: RECORD_UPDATE_FAILURE})
+      renderAlert('Error', "Can't submit. Error in updating record", redirectToRecordList);
       reject(new SubmissionError(err));
     });
   });
 };
-
-export const fetchProject = (project_id) => {
-  return (dispatch) => {
-    dispatch({type: PROJECT_FETCHING});
-    project.get(project_id)
-    .then((project) => {
-      dispatch({type: PROJECT_FETCH_SUCCESS, payload: project});
-    })
-    .catch((err) => {
-      dispatch({type: PROJECT_FETCH_ERROR})
-    });
-  }
-};
-
-export const fetchNewProject = (dispatch, project_id) => {
-    dispatch({type: PROJECT_FETCHING});
-    project.get(project_id)
-    .then((project) => {
-      dispatch({type: PROJECT_FETCH_SUCCESS, payload: project});
-    })
-    .catch((err) => {
-      dispatch({type: PROJECT_FETCH_ERROR})
-    });
-};
-
-export const fetchProjectList = () => {
-  return (dispatch) => {
-    dispatch({type: PROJECT_LIST_FETCHING});
-    project.fetch()
-    .then((projects) => {
-      dispatch({type: PROJECT_LIST_FETCH_SUCCESS, payload: projects});
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({type: PROJECT_LIST_FETCH_ERROR});
-    })
-  }
-}
-
-export const fetchNewProjectList = () => {
-    dispatch({type: PROJECT_LIST_FETCHING});
-    project.fetch()
-    .then((projects) => {
-      dispatch({type: PROJECT_LIST_FETCH_SUCCESS, payload: projects.response});
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({type: PROJECT_LIST_FETCH_ERROR});
-    })
-}
 
 export const deleteProject = (id) => {
   return project.remove(id);

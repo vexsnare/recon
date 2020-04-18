@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { required, email } from '../validators';
+import { required, mobile } from '../validators';
 import { Field, reduxForm } from 'redux-form';
-import { phonecall } from 'react-native-communications';
-
+import { Linking } from 'expo';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -13,8 +13,9 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { primaryColor, inputErrorTextSize } from '../themes';
-import {  Button } from './common';
+import {  Button, Loader } from './common';
 import { renderTextInput} from './renderer';
+import { forgotPassword } from '../actions/forgot_password/forgotPasswordAction'
 
 class ForgotPassword extends Component {
   renderAlert() {
@@ -29,19 +30,19 @@ class ForgotPassword extends Component {
     }
     return null;
   }
-  renderContactInfo() {
+  renderContactInfo(phone) {
+    if(!phone) {
+      return null;
+    }
     return (
       <View style={{marginTop: 20, paddingBottom: 10, backgroundColor: '#f1f1f1'}}>
         <View style={styles.line} />
           <Text>
-            You can also contact us directly.
+            Please call this number directly and ask them to reset your password.
           </Text>
-        <View>
-          <Text><Text style={styles.boldText}>Email:</Text>contact@demo.co.in</Text>
-        </View>
-        <TouchableWithoutFeedback onPress={() => phonecall('+11111111', true)} style={{flex: 1, justifyContent: 'flex-end'}}>
+        <TouchableWithoutFeedback onPress={() => Linking.openURL("tel:+91"+phone)} style={{flex: 1, justifyContent: 'flex-end'}}>
           <View>
-            <Text style={{marginLeft: 5}}><Text style={styles.boldText}>Phone:</Text>+91-11111111</Text>
+    <Text style={{marginLeft: 5}}><Text style={styles.boldText}>Phone:</Text>+91-{phone}</Text>
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -57,15 +58,17 @@ class ForgotPassword extends Component {
         backgroundColor={primaryColor}
         textColor={'white'}
         size='small'
-        onPress={null}
+        onPress={this.props.handleSubmit((data, dispatch) => forgotPassword(data, dispatch))}
       >Submit</Button>
     );
 
   }
 
   render() {
+    const { myAdmin } = this.props;
     return (
         <View style={styles.globalContainer}>
+        <Loader visible={this.props.submitting} />
         <ScrollView style={styles.container}>
           <View style={{paddingTop: 10, flexDirection: 'column', justifyContent: 'space-around'}}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -76,14 +79,14 @@ class ForgotPassword extends Component {
             <Text style={styles.mainText}>Forgot Password</Text>
           </View>
           <Field
-            name='login'
-            label="Email"
+            name='username'
+            label="Your mobile number"
             component={renderTextInput}
-            validate={[required, email]}
+            validate={[required]}
           />
           <View>
             <Text style={styles.instructionText}>
-              We would send you a link to reset your password.
+              We would like you fetch your admin detail.
             </Text>
           </View>
           <View style={{paddingTop: 10}}>
@@ -93,7 +96,7 @@ class ForgotPassword extends Component {
             </View>
           </View>
           { this.renderAlert() }
-          { this.renderContactInfo()}
+          { this.renderContactInfo(myAdmin)}
           </ScrollView>
           </View>
     );
@@ -102,7 +105,12 @@ class ForgotPassword extends Component {
 
 const forgotPasswordForm = reduxForm({ form: 'forgotPasswordForm',  destroyOnUnmount: true })(ForgotPassword);
 
-export default forgotPasswordForm;
+const mapStateToProps = (state) => {
+  const { myAdmin } = state.services.session;
+  return { myAdmin };
+};
+
+export default connect(mapStateToProps)(forgotPasswordForm);
 
 const styles = StyleSheet.create({
   mainText: {

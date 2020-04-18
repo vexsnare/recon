@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
-import { required, mobile } from '../../validators';
-import { renderTextInput} from '../renderer';
-import { createStackNavigator} from 'react-navigation-stack'
+import { required, mobile, email } from '../../validators';
+import { renderTextInput, renderCheckBox} from '../renderer';
+import {createStackNavigator} from 'react-navigation-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   View,
@@ -13,24 +12,21 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-  TouchableWithoutFeedback
-
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+
 import { primaryColor, secondaryColor } from '../../themes';
-import { Button, Loader } from './../common';
-import { registerUser, updateUser } from '../../actions/register';
+import { Button, Loader } from '../common';
+import { createAccount } from '../../actions/register';
+import NotAuthorized from './NotAuthorized';
 
-class RegisterUser extends Component {
-
-    componentDidMount() {
-      this.props.reset();
-    }
+class UpdateAccount extends Component {
 
     renderAlert() {
       if (this.props.error) {
         setTimeout(() => {
-          Alert.alert('Unable to Register.', this.props.error,
+          Alert.alert('Unable to update.', this.props.error,
           [
              {text: 'OK', onPress: () => null}
           ]);
@@ -39,7 +35,7 @@ class RegisterUser extends Component {
       return null;
     }
 
-    renderCreateButton() {
+    renderRegisterButton() {
       if (this.props.submitting) {
         return null;
       }
@@ -50,15 +46,15 @@ class RegisterUser extends Component {
           textColor={'white'}
           disabled={this.props.error != null}
           size='medium'
-          onPress={this.props.handleSubmit((data, dispatch) => registerUser(data, dispatch))}
-        >Create/Update</Button>
+          onPress={this.props.handleSubmit((data, dispatch) => createAccount(data, dispatch))}
+        >Update</Button>
       );
     }
 
     render() {
-      const { loading, status } = this.props;
-      if(status == "SUCCESS") {
-        console.log("Register Page props: " + this.props);
+      const { error, role, navigation } = this.props;
+      if(role != 'Admin') {
+        return <NotAuthorized />
       }
       return (
         <KeyboardAwareScrollView
@@ -87,24 +83,34 @@ class RegisterUser extends Component {
             component={renderTextInput}
             validate={[required]}
           />
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('legals')}>
+          
+        <Field
+          name='admin'
+          label='This user is Admin'
+          component={renderCheckBox}
+        />
+        <View>
+          <View style={styles.line} />
+            <TouchableOpacity>
               <Text style={styles.tAndcText}>
-                Please fill above detail for Sign Up
+                Please fill above detail for Sign Up.
               </Text>
-            </TouchableOpacity>
-            <View style={{paddingTop: 10}}>
+            </TouchableOpacity>            
+            <View>
               <View style={styles.line} />
-           
+              
                 <View style={{paddingTop: 20}}>
-                  {this.renderCreateButton()}
+                  {this.renderRegisterButton()}
                 </View>
-           
+                <View style={styles.line} />
+                
+              </View>        
               </View>
-              </View>
+            </View>
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>
             { this.renderAlert() }
-             <Loader visible={this.props.submitting}/>
+             <Loader visible={this.props.submitting} />
           </View>
         </KeyboardAwareScrollView>
       );
@@ -121,14 +127,21 @@ const styles = StyleSheet.create({
     color: 'gray',
     alignSelf: 'center',
     paddingLeft: 5,
-    paddingBottom: 5,
+    paddingVertical: 15,
     fontSize: 12
+  },
+  tAndcForAdminText: {
+    color: 'blue',
+    alignSelf: 'center',
+    paddingLeft: 5,
+    paddingBottom: 5,
+    fontSize: 16
   },
   line: {
     borderColor: 'gray',
     borderWidth: 0.4,
     marginLeft: -10,
-    marginRight: -10
+    marginRight: -10,
   },
   button: {
     backgroundColor: primaryColor,
@@ -159,20 +172,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const registerForm = reduxForm({ form: 'signupForm', destroyOnUnmount: true })(RegisterUser);
+const updateAccountForm = reduxForm({ form: 'signupFormAdmin', destroyOnUnmount: true })(UpdateAccount);
 
 const mapStateToProps = (state) => {
   const { loading, status }  = state.data.register;
-  return { loading, status };
+  const { user } = state.services.session; 
+  let role = "User";
+  if(user && user.roles.length > 1) {
+    role = "Admin";
+  }
+  return { loading, role, status };
 };
 
-const RegisterFormScreen = connect(mapStateToProps)(registerForm);
+const updateAccountScreen = connect(mapStateToProps)(updateAccountForm);
 
 export default createStackNavigator({
-  'RegisterUserNav': {
-    screen: RegisterFormScreen,
+  'UpdateAccountScreen': {
+    screen: updateAccountScreen,
     navigationOptions: ({navigation}) => ({    
-      title: 'Regiser User',
+      title: 'Update Existing Account',
       headerLeft: 
         <TouchableWithoutFeedback
           onPress={ () => navigation.toggleDrawer()}
@@ -181,7 +199,9 @@ export default createStackNavigator({
       </TouchableWithoutFeedback>}
       )
   }
-}, {
-  initialRouteName: 'RegisterUserNav'
+},
+{
+  initialRouteName: 'UpdateAccountScreen'
 }
-);
+)
+

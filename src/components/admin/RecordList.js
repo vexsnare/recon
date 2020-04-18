@@ -9,22 +9,27 @@ import {
   View
 } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
+import {createStackNavigator } from 'react-navigation-stack';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
 import { primaryColor, secondaryColor} from '../../themes';
-import { Card } from '../common';
+import { Card,Wait } from '../common';
 import moment from 'moment';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Welcome from './Welcome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
-import { fetchNewProjectList } from '../../actions/user/record';
+import { getRecords, recordToEdit } from '../../actions/admin/records';
 import { submitOfflineReports } from '../../helpers';
 import { Linking  } from 'expo';
+import RecordViewScreen from './Record'
+import RecordCreateScreen from './RecordCreate'
+import RecordEditScreen from './RecordEdit'
+import { timing } from 'react-native-reanimated';
 
 class RecordList extends Component {
 
   componentDidMount() {
-    fetchNewProjectList();
+    getRecords();
   }
 
   keyExtractor = (item, index) => item.id;
@@ -45,10 +50,14 @@ class RecordList extends Component {
     }
   }
 
-
+  formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' | ' + date.getHours() + ':' + date.getMinutes();
+  }
 
   onRowPress(item) {
-    this.props.navigation.navigate('RecordViewScreen', {record: item})
+    recordToEdit(item);
+    this.props.navigation.push('RecordView', {record: item})
   }
   renderCardItem(label, text, phone) {
     return (
@@ -74,7 +83,6 @@ class RecordList extends Component {
 
   renderListItem = ({ item })=>  {
     const { name, mobileNumber, district, age, gender, updatedTimeStamp } = item;
-    console.log("updatedTimeStamp",updatedTimeStamp);
     return (
       <View>
         <Card>
@@ -89,7 +97,7 @@ class RecordList extends Component {
             {this.renderCardItem('Gender', gender)}
             {this.renderCardItem('District', district)}
             {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
-            {this.renderCardItem('Date', moment(new Date(updatedTimeStamp)).format('DD MMM YYYY HH:MM'))}
+            {this.renderCardItem('Date', ''+updatedTimeStamp)}
             </View>
           </TouchableWithoutFeedback>
           <TouchableHighlight onPress={() => this.onRowPress(item)}>
@@ -113,19 +121,17 @@ class RecordList extends Component {
     if(loading) {
       return <Wait />;
     }
-    
-    let list = records;
     // navigation state
     return (
         <View style={{flex: 1, backgroundColor: 'white', paddingBottom: 10}} >
         <View style={{backgroundColor: 'white'}}>
         {this.renderSyncReportAction(offlineRecords)}
         </View>
-        {_.isEmpty(records) && <Welcome navigation={navigation}/>}
+        {(!records || _.isEmpty(records)) && <Welcome navigation={navigation}/>}
         {!_.isEmpty(records) &&       
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={list}
+          data={records}
           renderItem={this.renderListItem}
         />}
         {
@@ -139,8 +145,6 @@ class RecordList extends Component {
       );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   btnModal: {
@@ -175,16 +179,54 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { loading, error } = state.data.user.records;
+
+  const { records, error, loading } = state.data.user.records.records;
   const offlineRecords = state.data.offline.records;
-  const recordList = state.data.user.records.records.records;
-  let records = [];
-  if(recordList) {
-    records = recordList;
-  }
   const tokens  = state.services.session.tokens;
   axios.defaults.headers['Authorization'] = "Bearer " + tokens;
   return { records, error, loading, offlineRecords };
 }
 
-export default connect(mapStateToProps)(RecordList);
+const RecordListScreen = connect(mapStateToProps)(RecordList);
+
+export default createStackNavigator({
+  'RecordList': {
+    screen: RecordListScreen,
+    navigationOptions: ({navigation}) => ({    
+      title: 'Record List',
+      headerLeft: 
+        <TouchableWithoutFeedback
+          onPress={ () => navigation.toggleDrawer()}
+      >
+        <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
+      </TouchableWithoutFeedback>}
+      )
+  },
+  'RecordView':  {
+    screen: RecordViewScreen,
+    navigationOptions: ({navigation}) => ({
+      title: 'View',
+      headerRight:
+                  <TouchableWithoutFeedback
+                     onPress={ () => navigation.navigate('RecordEdit') }
+                  >
+                   <View style={{padding: 10}}><Text>EDIT</Text><Icon name="mode-edit" size={22} /></View>
+                 </TouchableWithoutFeedback>
+              })
+  },
+  'RecordCreate': {
+    screen: RecordCreateScreen,
+    navigationOptions: ({navigation}) => ({    
+      title: 'Record Create',
+    })
+  },
+  'RecordEdit': {
+    screen: RecordEditScreen,
+    navigationOptions: ({navigation}) => ({    
+      title: 'Record Edit',
+    })
+  }
+},{
+  initialRouteName: 'RecordList'
+}
+)

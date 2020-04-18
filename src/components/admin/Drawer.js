@@ -3,10 +3,10 @@ import { View, StyleSheet, Button, Image, SafeAreaView, ScrollView, TouchableWit
 import { createDrawerNavigator, DrawerActions, DrawerItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Icon } from 'react-native-elements';
-import CreateUser from './CreateUser';
-import CreateAdmin from './CreateAdmin';
+import CreateAccount from './CreateAccount';
+import UpdateAccount from './UpdateAccount';
 import {ProfileScreen} from '../shared/Profile';
-import RecordNavigator from './Records';
+import RecordNavigator from './RecordList';
 import { primaryColor } from '../../themes';
 
 
@@ -21,14 +21,14 @@ const ProfileStackNav =  createStackNavigator({
                      <View style={{padding: 10}}><Icon type='ionicon' name="ios-menu" size={35} /></View>
                    </TouchableWithoutFeedback>
     })
-  } },
+  }},
   {
     initialRouteName: 'Profile'
   }
 )
 
 export default createDrawerNavigator({
-  "Records": {
+  "RecordList": {
     screen: RecordNavigator,
     navigationOptions: ({navigation}) => ({
       drawerLabel: 'Records.',
@@ -42,23 +42,23 @@ export default createDrawerNavigator({
       drawerIcon: <Icon type='ionicon' name="ios-person" />
     })
   },
-  "RegisterUser": { 
-    screen: CreateUser,
+  "Register": {
+    screen: CreateAccount,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Register User',
-      drawerIcon: <Icon type='ionicon' name="ios-body" />
+      drawerLabel: 'Create Account',
+      drawerIcon: <Icon type='ionicon' name="ios-ribbon" />
     })
   },
-  "RegisterAdmin": {
-    screen: CreateAdmin,
+  "UpdateAccount": {
+    screen: UpdateAccount,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Register Admin',
-      drawerIcon: <Icon type='ionicon' name="ios-build" />
+      drawerLabel: 'Update Account',
+      drawerIcon: <Icon type='ionicon' name="ios-settings" />
     })
   }
 }, {
   headerMode: 'screen',
-  initialRouteName: 'Records',
+  initialRouteName: 'RecordList',
   drawerPosition: 'Left',
   contentOptions: {
     activeTintColor: primaryColor,

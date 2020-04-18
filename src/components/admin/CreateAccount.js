@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import Spinner from 'react-native-loading-spinner-overlay';
 import { Field, reduxForm } from 'redux-form'
 import { required, mobile, email } from '../../validators';
-import { renderTextInput} from '../renderer';
+import { renderTextInput, renderCheckBox} from '../renderer';
 import {createStackNavigator} from 'react-navigation-stack';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
@@ -13,15 +12,16 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { primaryColor, secondaryColor } from '../../themes';
 import { Button, Loader } from '../common';
-import { registerAdmin, updateAdmin } from '../../actions/register';
+import { createAccount } from '../../actions/register';
+import NotAuthorized from './NotAuthorized';
 
-class RegisterAdmin extends Component {
+class CreateAccount extends Component {
 
     renderAlert() {
       if (this.props.error) {
@@ -46,13 +46,16 @@ class RegisterAdmin extends Component {
           textColor={'white'}
           disabled={this.props.error != null}
           size='medium'
-          onPress={this.props.handleSubmit((data, dispatch) => registerAdmin(data, dispatch))}
-        >Create/Update</Button>
+          onPress={this.props.handleSubmit((data, dispatch) => createAccount(data, dispatch))}
+        >Create</Button>
       );
     }
 
     render() {
-      const { error, navigation } = this.props;
+      const { error, role, navigation } = this.props;
+      if(role != 'Admin') {
+        return <NotAuthorized />
+      }
       return (
         <KeyboardAwareScrollView
           style={styles.contentContainer}
@@ -80,18 +83,20 @@ class RegisterAdmin extends Component {
             component={renderTextInput}
             validate={[required]}
           />
+          
+        <Field
+          name='admin'
+          label='This user is Admin'
+          component={renderCheckBox}
+        />
+        <View>
+          <View style={styles.line} />
             <TouchableOpacity>
               <Text style={styles.tAndcText}>
                 Please fill above detail for Sign Up.
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.tAndcForAdminText}>
-                This is Admin account creation with Admin access rights.
-              </Text>
-            </TouchableOpacity>
-            
-            <View style={{paddingTop: 10}}>
+            </TouchableOpacity>            
+            <View>
               <View style={styles.line} />
               
                 <View style={{paddingTop: 20}}>
@@ -100,6 +105,7 @@ class RegisterAdmin extends Component {
                 <View style={styles.line} />
                 
               </View>        
+              </View>
             </View>
           {/* modal for showing loader */}
           <View style={{ flex: 1 }}>
@@ -121,7 +127,7 @@ const styles = StyleSheet.create({
     color: 'gray',
     alignSelf: 'center',
     paddingLeft: 5,
-    paddingBottom: 5,
+    paddingVertical: 15,
     fontSize: 12
   },
   tAndcForAdminText: {
@@ -166,20 +172,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const registerForm = reduxForm({ form: 'signupFormAdmin', destroyOnUnmount: true })(RegisterAdmin);
+const createAccountForm = reduxForm({ form: 'signupFormAdmin', destroyOnUnmount: true })(CreateAccount);
 
 const mapStateToProps = (state) => {
   const { loading, status }  = state.data.register;
-  return { loading, status };
+  const { user } = state.services.session; 
+  let role = "User";
+  if(user && user.roles.length > 1) {
+    role = "Admin";
+  }
+  return { loading, role, status };
 };
 
-const RegisterFormScreen = connect(mapStateToProps)(registerForm);
+const createAccountScreen = connect(mapStateToProps)(createAccountForm);
 
 export default createStackNavigator({
-  'RegisterAdminNav': {
-    screen: RegisterFormScreen,
+  'CreateAccountScreen': {
+    screen: createAccountScreen,
     navigationOptions: ({navigation}) => ({    
-      title: 'Regiser Admin',
+      title: 'Create New Account',
       headerLeft: 
         <TouchableWithoutFeedback
           onPress={ () => navigation.toggleDrawer()}
@@ -190,8 +201,7 @@ export default createStackNavigator({
   }
 },
 {
-  initialRouteName: 'RegisterAdminNav'
+  initialRouteName: 'CreateAccountScreen'
 }
-
 )
 

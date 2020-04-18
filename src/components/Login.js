@@ -59,7 +59,7 @@ class Login extends Component {
 
   render() {
     if(this.props.isLogin) {
-      this.props.navigation.navigate(this.props.role == "User" ? "User" : "Admin");
+      this.props.navigation.navigate("Admin");
     }
     return (
         <ScrollView

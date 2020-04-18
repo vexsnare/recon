@@ -116,6 +116,20 @@ export const register = (signupData) => {
 	});
 };
 
+export const findMyAdmin = (username) => {
+	console.log("Forgot find for username ", username);
+	return new Promise((resolve, reject)=> {
+		api.getMyAdmin(username)
+		.then(response => {
+			console.log("resposen for foo");
+			resolve(response.data);
+		}).catch(error => {
+			console.log("error", error);
+			reject(error);
+		})
+	});
+}
+
 export const update = (signupData) => {
 	console.log(signupData);
 	return new Promise((resolve, reject) => {

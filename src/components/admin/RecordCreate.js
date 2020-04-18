@@ -18,14 +18,13 @@ class RecordCreateForm extends Component {
   
 
   render() {
-    const {loading} = this.props;
     return (
       <KeyboardAwareScrollView
         style={styles.container}
         keyboardShouldPersistTaps='always'
         >
         <RecordForm />
-        <Loader visible={loading} />
+        <Loader visible={this.props.loading} />
         <View style={styles.button}>
           <Button color={primaryColor} onPress={this.props.handleSubmit((data, dispatch) => createRecord(data, dispatch))}>
             SAVE

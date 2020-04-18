@@ -22,36 +22,13 @@ const renderAlert = (title, message) => {
 }
 
 //In use
-export const registerUser = (values, dispatch) => {  
-  const { password, name, phone } = values;
+export const createAccount = (values, dispatch) => {
+  const { password, name, phone, admin } = values;
   const registerData = {
     fullName: name,
     password,
     mobileNumber:phone,
-    admin: 0,
-    createdBy: "dummy"
-  };
-  return new Promise((resolve, reject) => {
-    session.register(registerData)
-    .then(() => {
-      renderAlert("Success", "Press Ok to go back to records.");
-      store.dispatch(reset("signupForm"));
-      resolve();
-    }).catch((errorMessage) => {
-      console.log('Failed to signup', errorMessage);
-      reject(new SubmissionError({_error : errorMessage}));
-    });
-  });
-};
-
-//In use
-export const registerAdmin = (values, dispatch) => {
-  const { password, name, phone } = values;
-  const registerData = {
-    fullName: name,
-    password,
-    mobileNumber:phone,
-    admin: 1,
+    admin: admin,
     createdBy: "dummy"
   };
   return new Promise((resolve, reject) => {

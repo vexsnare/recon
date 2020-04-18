@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import {Card, CardHeading, CardSection, Container, TextInput } from './../common';
+import React, { Component } from 'react';
+import { Container } from '../common';
+import { Text, View, StyleSheet} from 'react-native'
+import { Icon } from 'react-native-elements'
 
 export default class RecordView extends Component {
 
@@ -23,7 +24,6 @@ export default class RecordView extends Component {
     render() {
         const record = this.props.navigation.getParam("record", "NO RECORD");
         return (
-            
             <Container>
                 {this.display("Full Name", record.name)}
                 {this.display("Phone", record.mobileNumber)}
@@ -39,6 +39,14 @@ export default class RecordView extends Component {
                 {this.display("Anyone Around", record.anyOneAround)}
                 {this.display("Previous History Of Disease", record.previousHistoryOfDisease)}
                 {this.display("OtherDetails", record.otherDetails)}
+                {record.quarantineType && <View>
+                        <Text style={{fontSize: 25}}>Quarantine Details</Text>
+                        <View style={{borderWidth: 0.5}}></View>
+                        </View>}
+                {record.quarantineType && this.display("Quarantine Type", record.quarantineType)}
+                {record.quarantineAddress && this.display("Quarantine Address", record.quarantineAddress)}
+                {record.contactType && this.display("Contact Type", record.contactType)}
+                {record.contactAddress && this.display("ContactAddress", record.contactAddress)}
                 <View style={{marginBottom: 40}}>
                 {record.location && <View>
                         <Text style={{fontSize: 25}}>Location</Text>
@@ -46,6 +54,11 @@ export default class RecordView extends Component {
                         </View>}
                 {record.location && this.display("Latitude", record.location.lat)}
                 {record.location && this.display("Longitude", record.location.lon)}
+                {record.partnerNumber && <View>
+                        <Text style={{fontSize: 25}}>Submitted By</Text>
+                        <View style={{borderWidth: 0.5}}></View>
+                        </View>}
+                {record.partnerNumber && this.display("Contact Number", record.partnerNumber)}
                 </View>
             </Container>
             

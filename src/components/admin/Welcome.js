@@ -9,9 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default class Welcome extends Component {
-
-  render() {
+export default Welcome =  (props) => {
     return (
         <ScrollView style={{backgroundColor: 'white'}} >
           <View style={styles.welcome}>
@@ -27,7 +25,7 @@ export default class Welcome extends Component {
            iconLeft
            fontSize={16}
            containerViewStyle={{marginTop: 20}}
-           onPress={() => this.props.navigation.navigate('RecordCreate')}
+           onPress={() => props.navigation.navigate('RecordCreate')}
            backgroundColor={primaryColor}
            title='Add Record' />
           <Card style={{justifyContent: 'center', margin: 10}}>
@@ -38,7 +36,6 @@ export default class Welcome extends Component {
           </Card>
         </ScrollView>
     );
-  }
 }
 
 const styles = StyleSheet.create({
