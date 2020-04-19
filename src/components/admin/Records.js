@@ -12,6 +12,8 @@ import moment from 'moment';
 import { Linking } from 'expo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import RecordView from './Record';
+import {formatDate} from '../../utils';
+import {recordCardDateFormat} from '../../const'
 
 class RecordList extends Component {
 
@@ -62,7 +64,7 @@ class RecordList extends Component {
             {this.renderCardItem('Gender', gender)}
             {this.renderCardItem('District', district)}
             {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
-            {this.renderCardItem('Date', moment(new Date(updatedTimeStamp)).format('DD MMM YYYY HH:MM'))}
+            {this.renderCardItem('Date', formatDate(updatedTimeStamp, recordCardDateFormat))}            
             </View>
           </TouchableWithoutFeedback>
           <TouchableHighlight onPress={() => this.onRowPress(item)}>

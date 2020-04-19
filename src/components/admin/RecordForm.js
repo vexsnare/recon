@@ -187,7 +187,7 @@ export default class RecordForm extends Component {
         />
         <Field
           name='contactAddress'
-          label='Contact Address'
+          label='Contact Details'
           component={renderTextArea}
         />
       </View>

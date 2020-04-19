@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
 import { primaryColor, secondaryColor} from '../../themes';
 import { Card,Wait } from '../common';
-import moment from 'moment';
 import Welcome from './Welcome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
@@ -25,6 +24,9 @@ import RecordViewScreen from './Record'
 import RecordCreateScreen from './RecordCreate'
 import RecordEditScreen from './RecordEdit'
 import { timing } from 'react-native-reanimated';
+import {formatDate} from '../../utils';
+import {recordCardDateFormat} from '../../const'
+
 
 class RecordList extends Component {
 
@@ -48,11 +50,6 @@ class RecordList extends Component {
         />
       );
     }
-  }
-
-  formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' | ' + date.getHours() + ':' + date.getMinutes();
   }
 
   onRowPress(item) {
@@ -97,7 +94,7 @@ class RecordList extends Component {
             {this.renderCardItem('Gender', gender)}
             {this.renderCardItem('District', district)}
             {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
-            {this.renderCardItem('Date', ''+updatedTimeStamp)}
+            {this.renderCardItem('Date', formatDate(updatedTimeStamp, recordCardDateFormat) )}          
             </View>
           </TouchableWithoutFeedback>
           <TouchableHighlight onPress={() => this.onRowPress(item)}>

@@ -20,7 +20,7 @@ export default class NotAuthorized extends Component {
           <Card style={{justifyContent: 'center', margin: 10}}>
             <View style={styles.view}>
               <Text style={styles.text}>You don't have permission to perform this action.</Text>
-              <Text style={styles.text}>Please ccontact Administrator</Text>
+              <Text style={styles.text}>Please contact Administrator</Text>
             </View>
           </Card>
         </ScrollView>

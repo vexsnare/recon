@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export const getNested = (obj, key) => {
@@ -54,4 +56,10 @@ export const getThisMonthDate = () => {
 export const getTillNowDate = () => {
   var tillDate = '01-01-2000';
   return tillDate;
+}
+
+
+export const formatDate = (timestamp, formatString) => {
+  const timeString = moment(timestamp).format( formatString );
+  return timeString;
 }
