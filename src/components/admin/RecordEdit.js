@@ -51,6 +51,6 @@ const mapStateToProps = (state) => {
   return { initialValues, recordId: toEditRecord.id };
 }
 
-const RecordUpdateForm = reduxForm({form: 'recordUpdateForm'})(RecordUpdate);
+const RecordUpdateForm = reduxForm({form: 'recordUpdateForm', destroyOnUnmount: true})(RecordUpdate);
 
 export default connect(mapStateToProps)(RecordUpdateForm);

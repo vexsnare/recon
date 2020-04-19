@@ -59,7 +59,7 @@ class RecordList extends Component {
   renderCardItem(label, text, phone) {
     return (
         <View style={{flex: 1, flexDirection: 'row', paddingVertical: 3, backgroundColor: 'white'}}>
-         <View style={{flex: 1, flexDirection: 'row'}}>
+         <View style={{flex: 2, flexDirection: 'row'}}>
             <Text style={{color: 'gray', fontSize: 16 }}>
               {label}
             </Text>
@@ -85,13 +85,12 @@ class RecordList extends Component {
         <Card>
           <View style={styles.heading}>
             <Text style={styles.title}>
-              {name}
+              Name: {name}
             </Text>
           </View>
           <TouchableWithoutFeedback onPress={() => this.onRowPress(item)}>
             <View style={{paddingHorizontal: 10, backgroundColor: 'white'}}>
-            {this.renderCardItem('Age', age)}
-            {this.renderCardItem('Gender', gender)}
+            <View style={{flex: 6, flexDirection: 'row', justifyContent:'space-between'}}>{this.renderCardItem('Gender', gender)}{this.renderCardItem('Age', age)}</View>
             {this.renderCardItem('District', district)}
             {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
             {this.renderCardItem('Date', formatDate(updatedTimeStamp, recordCardDateFormat) )}          
@@ -101,7 +100,7 @@ class RecordList extends Component {
             <View style={styles.bottom}>
               <View style={{flexDirection: 'row', paddingVertical: 15}}>
                 <MaterialIcons name="arrow-forward" size={22} />
-                <Text style={{fontSize: 16, fontWeight: '500'}}>
+                <Text style={{fontSize: 16}}>
                   View Detail
                 </Text>
               </View>

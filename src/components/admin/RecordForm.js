@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
 import { Heading, TextInput, Bold } from '../common';
-import { required, mobile, maxLength2, valueIsNotNull } from '../../validators';
+import { required, mobile, valueIsNotNull } from '../../validators';
 import { renderTextInput, renderCheckBox } from '../renderer';
 
 import RNPickerSelect from 'react-native-picker-select';

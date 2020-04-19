@@ -14,7 +14,8 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_RECORDS:
       return { ...state, loading: true };
     case RECORD_LIST_ADD:
-          const recordList = state.records ? state.records : [];
+          let recordList = state.records ? state.records : [];
+          recordList = recordList.slice(0, 39);
           return { ...state, records: [action.payload, ...recordList ]};
     case FETCH_RECORDS_S:
       return { ...state, error: null, loading: false, records: action.data};
