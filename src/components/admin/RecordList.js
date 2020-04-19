@@ -41,8 +41,8 @@ class RecordList extends Component {
       return (
         <Button
           raised
-          icon={{name: 'sync', size: 22}}
-          buttonStyle={{backgroundColor: secondaryColor}}
+          icon={{name: 'sync', size: 30}}
+          buttonStyle={{backgroundColor: 'red'}}
           textStyle={{textAlign: 'center'}}
           containerViewStyle={{marginRight: 0, marginLeft: 0, borderWidth: 1}}
           title={`Click to sync offline records`}

@@ -94,7 +94,7 @@ export const createRecord =  (formValues) => {
                   sleep(1500).then ( () => {
                       console.log('No Internet Submitting offLine');
                       dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
-                      renderAlert('Submitted offLine', "Please sync your reports once you are connected to Internet");
+                      renderAlert('Submitted', "Please sync your reports once you are connected to Internet");
                       dispatch({type: RECORD_CREATE_F, payload: "Failed"});
                     }
                   )

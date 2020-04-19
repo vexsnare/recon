@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/logout';
 import { ListItem, Icon } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation-stack';
+import { secondaryColor, backgroundColor, touchableColor } from '../../themes';
 
 class Profile extends React.Component {
 
@@ -61,7 +62,7 @@ class Profile extends React.Component {
           wrapperStyle={{padding:5}}
             hideChevron
            title="Logout"
-           containerStyle={{backgroundColor: '#ff7e75'}}
+           containerStyle={{backgroundColor: secondaryColor}}
            leftIcon={{type: 'ionicon', name: 'md-exit'}}
            onPress={() => this.renderConfirmAlert()}
         />

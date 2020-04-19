@@ -7,14 +7,12 @@ import AuthNavigator from './src/components/Auth';
 import axios from 'axios';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import NavigatorService from './src/services/navigator';
-
 class App extends Component {
-
 
   constructor() {
     super();
     axios.defaults.baseURL = 'https://ancient-dawn-45667.herokuapp.com';
-	  axios.defaults.headers['Content-Type'] = 'application/json';
+    axios.defaults.headers['Content-Type'] = 'application/json';
   }
 
   render() {
