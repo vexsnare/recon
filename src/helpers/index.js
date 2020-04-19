@@ -1,6 +1,6 @@
 import store from '../../Store';
 import { getNested } from '../utils';
-import { Platform, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import _ from 'lodash';
 import NetInfo from '@react-native-community/netinfo';
 import * as api from '../services/owner/project/Api';
@@ -66,4 +66,16 @@ export const submitOfflineReports = (showLoader) => {
     }
    });
 }
+
+//Inuse
+export const makeRandomID = (length) => {
+  length = length ? length : 24;
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
 

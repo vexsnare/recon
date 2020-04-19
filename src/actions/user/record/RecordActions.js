@@ -1,5 +1,6 @@
 import { reset, SubmissionError } from 'redux-form';
 import _ from 'lodash';
+import { makeRandomID } from './../../../helpers'
 import React, {Component} from 'react'
 import { Alert } from 'react-native';
 import {Loader} from '../../../components/common'
@@ -11,6 +12,7 @@ import {
   RECORD_CREATE_F,
   RECORD_LIST_ADD,
   RECORD_UPDATE,
+  RECORD_UPDATE_OFFLINE,
   RECORD_UPDATE_FAILURE,
   RECORD_UPDATE_SUCCESS,
   SUBMIT_REPORT_OFFLINE
@@ -25,6 +27,12 @@ const { dispatch} = store;
 
 const sleep = (time) => {
   return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+const addRandomIdAndMode = (values) => {
+    values["id"] = makeRandomID(24);
+    values["mode"] = "offline";
+    return values;
 }
 
 const redirectToRecordList = () => NavigatorService.navigate("RecordList");
@@ -43,11 +51,11 @@ const renderAlert = (title, message, func) => {
 const transformValues = (values) => {
   const quarantineType = values.quarantineType ? values.quarantineType : "NONE";
   const contactType = values.contactType ? values.contactType : "NONE";
-  return {...values, quarantineType, contactType, age: parseInt(age)}
+  return {...values, quarantineType, contactType, age: parseInt(values.age) }
 }
 
 export const createRecord =  (formValues) => {
-    let values = transformValues(formValues);
+    var values = transformValues(formValues);
     console.log("formValues", values);
     Location.requestPermissionsAsync().then((permission) => {
       let { status } = permission;
@@ -85,13 +93,15 @@ export const createRecord =  (formValues) => {
                 });
               } else {
                 console.log('Checking Internet... not connected');
-                console.log("Log ", 0);
                 const offlineReports = getNested(store.getState(), 'data.offline.records');
                 console.log("Log ", 1);
                 if(_.size(offlineReports) <= 100) {
                   console.log("Log ", 2);
                   sleep(1500).then ( () => {
-                      console.log('No Internet Submitting offLine');
+                      values = addRandomIdAndMode(values);
+
+                      console.log('No Internet Submitting offLine', values);
+                      dispatch({type: RECORD_LIST_ADD, payload: values});
                       dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
                       renderAlert('Submitted', "Please sync your reports once you are connected to Internet", redirectToRecordList);
                       dispatch({type: RECORD_CREATE_F, payload: "Failed"});
@@ -123,23 +133,34 @@ export const createRecord =  (formValues) => {
     })
   }
 
+const updateOfflineRecord = (values, id) => {
+  values['id'] = id;
+  dispatch({type: RECORD_UPDATE_OFFLINE, payload: values});
+  return new Promise((resolve, reject) => {
+    renderAlert('Success', "Updated record. Please sync once you have internet", redirectToRecordList);
+    resolve("UPDATED OFFLINE");
+  })
+}
 
-export const updateRecord = (formValues, id, dispatch) => {
+export const updateRecord = (formValues, id, mode, dispatch) => {
+  if(mode && mode == "offline") {
+    return updateOfflineRecord(formValues, id);
+  }
   const values = transformValues(formValues);
-  dispatch({type: RECORD_UPDATE});
+  //dispatch({type: RECORD_UPDATE});
   return new Promise((resolve, reject) => {
     project.update(values, id)
     .then((result) => {
       console.log("result = ", result);
-      dispatch({type: RECORD_UPDATE_SUCCESS});
+      //dispatch({type: RECORD_UPDATE_SUCCESS});
       getRecords();
       redirectToRecordList();
       resolve(result.data);
     })
     .catch((err) => {
       console.log("err", err);
-      dispatch({type: RECORD_UPDATE_FAILURE})
-      renderAlert('Error', "Can't submit. Error in updating record", redirectToRecordList);
+      //dispatch({type: RECORD_UPDATE_FAILURE})
+      renderAlert('Error', "Can't submit. Make sure you have internet connection.", redirectToRecordList);
       reject(new SubmissionError(err));
     });
   });

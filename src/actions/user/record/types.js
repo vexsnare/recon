@@ -2,6 +2,7 @@ export const RECORD_CREATE = 'record/create';
 export const RECORD_CREATE_F = 'record/create_f';
 export const RECORD_CREATE_S = 'record/create_s';
 export const RECORD_CREATE_OFFLINE = 'project/create_offline';
+export const RECORD_UPDATE_OFFLINE = 'project/update_offline';
 export const RECORD_UPDATE = 'record/fetching';
 export const RECORD_UPDATE_SUCCESS = 'record/fetched';
 export const RECORD_UPDATE_FAILURE = 'record/fetchError';

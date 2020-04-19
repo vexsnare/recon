@@ -13,7 +13,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 class RecordUpdate extends Component {
   
   render() {
-    const {recordId, handleSubmit, submitting} = this.props;
+    const {recordId, handleSubmit, submitting, mode} = this.props;
     return (
       <KeyboardAwareScrollView
         style={{flex: 1, backgroundColor: 'white'}}
@@ -22,9 +22,9 @@ class RecordUpdate extends Component {
         >
         <RecordForm />
         <Container>
-          <Loader visible={this.props.submitting} />
+          <Loader visible={submitting} />
           <View style={styles.button}>
-            <Button color={primaryColor} onPress={handleSubmit((data, dispatch) => updateRecord(data, recordId, dispatch))}>
+            <Button color={primaryColor} onPress={handleSubmit((data, dispatch) => updateRecord(data, recordId, mode, dispatch))}>
               Update
             </Button>
           </View>
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { toEditRecord } = state.data.user.records.record;
-  let initialValues = {...toEditRecord, age: toEditRecord.age +''} ;
-  return { initialValues, recordId: toEditRecord.id };
+  let initialValues = {...toEditRecord, age: (toEditRecord.age +'')} ;
+  return { initialValues, recordId: toEditRecord.id,  mode: toEditRecord.mode };
 }
 
 const RecordUpdateForm = reduxForm({form: 'recordUpdateForm', destroyOnUnmount: true})(RecordUpdate);
