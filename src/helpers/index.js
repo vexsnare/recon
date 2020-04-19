@@ -3,7 +3,6 @@ import { getNested } from '../utils';
 import { Platform, Alert } from 'react-native';
 import _ from 'lodash';
 import NetInfo from '@react-native-community/netinfo';
-import axios from 'axios';
 import * as api from '../services/owner/project/Api';
 import {
   REMOVE_REPORT_FROM_OFFLINE
