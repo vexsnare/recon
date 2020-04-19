@@ -23,6 +23,7 @@ export const renderDropdown = (props) => {
           onBlur={input.onBlur}
           autoCorrect={false}
           items={options}
+          value={input.value}
       />
       </View>
       {meta.touched && meta.error && <Text style={{color: 'red', fontSize: inputErrorTextSize}}>{meta.error}</Text>}
