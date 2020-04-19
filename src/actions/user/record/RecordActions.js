@@ -67,7 +67,7 @@ export const createRecord =  (formValues) => {
 
             NetInfo.fetch().then((status) => {
               console.log('Internet is there isConnected = ', status);
-              if(status.isInternetReachable) {
+              if(status.isConnected) {
                 return new Promise((resolve, reject) => {
                   console.log("Record: ", values);
                   project.create(values)

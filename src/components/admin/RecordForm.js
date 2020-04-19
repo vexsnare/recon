@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Field } from 'redux-form'
+import { Field } from 'redux-form';
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
 import { Heading, TextInput, Bold } from '../common';

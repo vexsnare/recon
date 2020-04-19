@@ -52,7 +52,7 @@ export const submitOfflineReports = (showLoader) => {
   }
   NetInfo.fetch()
    .then( state => {
-    if(state.isInternetReachable) {
+    if(state.isConnected) {
       if(showLoader) { console.log(showLoader)};
       syncReports(offlineReports).then(() => {
         if(showLoader) renderAlert('Done', 'All offline reports have been sent to server.');
