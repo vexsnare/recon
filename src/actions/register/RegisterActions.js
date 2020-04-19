@@ -43,3 +43,26 @@ export const createAccount = (values, dispatch) => {
     });
   });
 };
+
+
+//In use
+export const updateAccount = (values, dispatch) => {
+  const { password, phone, admin } = values;
+  const updateData = {
+    password,
+    mobileNumber:phone,
+    admin: admin,
+    createdBy: "dummy"
+  };
+  return new Promise((resolve, reject) => {
+    session.update(updateData)
+    .then((user) => {
+      renderAlert("Success", "Press Ok to go back to records.");
+      store.dispatch(reset("updateFormAdmin"));
+      resolve();
+    }).catch(({errorMessage}) => {
+      console.log('Failed to Register', errorMessage);
+      reject(new SubmissionError({_error : errorMessage}));
+    });
+  });
+};

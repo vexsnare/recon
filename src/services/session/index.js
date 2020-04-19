@@ -101,13 +101,25 @@ export const register = (signupData) => {
 		api.register(signupData)
 		.then(response => {
 			console.log('register response = ', response);
-			const status = response.data.status;
-			if(status == "FAILURE") {
-				throw response.data.exception.message;
-			} else {
-				store.dispatch({ type: REGISTER_USER_SUCCESS});
-			}
-			resolve(status);
+			store.dispatch({ type: REGISTER_USER_SUCCESS});
+			resolve(response.data);
+		})
+		.catch(error => {
+			console.log('register error = ', error.response.data);
+			reject(error.response.data);
+		});
+	});
+};
+
+
+export const update = (updateData) => {
+	console.log(updateData);
+	return new Promise((resolve, reject) => {
+		api.register(updateData)
+		.then(response => {
+			console.log('update response = ', response);
+			store.dispatch({ type: REGISTER_USER_SUCCESS});
+			resolve(response.data);
 		})
 		.catch(error => {
 			console.log('register error = ', error.response.data);

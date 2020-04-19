@@ -18,7 +18,7 @@ import { Icon } from 'react-native-elements';
 
 import { primaryColor, secondaryColor } from '../../themes';
 import { Button, Loader } from '../common';
-import { createAccount } from '../../actions/register';
+import { updateAccount } from '../../actions/register';
 import NotAuthorized from './NotAuthorized';
 
 class UpdateAccount extends Component {
@@ -46,7 +46,7 @@ class UpdateAccount extends Component {
           textColor={'white'}
           disabled={this.props.error != null}
           size='medium'
-          onPress={this.props.handleSubmit((data, dispatch) => createAccount(data, dispatch))}
+          onPress={this.props.handleSubmit((data, dispatch) => updateAccount(data, dispatch))}
         >Update</Button>
       );
     }
@@ -62,12 +62,6 @@ class UpdateAccount extends Component {
           keyboardShouldPersistTaps='always'
         >
           <View style={styles.container}>
-          <Field
-            name='name'
-            label="Full Name"
-            component={renderTextInput}
-            validate={[required]}
-          />
           <Field
             name='phone'
             label='Mobile'
@@ -172,7 +166,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const updateAccountForm = reduxForm({ form: 'signupFormAdmin', destroyOnUnmount: true })(UpdateAccount);
+const updateAccountForm = reduxForm({ form: 'updateFormAdmin', destroyOnUnmount: true })(UpdateAccount);
 
 const mapStateToProps = (state) => {
   const { loading, status }  = state.data.register;

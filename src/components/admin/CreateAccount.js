@@ -20,6 +20,7 @@ import { primaryColor, secondaryColor } from '../../themes';
 import { Button, Loader } from '../common';
 import { createAccount } from '../../actions/register';
 import NotAuthorized from './NotAuthorized';
+import { Value } from 'react-native-reanimated';
 
 class CreateAccount extends Component {
 
@@ -89,7 +90,12 @@ class CreateAccount extends Component {
           label='This user is Admin'
           component={renderCheckBox}
         />
+        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between'}}>
+        <Text style={{fontSize: 15, color: secondaryColor}}>Admin account can add or update other accounts</Text>
+        <Text style={{fontSize: 15, color: secondaryColor}}>Non Admin account can only add records.</Text>
+        </View>
         <View>
+        
           <View style={styles.line} />
             <TouchableOpacity>
               <Text style={styles.tAndcText}>
