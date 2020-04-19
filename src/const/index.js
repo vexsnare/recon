@@ -1,0 +1,1 @@
+export const recordCardDateFormat = 'YYYY MMM DD, h:mm A';

@@ -52,14 +52,14 @@ export default createDrawerNavigator({
   "RecordList": {
     screen: RecordNavigator,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Records.',
+      drawerLabel: 'Records',
       drawerIcon: <Icon type='ionicon' name="ios-journal" />
     })
   },
   "Profile": {
     screen: ProfileStackNav,
     navigationOptions: ({navigation}) => ({
-      drawerLabel: 'Profile.',
+      drawerLabel: 'Profile',
       drawerIcon: <Icon type='ionicon' name="ios-person" />
     })
   },
