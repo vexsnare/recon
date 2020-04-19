@@ -186,9 +186,10 @@ export default class RecordForm extends Component {
           ]}
         />
         <Field
-          name='contactAddress'
+          name='contactDetails'
           label='Contact Details'
           component={renderTextArea}
+          placeholder="You can place Name, phone#, address or other info of contact point here."
         />
       </View>
     );
