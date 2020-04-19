@@ -34,7 +34,7 @@ export const createAccount = (values, dispatch) => {
   return new Promise((resolve, reject) => {
     session.register(registerData)
     .then((user) => {
-      renderAlert("Success", "Press Ok to go back to records.");
+      renderAlert("Success", "Account has been created. Press OK to go back to records.");
       store.dispatch(reset("signupFormAdmin"));
       resolve();
     }).catch(({errorMessage}) => {
@@ -57,7 +57,7 @@ export const updateAccount = (values, dispatch) => {
   return new Promise((resolve, reject) => {
     session.update(updateData)
     .then((user) => {
-      renderAlert("Success", "Press Ok to go back to records.");
+      renderAlert("Success", "Account has been updated. Press OK to go back to records.");
       store.dispatch(reset("updateFormAdmin"));
       resolve();
     }).catch(({errorMessage}) => {

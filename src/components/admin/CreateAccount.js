@@ -16,11 +16,10 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { primaryColor, secondaryColor } from '../../themes';
+import { primaryColor, secondaryColor, statusBarColor } from '../../themes';
 import { Button, Loader } from '../common';
 import { createAccount } from '../../actions/register';
 import NotAuthorized from './NotAuthorized';
-import { Value } from 'react-native-reanimated';
 
 class CreateAccount extends Component {
 
@@ -91,8 +90,8 @@ class CreateAccount extends Component {
           component={renderCheckBox}
         />
         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between'}}>
-        <Text style={{fontSize: 15, color: secondaryColor}}>Admin account can add or update other accounts</Text>
-        <Text style={{fontSize: 15, color: secondaryColor}}>Non Admin account can only add records.</Text>
+        <Text style={{fontSize: 15, color: statusBarColor}}><Text>{'\u2B24'}</Text>.Admin account can add or update other accounts</Text>
+        <Text style={{fontSize: 15, color: secondaryColor}}><Text>{'\u2B24'}</Text>.Non Admin account can only add records.</Text>
         </View>
         <View>
         

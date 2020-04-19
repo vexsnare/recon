@@ -33,9 +33,9 @@ class AppLoadingScreen extends React.Component {
 
   autoLogin() {
     const { isLogin, tokens } = this.props;
+    this.props.navigation.navigate(isLogin ? 'Admin' : 'Auth');
     if(isLogin) {
       axios.defaults.headers['Authorization'] = "Bearer " + tokens;
-      this.props.navigation.navigate(isLogin ? 'Admin' : 'Auth');
     }
   }
 

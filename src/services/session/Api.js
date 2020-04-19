@@ -38,15 +38,12 @@ export const signOut = () => {
 	return true;
 };
 
+//In use
 export const register = (signupData) => {
 	return axios.post(endPoints.register, signupData);
 };
 
-
+//In use
 export const updateAccount = (updateAccountData) => {
 	return axios.put(endPoints.register, updateAccountData);
-};
-//In Use
-export const update = (signupData) => {
-	return axios.put(endPoints.userUpdate, signupData);
 };

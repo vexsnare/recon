@@ -82,6 +82,7 @@ class Login extends Component {
           <Field
             name='login'
             label="Phone"
+            keyboardType='numeric'
             component={renderTextInput}
             validate={[required, mobile]}
           />

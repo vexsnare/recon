@@ -63,6 +63,12 @@ class UpdateAccount extends Component {
         >
           <View style={styles.container}>
           <Field
+            name='name'
+            label="Full Name"
+            component={renderTextInput}
+            validate={[required]}
+          />
+          <Field
             name='phone'
             label='Mobile'
             maxLength={10}
