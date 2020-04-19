@@ -1,12 +1,16 @@
 {
   "expo": {
-    "name": "recon",
-    "slug": "recon",
+    "name": "Paryavekshan",
+    "slug": "paryavekshan",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
+    "android": {
+      "package": "com.covid.quarantine.paryavekshan",
+      "versionCode": 1
+    },
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +28,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Final rel_1.1.6t offline submit fix "
+    "description": "Final rel_1.1.7 offline submit fix "
   }
 }

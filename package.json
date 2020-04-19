@@ -64,8 +64,18 @@
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/vexsnare/recon.git"
   },
-  "author": "",
+  "expo": {
+    "name": "Paryavekshan",
+    "slug": "paryavekshan",
+    "icon": "./assests/icon.png",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.dpk.covid.paryavekshan",
+      "versionCode": 1
+    }
+  },
+  "author": "vinay.saini",
   "license": "ISC",
   "homepage": "https://bitbucket.org/vexsnare/recon#readme",
-  "description": ""
+  "description": "App to collect data for people in quarantine [covid-19], this app supports both online and offline mode."
 }
