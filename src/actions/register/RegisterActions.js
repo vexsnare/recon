@@ -28,7 +28,7 @@ export const createAccount = (values, dispatch) => {
     fullName: name,
     password,
     mobileNumber:phone,
-    admin: admin ? admin : 0
+    admin: (admin ? admin : false)
   };
   return new Promise((resolve, reject) => {
     session.register(registerData)
@@ -51,7 +51,7 @@ export const updateAccount = (values, dispatch) => {
     fullName: name,
     password,
     mobileNumber:phone,
-    admin: admin ? admin : 0
+    admin: (admin ? admin : false)
   };
   return new Promise((resolve, reject) => {
     session.update(updateData)
