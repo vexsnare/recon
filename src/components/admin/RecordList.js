@@ -12,7 +12,7 @@ import { Icon, Button } from 'react-native-elements';
 import {createStackNavigator } from 'react-navigation-stack';
 import { connect } from 'react-redux';
 import ActionButton from 'react-native-action-button';
-import { primaryColor, secondaryColor} from '../../themes';
+import { primaryColor, secondaryColor, backgroundColor, touchableColor} from '../../themes';
 import { Card,Wait } from '../common';
 import Welcome from './Welcome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -23,7 +23,6 @@ import { Linking  } from 'expo';
 import RecordViewScreen from './Record'
 import RecordCreateScreen from './RecordCreate'
 import RecordEditScreen from './RecordEdit'
-import { timing } from 'react-native-reanimated';
 import {formatDate} from '../../utils';
 import {recordCardDateFormat} from '../../const'
 
@@ -58,7 +57,7 @@ class RecordList extends Component {
   }
   renderCardItem(label, text, phone) {
     return (
-        <View style={{flex: 1, flexDirection: 'row', paddingVertical: 3, backgroundColor: 'white'}}>
+        <View style={{flex: 1, flexDirection: 'row', paddingVertical: 3, backgroundColor: touchableColor}}>
          <View style={{flex: 2, flexDirection: 'row'}}>
             <Text style={{color: 'gray', fontSize: 16 }}>
               {label}
@@ -85,11 +84,11 @@ class RecordList extends Component {
         <Card>
           <View style={styles.heading}>
             <Text style={styles.title}>
-              Name: {name}
+              Name:  {name}
             </Text>
           </View>
           <TouchableWithoutFeedback onPress={() => this.onRowPress(item)}>
-            <View style={{paddingHorizontal: 10, backgroundColor: 'white'}}>
+            <View style={{paddingHorizontal: 10, backgroundColor: touchableColor}}>
             <View style={{flex: 6, flexDirection: 'row', justifyContent:'space-between'}}>{this.renderCardItem('Gender', gender)}{this.renderCardItem('Age', age)}</View>
             {this.renderCardItem('District', district)}
             {this.renderCardItem('Phone Number', mobileNumber, mobileNumber)}
@@ -98,7 +97,7 @@ class RecordList extends Component {
           </TouchableWithoutFeedback>
           <TouchableHighlight onPress={() => this.onRowPress(item)}>
             <View style={styles.bottom}>
-              <View style={{flexDirection: 'row', paddingVertical: 15}}>
+              <View style={{flexDirection: 'row', paddingVertical: 8}}>
                 <MaterialIcons name="arrow-forward" size={22} />
                 <Text style={{fontSize: 16}}>
                   View Detail
@@ -156,21 +155,20 @@ const styles = StyleSheet.create({
     title: {
     fontSize: 18,
     paddingLeft: 10,
-    padding: 10,
+    padding: 8,
     fontWeight: '500',
-    color: primaryColor,
-
+    color: secondaryColor,
+    backgroundColor: '#f0f6ff'
   },
   heading: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.4,
     borderColor: '#d2d2d2',
     justifyContent: 'space-between',
   },
   bottom: {
     justifyContent: 'center',
     paddingLeft: 10,
-    backgroundColor: 'white',
-    backgroundColor: '#f0f6ff',
+    backgroundColor: 'white'
   }
 });
 

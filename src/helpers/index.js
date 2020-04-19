@@ -65,12 +65,12 @@ export const submitOfflineReports = (showLoader) => {
       if(showLoader) { console.log(showLoader)};
       offlineReports = offlineReports.map(x => transformValues(x));
       syncReports(offlineReports).then(() => {
-        if(showLoader) renderAlert('Done', 'All offline reports have been sent to server.');
+        if(showLoader) renderAlert('Thank you', 'All offline reports have been sent to server.');
         getRecords();
         store.dispatch({type:REMOVE_REPORT_FROM_OFFLINE});
       })
     } else {
-      if(showLoader) renderAlert('No Internet', 'Please connect to Internet and try again');
+      if(showLoader) renderAlert('No Internet', 'You can do later when you have Internet');
     }
    });
 }
