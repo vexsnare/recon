@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { renderTextInput} from './renderer';
-import { required } from '../validators';
+import { required, mobile } from '../validators';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {
   View,
@@ -83,7 +83,7 @@ class Login extends Component {
             name='login'
             label="Phone"
             component={renderTextInput}
-            validate={[required]}
+            validate={[required, mobile]}
           />
           <Field
             name='password'

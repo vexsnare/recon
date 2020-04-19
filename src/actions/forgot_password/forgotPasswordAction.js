@@ -10,10 +10,11 @@ export const forgotPassword = (values) => {
   return new Promise((resolve, reject) => {
     session.findMyAdmin(username)
     .then((data) => {
+        console.log("data", data);
         store.dispatch({type: FETCH_MY_ADMIN, payload:data})
-        resolve();
-    }).catch((errorMessage) => {
-      reject(new SubmissionError({_error: errorMessage}));
+        resolve(data);
+    }).catch(({errorMessage}) => {
+         reject(new SubmissionError({_error: errorMessage}));
     });
   });
 };

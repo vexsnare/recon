@@ -110,8 +110,8 @@ export const register = (signupData) => {
 			resolve(status);
 		})
 		.catch(error => {
-			console.log('register error = ', error);
-			reject(error);
+			console.log('register error = ', error.response.data);
+			reject(error.response.data);
 		});
 	});
 };
@@ -121,11 +121,11 @@ export const findMyAdmin = (username) => {
 	return new Promise((resolve, reject)=> {
 		api.getMyAdmin(username)
 		.then(response => {
-			console.log("resposen for foo");
+			console.log("resposen for foo", response);
 			resolve(response.data);
 		}).catch(error => {
-			console.log("error", error);
-			reject(error);
+			console.log("error", error.response);
+			reject(error.response.data);
 		})
 	});
 }

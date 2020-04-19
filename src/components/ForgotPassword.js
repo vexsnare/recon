@@ -92,7 +92,9 @@ class ForgotPassword extends Component {
             name='username'
             label="Your mobile number"
             component={renderTextInput}
-            validate={[required]}
+            keyboardType='numeric'
+            maxLength={10}
+            validate={[required, mobile]}
           />
           <View>
             <Text style={styles.instructionText}>

@@ -10,7 +10,7 @@ const renderAlert = (title, message) => {
     title,
     message,
     [
-      {text: 'OK', onPress: () => NavigatorService.navigate("Records") },
+      {text: 'OK', onPress: () => NavigatorService.navigate("RecordList") },
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -37,7 +37,7 @@ export const createAccount = (values, dispatch) => {
       renderAlert("Success", "Press Ok to go back to records.");
       store.dispatch(reset("signupFormAdmin"));
       resolve();
-    }).catch((errorMessage) => {
+    }).catch(({errorMessage}) => {
       console.log('Failed to signup', errorMessage);
       reject(new SubmissionError({_error : errorMessage}));
     });
