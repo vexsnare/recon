@@ -3,9 +3,7 @@ import React from 'react';
 import { getNested } from '../utils';
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
-  StyleSheet,
   View,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -21,7 +19,7 @@ class AppLoadingScreen extends React.Component {
     } else {
       const unsubscribe = store.subscribe(() => {
         isHydrated = getNested(store.getState(), 'services.persist.isHydrated');
-        if (isHydrated) {
+        if (isHydrated || isLogin) {
           this.autoLogin();
           unsubscribe();
         }
@@ -50,12 +48,8 @@ class AppLoadingScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { isLogin, user, tokens } = state.services.session; 
-  let role = "User";
-  if(isLogin && user.roles.length > 1) {
-    role = "Admin";
-  }
-  return {role, isLogin, tokens};
+  const { isLogin, tokens } = state.services.session; 
+  return {isLogin, tokens};
 }
 
 export default connect(mapStateToProps)(AppLoadingScreen);

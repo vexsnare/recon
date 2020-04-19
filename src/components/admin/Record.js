@@ -46,7 +46,7 @@ export default class RecordView extends Component {
                 {record.quarantineType && this.display("Quarantine Type", record.quarantineType)}
                 {record.quarantineAddress && this.display("Quarantine Address", record.quarantineAddress)}
                 {record.contactType && this.display("Contact Type", record.contactType)}
-                {record.contactDetails && this.display("Contact Information", record.contactDetails)}
+                {record.contactDetails && this.display("Contact Details", record.contactDetails)}
                 <View style={{marginBottom: 40}}>
                 {record.location && <View>
                         <Text style={{fontSize: 25}}>Location</Text>
