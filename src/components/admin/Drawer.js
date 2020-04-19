@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import { View, StyleSheet, Button, Image, SafeAreaView, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { createDrawerNavigator, DrawerActions, DrawerItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
+import SafeAreaView from 'react-native-safe-area-view';
 import { Icon } from 'react-native-elements';
 import CreateAccount from './CreateAccount';
 import UpdateAccount from './UpdateAccount';
 import {ProfileScreen} from '../shared/Profile';
 import RecordNavigator from './RecordList';
 import { primaryColor } from '../../themes';
+import DrawerHeader from './DrawerHeader';
 
 
 const ProfileStackNav =  createStackNavigator({
@@ -26,6 +28,25 @@ const ProfileStackNav =  createStackNavigator({
     initialRouteName: 'Profile'
   }
 )
+
+
+const CustomDrawerContentComponent = props => (
+  <ScrollView>
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <DrawerHeader/>
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default createDrawerNavigator({
   "RecordList": {
@@ -70,6 +91,7 @@ export default createDrawerNavigator({
     iconContainerStyle: {
       opacity: 1
     }
-  }
+  },
+  contentComponent: CustomDrawerContentComponent
 }
 );

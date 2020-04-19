@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
+  Image,
   TouchableWithoutFeedback,
   TouchableOpacity
 } from 'react-native';
@@ -36,6 +37,7 @@ class ForgotPassword extends Component {
       return null;
     }
     return (
+
       <View style={{marginTop: 20, padding: 10, backgroundColor: '#f1f1f1'}}>
         <View style={styles.line} />
           <Text style={{fontSize: 20, paddingVertical: 10}}>
@@ -48,6 +50,7 @@ class ForgotPassword extends Component {
           </View>
         </TouchableWithoutFeedback>
       </View>
+   
     );
   }
   renderButton() {
@@ -69,15 +72,20 @@ class ForgotPassword extends Component {
   render() {
     const { myAdmin } = this.props;
     return (
+      <ScrollView>
         <View style={styles.globalContainer}>
+       <View style={styles.containerStyle}>
+        <View style={styles.logoContainerStyle}>
+          <Image source={require('../../assets/icon.png')} style={{ width: 64, height: 64 }} />
+        </View>
+        <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
+          <View>
+            <Text style={{color: primaryColor, margin: 20}}>Back</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
         <Loader visible={this.props.submitting} />
-        <ScrollView style={styles.container}>
           <View style={{paddingTop: 10, flexDirection: 'column', justifyContent: 'space-around'}}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-              <View>
-                <Text style={{color: primaryColor}}>Back</Text>
-              </View>
-            </TouchableOpacity>
             <Text style={styles.mainText}>Forgot Password</Text>
           </View>
           <Field
@@ -99,8 +107,9 @@ class ForgotPassword extends Component {
           </View>
           { this.renderAlert() }
           { this.renderContactInfo(myAdmin)}
-          </ScrollView>
+          
           </View>
+          </ScrollView>
     );
   }
 }
@@ -122,7 +131,13 @@ const styles = StyleSheet.create({
   },
   globalContainer: {
     flex: 1,
+    padding: 10,
     backgroundColor: 'white'
+  },
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   container: {
     paddingTop: 20,
@@ -139,6 +154,14 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontSize: 20
+  },
+  textHeadingStyle: {
+    fontSize: 30,
+    fontWeight: '900',
+    color: 'white'
+  },
+  logoContainerStyle: {
+    paddingTop: 20
   },
   line: {
     borderColor: 'gray',

@@ -68,7 +68,7 @@ class Login extends Component {
         >
           <View style={styles.headerContainer}>
             <View style={styles.logoContainerStyle}>
-              <Image source={require('../../assets/icon.png')} style={{ width: 44, height: 44 }} />
+              <Image source={require('../../assets/icon.png')} style={{ width: 64, height: 64 }} />
             </View>
             <TouchableWithoutFeedback onPress={() => this.props.navigation.goBack()}>
               <View>

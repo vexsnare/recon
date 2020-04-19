@@ -207,7 +207,7 @@ export default createStackNavigator({
                   <TouchableWithoutFeedback
                      onPress={ () => navigation.navigate('RecordEdit') }
                   >
-                   <View style={{padding: 10}}><Text>EDIT</Text><Icon name="mode-edit" size={22} /></View>
+                   <View style={{padding: 10, flexDirection: 'row', justifyContent: 'space-between'}}><Text style={{fontSize: 20, color: primaryColor}}>EDIT</Text><Icon name="mode-edit" size={25} /></View>
                  </TouchableWithoutFeedback>
               })
   },

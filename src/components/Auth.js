@@ -27,7 +27,7 @@ class AuthScreen extends Component {
         {this.statusBar()}
         <View style={styles.containerStyle}>
           <View style={styles.logoContainerStyle}>
-            <Image source={require('../../assets/icon.png')} style={{ width: 65, height: 65 }} />
+            <Image source={require('../../assets/icon.png')} style={{ width: 100, height: 100 }} />
           </View>
           <View style={styles.textContainerStyle}>
             <Text style={styles.textHeadingStyle}>
