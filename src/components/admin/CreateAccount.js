@@ -52,7 +52,8 @@ class CreateAccount extends Component {
     }
 
     render() {
-      const { error, role, navigation } = this.props;
+      const { role } = this.props;
+      console.log(this.props);
       if(role != 'Admin') {
         return <NotAuthorized />
       }

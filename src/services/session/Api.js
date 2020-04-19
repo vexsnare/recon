@@ -4,7 +4,7 @@ const endPoints = {
 	validateToken: '/auth/validate_token',
 	signOut: 'auth/sign_out',
 	register: '/user/signup',
-	userUpdate: '/user',
+	userUpdate: '/user/',
 	myAdmin: '/user/myadmin'
 };
 
@@ -45,5 +45,5 @@ export const register = (signupData) => {
 
 //In use
 export const updateAccount = (updateAccountData) => {
-	return axios.put(endPoints.register, updateAccountData);
+	return axios.put(endPoints.userUpdate, updateAccountData);
 };
