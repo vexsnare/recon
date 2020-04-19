@@ -38,7 +38,7 @@ export default class RecordView extends Component {
                 {this.display("Anyone In Family Showing Symptoms", record.anyOneInFamilyShowingSymptoms)}
                 {this.display("Anyone Around", record.anyOneAround)}
                 {this.display("Previous History Of Disease", record.previousHistoryOfDisease)}
-                {this.display("OtherDetails", record.otherDetails)}
+                {this.display("Other Details", record.otherDetails)}
                 {record.quarantineType && <View>
                         <Text style={{fontSize: 25}}>Quarantine Details</Text>
                         <View style={{borderWidth: 0.5}}></View>

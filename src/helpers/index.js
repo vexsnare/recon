@@ -44,10 +44,17 @@ export const syncReports = (reports) => {
     });
   });
 }
+
+const transformValues = (values) => {
+  const quarantineType = values.quarantineType ? values.quarantineType : "NONE";
+  const contactType = values.contactType ? values.contactType : "NONE";
+  return {...values, quarantineType, contactType, age: parseInt(values.age) }
+}
+
 //In use
 export const submitOfflineReports = (showLoader) => {
   showLoader = showLoader || false;
-  const offlineReports = getNested(store.getState(), 'data.offline.records');
+  var offlineReports = getNested(store.getState(), 'data.offline.records');
   if(_.isEmpty(offlineReports) && showLoader) {
     renderAlert('Not required', 'All reports are already submitted');
     return;
@@ -56,6 +63,7 @@ export const submitOfflineReports = (showLoader) => {
    .then( state => {
     if(state.isConnected) {
       if(showLoader) { console.log(showLoader)};
+      offlineReports = offlineReports.map(x => transformValues(x));
       syncReports(offlineReports).then(() => {
         if(showLoader) renderAlert('Done', 'All offline reports have been sent to server.');
         getRecords();
