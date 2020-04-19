@@ -8,9 +8,9 @@ export const create = (projectData) => {
       console.log(result);
       resolve(result.data);
     })
-    .catch(err => {
-      console.log(err);
-      reject(err);
+    .catch(error => {
+      console.log(error.response.data);
+      reject(error.response.data);
     });
   });
 };

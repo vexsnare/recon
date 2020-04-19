@@ -11,7 +11,6 @@ export const fetchProject = (id) => {
 
 //In Use
 export const createProject = (projectData) => {
-	console.log(projectData);
 	return axios.post(endPoints.project, projectData);
 };
 

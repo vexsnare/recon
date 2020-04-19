@@ -43,7 +43,7 @@ const renderAlert = (title, message, func) => {
 const transformValues = (values) => {
   const quarantineType = values.quarantineType ? values.quarantineType : "NONE";
   const contactType = values.contactType ? values.contactType : "NONE";
-  return {...values, quarantineType, contactType}
+  return {...values, quarantineType, contactType, age: parseInt(age)}
 }
 
 export const createRecord =  (formValues) => {
@@ -77,10 +77,9 @@ export const createRecord =  (formValues) => {
                     redirectToRecordList();
                     resolve();
                   })
-                  .catch((err) => {
-                    console.log(err);
-                    dispatch({type: RECORD_CREATE_F, payload: "Submision Failed"});
-                    renderAlert('Submision Failed', "Report to your Administrator");
+                  .catch(({errorMessage}) => {
+                    dispatch({type: RECORD_CREATE_F, payload: errorMessage});
+                    renderAlert('Submision Failed', errorMessage);
                     reject(new SubmissionError("Submision Failed"));
                   });
                 });
