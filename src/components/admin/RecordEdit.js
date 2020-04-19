@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { toEditRecord } = state.data.user.records.record;
-  let initialValues = toEditRecord;
+  let initialValues = {...toEditRecord, age: toEditRecord.age +''} ;
   return { initialValues, recordId: toEditRecord.id };
 }
 

@@ -75,9 +75,10 @@ export default class RecordForm extends Component {
         <Field
           name='age'
           label='Age'
+          maxLength={3}
           component={renderTextInput}
           keyboardType='numeric'
-          validate={[required, maxLength2]}
+          validate={[required]}
         />
         <Field
           name='mobileNumber'

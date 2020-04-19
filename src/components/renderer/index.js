@@ -31,7 +31,7 @@ export const renderTextInput = (props) => {
        {...inputProps}
        placeholder={label}
        value={input.value}
-       onChangeTextValue={input.onChange}
+       onChangeTextValue={''+input.onChange}
        autoCorrect={false}
        selectionColor={selectionColor}
        onFocus={input.onFocus}
