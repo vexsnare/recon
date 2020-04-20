@@ -21,6 +21,7 @@ export const renderDropdown = (props) => {
           placeholder={placeholder}
           onFocus={input.onFocus}
           onBlur={input.onBlur}
+          value={input.value}
           autoCorrect={false}
           items={options}
       />
