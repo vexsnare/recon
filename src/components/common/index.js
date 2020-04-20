@@ -16,3 +16,4 @@ export * from './Loader';
 export * from './FloatingLabelInput';
 export * from './FetchError';
 export * from './Toggle';
+export * from './DropdownPicker';

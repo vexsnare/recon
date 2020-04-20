@@ -3,34 +3,9 @@ import _ from 'lodash';
 import { Field } from 'redux-form';
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import { secondaryColor, inputErrorTextSize, inputTextSize } from '../../themes';
-import { Heading, TextInput, Bold } from '../common';
+import { Heading, TextInput, Bold, DropdownPicker } from '../common';
 import { required, mobile, valueIsNotNull } from '../../validators';
 import { renderTextInput, renderCheckBox } from '../renderer';
-
-import RNPickerSelect from 'react-native-picker-select';
-
-export const renderDropdown = (props) => {
-  const { input, label, placeholder, options, meta, ...otherProps } = props;
-  return (
-    <View>
-      <Text style={{fontSize: inputTextSize}}>{label}</Text>
-      <View style={{borderColor: 'gray', borderWidth: 1}}>
-      <RNPickerSelect
-          onValueChange={input.onChange}
-          input={input}
-          placeholder={placeholder}
-          onFocus={input.onFocus}
-          onBlur={input.onBlur}
-          value={input.value}
-          autoCorrect={false}
-          items={options}
-      />
-      </View>
-      {meta.touched && meta.error && <Text style={{color: 'red', fontSize: inputErrorTextSize}}>{meta.error}</Text>}
-      </View>
-  );
-};
-
 
 export const renderTextArea = (props) => {
   const { input, label, meta, ...otherProps } = props;
@@ -109,7 +84,7 @@ export default class RecordForm extends Component {
         <Field
           name='gender'
           label='Gender'
-          component={renderDropdown}
+          component={DropdownPicker}
           options={[
             { label: 'Male', value: 'MALE' },
             { label: 'Female', value: 'FEMALE' },
@@ -165,7 +140,7 @@ export default class RecordForm extends Component {
         <Field
           name='quarantineType'
           label='Quarantine Type'
-          component={renderDropdown}
+          component={DropdownPicker}
           options={[
             { label: 'Home', value: 'HOME' },
             { label: 'Institutional', value: 'INSTITUTIONAL' },
@@ -180,7 +155,7 @@ export default class RecordForm extends Component {
         <Field
           name='contactType'
           label='Contact Type'
-          component={renderDropdown}
+          component={DropdownPicker}
           options={[
             { label: 'Primary', value: 'PRIMARY' },
             { label: 'Secondary', value: 'SECONDARY' },
