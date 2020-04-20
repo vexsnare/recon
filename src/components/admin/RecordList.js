@@ -30,7 +30,9 @@ import {recordCardDateFormat} from '../../const'
 class RecordList extends Component {
 
   componentDidMount() {
+    
     getRecords();
+    //initBackgroundFetch();
   }
 
   keyExtractor = (item, index) => item.id;
@@ -40,8 +42,8 @@ class RecordList extends Component {
       return (
         <Button
           raised
-          icon={{name: 'sync', size: 30}}
-          buttonStyle={{backgroundColor: 'red'}}
+          icon={{name: 'sync', size: 20}}
+          buttonStyle={{backgroundColor: primaryColor}}
           textStyle={{textAlign: 'center'}}
           containerViewStyle={{marginRight: 0, marginLeft: 0, borderWidth: 1}}
           title={`Click to sync offline records`}
@@ -83,9 +85,7 @@ class RecordList extends Component {
       <View>
         <Card>
           <View style={styles.heading}>
-            <Text style={styles.title}>
-              Name:  {name}
-            </Text>
+            <Text style={styles.title}>Name </Text><Text style={{...styles.title, color:secondaryColor}}>{name}</Text>
           </View>
           <TouchableWithoutFeedback onPress={() => this.onRowPress(item)}>
             <View style={{paddingHorizontal: 10, backgroundColor: touchableColor}}>
@@ -152,18 +152,20 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: '500'
   },
-    title: {
+  title: {
     fontSize: 18,
     paddingLeft: 10,
     padding: 8,
-    fontWeight: '500',
-    color: secondaryColor,
-    backgroundColor: '#f0f6ff'
+    fontWeight: '600',
+    color: 'gray',
+    
   },
   heading: {
+    backgroundColor: '#f0f6ff',
     borderBottomWidth: 0.4,
     borderColor: '#d2d2d2',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    flexDirection: 'row'
   },
   bottom: {
     justifyContent: 'center',

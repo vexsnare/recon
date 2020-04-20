@@ -55,6 +55,7 @@ const transformValues = (values) => {
 export const submitOfflineReports = (showLoader) => {
   showLoader = showLoader || false;
   var offlineReports = getNested(store.getState(), 'data.offline.records');
+  console.log("In offline records 1");
   if(_.isEmpty(offlineReports) && showLoader) {
     renderAlert('Not required', 'All reports are already submitted');
     return;
@@ -62,6 +63,7 @@ export const submitOfflineReports = (showLoader) => {
   NetInfo.fetch()
    .then( state => {
     if(state.isConnected) {
+      console.log("In offline records 5");
       if(showLoader) { console.log(showLoader)};
       offlineReports = offlineReports.map(x => transformValues(x));
       syncReports(offlineReports).then(() => {

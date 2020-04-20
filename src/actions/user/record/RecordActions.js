@@ -77,7 +77,6 @@ export const createRecord =  (formValues) => {
               console.log('Internet is there isConnected = ', status);
               if(status.isConnected) {
                 return new Promise((resolve, reject) => {
-                  console.log("Record: ", values);
                   project.create(values)
                   .then((data) => {
                     dispatch({type: RECORD_LIST_ADD, payload: data.response});
@@ -94,22 +93,19 @@ export const createRecord =  (formValues) => {
               } else {
                 console.log('Checking Internet... not connected');
                 const offlineReports = getNested(store.getState(), 'data.offline.records');
-                console.log("Log ", 1);
-                if(_.size(offlineReports) <= 150) {
-                  console.log("Log ", 2);
+                if(_.size(offlineReports) <= 250) {
                   sleep(1500).then ( () => {
                       values = addRandomIdAndMode(values);
-
                       console.log('No Internet Submitting offLine', values);
                       dispatch({type: RECORD_LIST_ADD, payload: values});
                       dispatch({type: SUBMIT_REPORT_OFFLINE, payload: values});
-                      renderAlert('Submitted', "Please sync your reports once you are connected to Internet", redirectToRecordList);
                       dispatch({type: RECORD_CREATE_F, payload: "Failed"});
+                      redirectToRecordList();
                     }
                   )
                 }
                 else {
-                  renderAlert('Error', "Can't submit. Please sync 150 pending recorts before submitting a new one", redirectToRecordList);
+                  renderAlert('Error', "Can't submit. Please sync 250 pending recorts before submitting a new one", redirectToRecordList);
                   dispatch({type: RECORD_CREATE_F, payload: "Failed"});
                 }
               }

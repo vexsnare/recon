@@ -13,6 +13,10 @@ class App extends Component {
     super();
     axios.defaults.baseURL = 'https://ancient-dawn-45667.herokuapp.com';
     axios.defaults.headers['Content-Type'] = 'application/json';
+    // Will invalidate all log statement in production
+    if (!__DEV__) {
+      console.log = () => {};
+    }
   }
 
   render() {
