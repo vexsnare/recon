@@ -30,9 +30,7 @@ import {recordCardDateFormat} from '../../const'
 class RecordList extends Component {
 
   componentDidMount() {
-    
     getRecords();
-    //initBackgroundFetch();
   }
 
   keyExtractor = (item, index) => item.id;

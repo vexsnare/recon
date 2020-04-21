@@ -135,6 +135,16 @@ export default class RecordForm extends Component {
           label='Shortness of breath'
           component={renderCheckBox}
         />
+        <Field
+          name='ili'
+          label='ILI'
+          component={renderCheckBox}
+        />
+        <Field
+          name='sari'
+          label='SARI'
+          component={renderCheckBox}
+        />
 
         <Field
           name='anyOneInFamilyShowingSymptoms'
@@ -188,7 +198,7 @@ export default class RecordForm extends Component {
         />
         <Field
           name='contactDetails'
-          label='Contact Details'
+          label='Suspect Contact Details'
           component={renderTextArea}
         />
       </View>
