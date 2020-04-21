@@ -9,7 +9,7 @@ export default class RecordView extends Component {
         return (
             <View style={{backgroundColor: 'white', marginBottom: 2}}>
             <View style={{margin: 10, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{fontSize: 16, fontWeight: "bold", flex: 1}}>
+                <Text style={{fontSize: 16, fontWeight: "bold", fontFamily: 'Roboto', flex: 1}}>
                     {key}
                 </Text>
                 <Text style={{fontSize: 16, flex: 2}}>
@@ -29,7 +29,7 @@ export default class RecordView extends Component {
                 {this.display("Phone", record.mobileNumber)}
                 {this.display("Age", record.age)}
                 {this.display("Gender", record.gender)}
-                {this.display("Ward", record.ward)}
+                {record.ward && this.display("Ward", record.ward)}
                 {this.display("Tehsil", record.tehsil)}
                 {this.display("District", record.district)}
                 {this.display("Fever", record.fever)}

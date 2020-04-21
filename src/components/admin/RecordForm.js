@@ -112,11 +112,6 @@ export default class RecordForm extends Component {
           component={renderCheckBox}
         />
         <Field
-          name='anyOneInFamilyShowingSymptoms'
-          label='Anyone In Family Showing Symptoms'
-          component={renderCheckBox}
-        />
-        <Field
           name='ili'
           label='ILI'
           component={renderCheckBox}
@@ -126,7 +121,11 @@ export default class RecordForm extends Component {
           label='SARI'
           component={renderCheckBox}
         />
-
+        <Field
+          name='anyOneInFamilyShowingSymptoms'
+          label='Anyone In Family Showing Symptoms'
+          component={renderCheckBox}
+        />
         <Field
           label='Anyone Around Showing Symptoms'
           name='anyOneAround'
