@@ -36,6 +36,8 @@ export default class RecordView extends Component {
                 {this.display("Cough", record.cough)}
                 {this.display("Shortness Of Breath", record.shortnessOfBreath)}
                 {this.display("Anyone In Family Showing Symptoms", record.anyOneInFamilyShowingSymptoms)}
+                {this.display("ILI", record.ili)}
+                {this.display("SARI", record.sari)}
                 {this.display("Anyone Around", record.anyOneAround)}
                 {this.display("Previous History Of Disease", record.previousHistoryOfDisease)}
                 {this.display("Other Details", record.otherDetails)}
