@@ -83,7 +83,7 @@ class RecordList extends Component {
       <View>
         <Card>
           <View style={styles.heading}>
-            <Text style={styles.title}>Name </Text><Text style={{...styles.title, color:secondaryColor}}>{name}</Text>
+            <Text style={styles.title}>Name</Text><Text style={{...styles.title, color:secondaryColor}}>{name}</Text>
           </View>
           <TouchableWithoutFeedback onPress={() => this.onRowPress(item)}>
             <View style={{paddingHorizontal: 10, backgroundColor: touchableColor}}>
@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    paddingLeft: 10,
     padding: 8,
-    fontWeight: '600',
+    fontWeight: '700',
+    fontFamily: 'Roboto',
     color: 'gray',
     
   },

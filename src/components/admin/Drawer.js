@@ -81,12 +81,16 @@ export default createDrawerNavigator({
   headerMode: 'screen',
   initialRouteName: 'RecordList',
   drawerPosition: 'Left',
+  hideStatusBar: false,
   contentOptions: {
     activeTintColor: primaryColor,
     itemsContainerStyle: {
       marginVertical: 0,
       flex: 1,
       flexDirection: 'column'
+    },
+    labelStyle: {
+      fontFamily: 'Roboto'
     },
     iconContainerStyle: {
       opacity: 1
